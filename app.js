@@ -187,7 +187,17 @@
     html += '</div>';
     html += '<div class="round-group collapsed">';
 
-
+    /* Players accordion */
+    html += '<div class="players-section">';
+    html += '<div class="players-header">';
+    html += '<span class="players-icon">\u26BD</span>';
+    html += '<span class="players-title">Pelaajat</span>';
+    html += '<span class="players-arrow">\u25BE</span>';
+    html += '</div>';
+    html += '<div class="players-content">';
+    html += '<div class="players-empty">Pelaajatietoja ei ole viel\u00e4 lis\u00e4tty.</div>';
+    html += '</div>';
+    html += '</div>';
 
     var days = [];
     var dayMap = {};
