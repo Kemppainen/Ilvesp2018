@@ -89,12 +89,14 @@ main { max-width: 1100px; margin: 0 auto; padding: 32px 24px 60px; }
 
 /* ── ROUND / DATE ── */
 .round-group { padding: 16px 20px 8px; }
-.date-group { margin-bottom: 14px; }
+.date-group { margin-bottom: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.06); }
+.date-group:first-child { border-top: none; padding-top: 0; }
 .date-venue-row {
-  display: flex; align-items: flex-start; gap: 10px;
+  display: flex; align-items: stretch; gap: 10px;
   margin-bottom: 8px; flex-wrap: wrap;
 }
 .date-badge {
+  display: flex; align-items: center;
   font-size: 12px; font-weight: 700;
   background: rgba(245,176,0,0.12); border: 1px solid rgba(245,176,0,0.3);
   border-radius: 6px; padding: 5px 12px; color: var(--yellow-light); white-space: nowrap;
