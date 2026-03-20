@@ -1,193 +1,238 @@
 <!DOCTYPE html>
 <html lang="fi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
-  <meta name="theme-color" content="#0b0b0b">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Ilves P2018 – Otteluohjelma</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#042E12">
+  <title>Ilves P2018 – Otteluohjelma 2026</title>
   <link rel="icon" href="https://tulospalvelu.palloliitto.fi/logo/palloliitto/21x.png">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#0b0b0b;--surface:#131313;--surface2:#1a1a1a;
-      --border:#1e1e1e;--border2:#2a2a2a;
-      --green:#1db954;--green-d:rgba(29,185,84,.12);
-      --yellow:#f0c000;--yellow-d:rgba(240,192,0,.12);
-      --txt:#eee;--dim:#888;--mute:#555;
-    }
-    *{margin:0;padding:0;box-sizing:border-box}
-    html{-webkit-text-size-adjust:100%}
-    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--txt);-webkit-font-smoothing:antialiased}
-    a{color:var(--green);text-decoration:none}
-    a:hover{text-decoration:underline}
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-    .wrap{max-width:900px;margin:0 auto;padding:24px 20px 40px}
-
-    /* ── Header ── */
-    .hdr{text-align:center;padding:48px 20px 40px;position:relative}
-    .hdr::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80px;height:3px;background:var(--green);border-radius:2px}
-    .hdr img{width:72px;height:72px;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(29,185,84,.2))}
-    .hdr h1{font-size:32px;font-weight:900;letter-spacing:-1px;line-height:1}
-    .hdr h1 span{color:var(--green)}
-    .hdr p{color:var(--dim);font-size:14px;margin-top:8px;font-weight:500}
-    .hdr .sub{font-size:12px;color:var(--mute);margin-top:4px}
-
-    /* ── Stats row ── */
-    .stats{display:flex;justify-content:center;gap:12px;margin:28px 0 32px;flex-wrap:wrap}
-    .st{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 24px;text-align:center;min-width:90px}
-    .st-n{font-size:28px;font-weight:900;color:var(--green)}
-    .st-l{font-size:9px;color:var(--dim);letter-spacing:1.5px;font-weight:700;margin-top:2px}
-
-    /* ── Filter tabs ── */
-    .tabs{display:flex;justify-content:center;gap:6px;margin-bottom:32px;flex-wrap:wrap}
-    .tab{
-      padding:9px 22px;border:1px solid var(--border);border-radius:8px;
-      background:var(--surface);color:var(--dim);font-size:13px;font-weight:600;
-      font-family:inherit;cursor:pointer;transition:all .2s;
-    }
-    .tab:hover{border-color:var(--border2);color:var(--txt)}
-    .tab.on{background:var(--green);color:#000;border-color:var(--green);font-weight:700}
-
-    /* ── Section (sarjat) ── */
-    .sec{margin-bottom:40px}
-    .sec-hdr{
-      display:flex;align-items:center;gap:14px;
-      padding:16px 20px;background:var(--surface);
-      border:1px solid var(--border);border-radius:14px;margin-bottom:16px;
-    }
-    .sec-badge{
-      font-size:11px;font-weight:800;letter-spacing:1px;
-      background:var(--green);color:#000;padding:5px 12px;border-radius:6px;
-    }
-    .sec-title{font-size:18px;font-weight:800;letter-spacing:-.3px;flex:1}
-    .sec-count{font-size:12px;color:var(--dim);font-weight:600}
-
-    /* ── Day group ── */
-    .day{margin-bottom:14px}
-    .day-hdr{
-      display:flex;align-items:center;gap:10px;
-      padding:10px 16px;font-size:14px;font-weight:700;color:var(--txt);
-    }
-    .day-hdr .d{color:var(--green);text-transform:lowercase;font-weight:800}
-    .day-venue{
-      display:flex;align-items:center;gap:6px;
-      padding:0 16px 8px;font-size:12px;color:var(--dim);
+    :root {
+      --green-dark:   #042E12;
+      --green-mid:    #073D18;
+      --green-card:   #0A4D1F;
+      --green-border: #1A6B35;
+      --green-light:  #2A8847;
+      --yellow:       #F5B000;
+      --yellow-light: #FFD04A;
+      --yellow-dim:   rgba(245,176,0,0.15);
+      --text-primary: #F0F0F0;
+      --text-muted:   #8BAF95;
+      --home-bg:      rgba(245,176,0,0.07);
+      --away-bg:      rgba(255,255,255,0.02);
     }
 
-    /* ── Match row ── */
-    .mtbl{width:100%;border-collapse:collapse}
-    .mtbl td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:middle}
-    .mtbl tr:last-child td{border-bottom:none}
-    .mtbl tr:hover td{background:var(--green-d)}
-    .mtbl .time{color:var(--dim);font-weight:600;width:60px;font-variant-numeric:tabular-nums}
-    .mtbl .team{font-weight:600}
-    .mtbl .ilves{color:var(--green);font-weight:700}
-    .mtbl .vs{color:var(--mute);text-align:center;width:30px;font-size:12px}
-    .mtbl .sc{text-align:center;font-weight:800;width:50px;color:var(--txt);font-variant-numeric:tabular-nums}
-    .mtbl .ha{width:55px;text-align:center}
-    .ha-tag{
-      font-size:9px;font-weight:800;letter-spacing:.8px;
-      padding:3px 8px;border-radius:4px;display:inline-block;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--green-dark);
+      color: var(--text-primary);
+      min-height: 100vh;
     }
-    .ha-tag.h{background:var(--green-d);color:var(--green)}
-    .ha-tag.a{background:var(--yellow-d);color:var(--yellow)}
 
-    /* ── Empty state ── */
-    .empty{text-align:center;padding:60px 20px;color:var(--mute)}
-
-    /* ── Footer ── */
-    .ftr{text-align:center;padding:24px 0;margin-top:20px;border-top:1px solid var(--border);font-size:11px;color:var(--mute)}
-    .ftr-b{font-weight:700;color:var(--dim);letter-spacing:.5px;margin-bottom:4px}
-
-    .hd{display:none!important}
-
-    /* ── Loading ── */
-    .ld{text-align:center;padding:80px 20px;color:var(--dim)}
-    .ld-i{font-size:40px;margin-bottom:14px;animation:p 1.5s ease-in-out infinite}
-    @keyframes p{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.92)}}
-
-    /* ── Mobile ── */
-    @media(max-width:640px){
-      .wrap{padding:16px 12px 32px}
-      .hdr{padding:36px 16px 32px}
-      .hdr h1{font-size:26px}
-      .hdr img{width:56px;height:56px}
-      .stats{gap:8px;margin:20px 0 24px}
-      .st{padding:10px 16px;min-width:75px}
-      .st-n{font-size:22px}
-      .tabs{gap:4px;margin-bottom:24px}
-      .tab{padding:8px 14px;font-size:12px}
-      .sec-hdr{padding:12px 14px;border-radius:10px}
-      .sec-title{font-size:15px}
-      .day-hdr{padding:8px 12px;font-size:13px}
-      .day-venue{padding:0 12px 6px;font-size:11px}
-      .mtbl td{padding:9px 10px;font-size:13px}
-      .mtbl .time{width:50px}
-      .mtbl .vs{width:24px;font-size:11px}
-      .mtbl .sc{width:40px}
-      .mtbl .ha{width:45px}
-      .ha-tag{font-size:8px;padding:2px 6px}
+    /* ── HEADER ── */
+    header {
+      background: linear-gradient(135deg, #021A0A 0%, #063015 60%, #021A0A 100%);
+      border-bottom: 3px solid var(--yellow);
+      padding: 28px 40px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
     }
-    @media(max-width:380px){
-      .hdr h1{font-size:22px}
-      .mtbl td{padding:8px 6px;font-size:12px}
-      .mtbl .ha{display:none}
-      .tab{padding:7px 10px;font-size:11px}
+    .logo-wrap {
+      width: 72px; height: 72px;
+      background: var(--yellow);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 4px 16px rgba(245,176,0,0.35);
+      overflow: hidden;
     }
-    @supports(padding:max(0px)){
-      .wrap{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
-      .ftr{padding-bottom:max(24px,env(safe-area-inset-bottom))}
+    .logo-wrap img { width: 64px; height: 64px; object-fit: contain; }
+    header h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.15; }
+    header h1 span { color: var(--yellow); }
+    header p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+    .season-badge {
+      margin-left: auto;
+      background: var(--yellow); color: #0A2A14;
+      font-weight: 800; font-size: 13px;
+      padding: 6px 16px; border-radius: 20px;
+      letter-spacing: 0.5px; white-space: nowrap;
+    }
+
+    /* ── LAYOUT ── */
+    main { max-width: 1100px; margin: 0 auto; padding: 32px 24px 60px; }
+
+    /* ── DIVISION ── */
+    .division-header { display: flex; align-items: center; gap: 12px; margin: 40px 0 16px; }
+    .division-header:first-of-type { margin-top: 0; }
+    .division-pill {
+      background: var(--yellow); color: #042E12;
+      font-size: 11px; font-weight: 800; letter-spacing: 1.2px;
+      text-transform: uppercase; padding: 5px 14px; border-radius: 20px;
+    }
+    .division-title { font-size: 19px; font-weight: 700; color: #E0F0E5; }
+
+    /* ── TEAM CARD ── */
+    .team-card {
+      background: var(--green-card); border: 1px solid var(--green-border);
+      border-radius: 12px; overflow: hidden; margin-bottom: 20px;
+    }
+    .team-header {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 20px; background: var(--green-mid);
+      border-bottom: 2px solid var(--yellow);
+    }
+    .team-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--yellow); flex-shrink: 0; }
+    .team-name { font-size: 16px; font-weight: 700; }
+    .team-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); }
+    .match-count {
+      background: rgba(245,176,0,0.12); border: 1px solid rgba(245,176,0,0.25);
+      padding: 3px 10px; border-radius: 12px; font-size: 12px; color: var(--yellow-light);
+    }
+
+    /* ── ROUND ── */
+    .round-group { padding: 16px 20px 8px; }
+    .round-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--text-muted);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+    }
+    .round-label::after { content: ''; flex: 1; height: 1px; background: var(--green-border); }
+
+    /* ── DATE GROUP ── */
+    .date-group { margin-bottom: 14px; }
+    .date-venue-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      margin-bottom: 8px; flex-wrap: wrap;
+    }
+    .date-badge {
+      font-size: 12px; font-weight: 700;
+      background: rgba(245,176,0,0.12); border: 1px solid rgba(245,176,0,0.3);
+      border-radius: 6px; padding: 5px 12px; color: var(--yellow-light); white-space: nowrap;
+    }
+    .venue-tag {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11.5px; color: var(--text-muted);
+      background: rgba(255,255,255,0.04); border-radius: 6px;
+      padding: 5px 10px; border: 1px solid var(--green-border);
+    }
+    .venue-tag .pin { font-size: 12px; }
+
+    /* ── MATCH TABLE ── */
+    .match-table { width: 100%; border-collapse: collapse; }
+    .match-table tr { border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .match-table tr:last-child { border-bottom: none; }
+    .match-table tr.home-match { background: var(--home-bg); }
+    .match-table tr.away-match { background: var(--away-bg); }
+    .match-table tr:hover { background: rgba(245,176,0,0.10); transition: background 0.12s; }
+    .match-table td { padding: 9px 10px; vertical-align: middle; font-size: 13.5px; }
+
+    td.col-time { width: 60px; font-weight: 800; color: var(--yellow); font-size: 14px; white-space: nowrap; }
+    td.col-home { text-align: right; width: 34%; font-weight: 400; color: #C8E0CE; }
+    td.col-home .ilves { font-weight: 700; color: #fff; }
+    td.col-vs { text-align: center; width: 30px; color: var(--text-muted); font-size: 11px; font-weight: 600; }
+    td.col-away { width: 34%; font-weight: 400; color: #C8E0CE; }
+    td.col-away .ilves { font-weight: 700; color: #fff; }
+    .col-score {
+      text-align: center; font-weight: 700; font-size: 15px;
+      color: var(--text-muted); min-width: 64px; white-space: nowrap; letter-spacing: 0.5px;
+    }
+    .col-score.played { color: var(--yellow-light); background: rgba(245,176,0,0.08); border-radius: 4px; }
+
+    /* ── LOADING ── */
+    .loading { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+    .loading-icon { font-size: 38px; margin-bottom: 12px; animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.92)} }
+
+    .no-matches { padding: 24px 20px; color: var(--text-muted); font-size: 13px; text-align: center; font-style: italic; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 24px; font-size: 12px;
+      color: var(--text-muted); border-top: 1px solid var(--green-border); margin-top: 20px;
+    }
+    footer a { color: var(--yellow); text-decoration: none; }
+
+    .mt { margin-top: 18px; }
+    .hd { display: none !important; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 650px) {
+      header { padding: 14px 16px 12px; flex-wrap: wrap; gap: 10px; }
+      .logo-wrap { width: 48px; height: 48px; }
+      .logo-wrap img { width: 42px; height: 42px; }
+      header h1 { font-size: 17px; letter-spacing: -0.3px; }
+      header p { font-size: 11px; margin-top: 2px; }
+      .season-badge { font-size: 11px; padding: 5px 11px; margin-left: auto; }
+      main { padding: 20px 10px 48px; }
+      .division-header { margin: 28px 0 12px; gap: 8px; }
+      .division-title { font-size: 15px; }
+      .division-pill { font-size: 10px; padding: 4px 10px; }
+      .team-card { border-radius: 10px; margin-bottom: 14px; }
+      .team-header { padding: 10px 14px; gap: 10px; }
+      .team-name { font-size: 14px; }
+      .team-meta { display: none; }
+      .match-count { font-size: 11px; padding: 2px 8px; }
+      .round-group { padding: 12px 10px 6px; }
+      .round-label { font-size: 10px; margin-bottom: 10px; }
+      .date-group { margin-bottom: 12px; }
+      .date-venue-row { gap: 6px; margin-bottom: 6px; flex-wrap: wrap; }
+      .date-badge { font-size: 11px; padding: 4px 9px; }
+      .venue-tag { font-size: 10.5px; }
+      .match-table { width: 100%; table-layout: fixed; }
+      .match-table td { padding: 8px 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      .col-time { width: 44px; font-size: 13px; font-weight: 700; padding-left: 6px !important; }
+      .col-home { font-size: 12px; text-align: right; width: 32%; }
+      .col-vs { width: 18px; font-size: 11px; padding: 0 2px; text-align: center; }
+      .col-away { font-size: 12px; width: 32%; }
+      .col-score { width: 46px; font-size: 13px; padding-right: 6px !important; }
+      .ilves { font-size: 12px; }
+      footer { padding: 18px 16px; font-size: 11px; }
     }
   </style>
 </head>
 <body>
-<div class="wrap">
-  <!-- Header -->
-  <div class="hdr">
-    <img src="https://tulospalvelu.palloliitto.fi/logo/palloliitto/21x.png" alt="Ilves">
-    <h1>ILVES <span>P2018</span> PIIRISARJAT</h1>
-    <p>Otteluohjelmat · Kevät 2026 · P8</p>
-    <div class="sub">Kausi 2025–2026</div>
-  </div>
 
-  <!-- Stats -->
-  <div class="stats">
-    <div class="st"><div class="st-n" id="mc">-</div><div class="st-l">OTTELUA</div></div>
-    <div class="st"><div class="st-n" id="uc">-</div><div class="st-l">TULOSSA</div></div>
-    <div class="st"><div class="st-n" id="nc">-</div><div class="st-l">SEURAAVA PV</div></div>
+<header>
+  <div class="logo-wrap">
+    <img src="https://tulospalvelu.palloliitto.fi/logo/palloliitto/21x.png"
+         alt="Ilves" onerror="this.style.display='none';this.parentNode.textContent='⚽';" />
   </div>
-
-  <!-- Tabs -->
-  <div class="tabs">
-    <button class="tab on" onclick="filt('all',this)">Kaikki</button>
-    <button class="tab" onclick="filt('upcoming',this)">Tulevat</button>
-    <button class="tab" onclick="filt('past',this)">Pelatut</button>
+  <div>
+    <h1>ILVES P2018 <span>OTTELUOHJELMA</span></h1>
+    <p>Piirisarjat · Kevät 2026 · P8</p>
   </div>
+  <div class="season-badge">Kausi 2026</div>
+</header>
 
+<main>
   <!-- Loading -->
-  <div id="ld" class="ld"><div class="ld-i">⚽</div><div>Haetaan ottelutietoja...</div></div>
+  <div id="loading" class="loading">
+    <div class="loading-icon">⚽</div>
+    <div>Haetaan ottelutietoja Palloliiton tulospalvelusta...</div>
+  </div>
 
-  <!-- Content -->
+  <!-- Content rendered by JS -->
   <div id="content"></div>
 
-  <!-- Widget container -->
+  <!-- Hidden widget container -->
   <div id="wr" style="display:none"></div>
+</main>
 
-  <!-- Footer -->
-  <div class="ftr">
-    <div class="ftr-b">ILVES P2018</div>
-    Tiedot: <a href="https://tulospalvelu.palloliitto.fi" target="_blank">tulospalvelu.palloliitto.fi</a> · <a href="https://www.ilvesfootball.com" target="_blank">ilvesfootball.com</a>
-  </div>
-</div>
+<footer>
+  Tiedot haettu: <a href="https://tulospalvelu.palloliitto.fi" target="_blank">tulospalvelu.palloliitto.fi</a> &nbsp;·&nbsp;
+  <a href="https://www.ilvesfootball.com" target="_blank">ilvesfootball.com</a>
+</footer>
 
 <script>
-var M=[],F='all';
-var DL=['Sunnuntai','Maanantai','Tiistai','Keskiviikko','Torstai','Perjantai','Lauantai'];
+var M=[];
 var DS=['su','ma','ti','ke','to','pe','la'];
 
-// Load widget
+// Capture document.write
 var wc=[];var ow=document.write.bind(document);
 document.write=function(h){wc.push(h)};
 var sc=document.createElement('script');
@@ -205,8 +250,8 @@ function pw(){
   if(r)document.getElementById('wr').innerHTML=r;
   var t=document.querySelector('#wr table');
   if(t)M=pt(t);
-  document.getElementById('ld').classList.add('hd');
-  uc();rn();
+  document.getElementById('loading').classList.add('hd');
+  render();
 }
 
 function pt(t){
@@ -214,9 +259,9 @@ function pt(t){
   for(var i=1;i<rows.length;i++){
     var c=rows[i].querySelectorAll('td');if(c.length<4)continue;
     var o={};
-    if(c.length>=7) o={d:c[0].textContent.trim(),t:c[1].textContent.trim(),h:c[2].textContent.trim(),s:c[3].textContent.trim(),a:c[4].textContent.trim(),v:c[5].textContent.trim(),c:c[6].textContent.trim()};
-    else if(c.length>=5) o={d:c[0].textContent.trim(),t:c[1].textContent.trim(),h:c[2].textContent.trim(),s:c[3].textContent.trim(),a:c[4].textContent.trim(),v:c.length>5?c[5].textContent.trim():'',c:''};
-    else o={d:c[0].textContent.trim(),t:'',h:c[1].textContent.trim(),s:c[2].textContent.trim(),a:c[3].textContent.trim(),v:'',c:''};
+    if(c.length>=7) o={d:c[0].textContent.trim(),t:c[1].textContent.trim(),h:c[2].textContent.trim(),s:c[3].textContent.trim(),a:c[4].textContent.trim(),v:c[5].textContent.trim(),cat:c[6].textContent.trim()};
+    else if(c.length>=5) o={d:c[0].textContent.trim(),t:c[1].textContent.trim(),h:c[2].textContent.trim(),s:c[3].textContent.trim(),a:c[4].textContent.trim(),v:c.length>5?c[5].textContent.trim():'',cat:''};
+    else o={d:c[0].textContent.trim(),t:'',h:c[1].textContent.trim(),s:c[2].textContent.trim(),a:c[3].textContent.trim(),v:'',cat:''};
     if(o.h||o.a)m.push(o);
   }
   return m;
@@ -225,48 +270,39 @@ function pt(t){
 function pd(s){if(!s)return null;var p=s.split('.');if(p.length<3)return null;return new Date(parseInt(p[2]),parseInt(p[1])-1,parseInt(p[0]))}
 function ii(n){return n&&n.toLowerCase().indexOf('ilves')!==-1}
 
-function uc(){
-  var n=new Date();n.setHours(0,0,0,0);
-  var up=0,nd=null;
-  for(var i=0;i<M.length;i++){
-    var x=pd(M[i].d);
-    if(x&&x>=n){up++;if(!nd)nd=M[i].d}
+function render(){
+  if(!M.length){
+    document.getElementById('content').innerHTML='<div class="no-matches">Ottelutietoja ei löytynyt. Tarkista tulospalvelusta.</div>';
+    return;
   }
-  document.getElementById('mc').textContent=M.length;
-  document.getElementById('uc').textContent=up;
-  document.getElementById('nc').textContent=nd||'-';
-}
 
-function gf(){
-  var n=new Date();n.setHours(0,0,0,0);var r=[];
+  // Group by category
+  var cats={};var catOrder=[];
   for(var i=0;i<M.length;i++){
-    var m=M[i],x=pd(m.d);
-    if(F==='upcoming'&&(!x||x<n))continue;
-    if(F==='past'&&(!x||x>=n))continue;
-    r.push(m);
-  }
-  return r;
-}
-
-function rn(){
-  var list=gf();
-  if(!list.length){document.getElementById('content').innerHTML='<div class="empty">Ei otteluita valitulla suodattimella.</div>';return}
-
-  // Group by category, then by date
-  var cats={};
-  for(var i=0;i<list.length;i++){
-    var m=list[i],ck=m.c||'Ottelut';
-    if(!cats[ck])cats[ck]=[];
-    cats[ck].push(m);
+    var ck=M[i].cat||'Ottelut';
+    if(!cats[ck]){cats[ck]=[];catOrder.push(ck)}
+    cats[ck].push(M[i]);
   }
 
   var html='';
-  for(var cat in cats){
-    var ms=cats[cat];
-    html+='<div class="sec">';
-    html+='<div class="sec-hdr"><span class="sec-badge">P8</span>';
-    html+='<span class="sec-title">'+cat+'</span>';
-    html+='<span class="sec-count">'+ms.length+' ottelua</span></div>';
+  for(var ci=0;ci<catOrder.length;ci++){
+    var cat=catOrder[ci];var ms=cats[cat];
+
+    // Division header
+    html+='<div class="division-header">';
+    html+='<div class="division-pill">P8 · '+cat+'</div>';
+    html+='<div class="division-title">Ilves P2018</div>';
+    html+='</div>';
+
+    // Team card
+    html+='<div class="team-card">';
+    html+='<div class="team-header">';
+    html+='<div class="team-dot"></div>';
+    html+='<div class="team-name">Ilves P2018</div>';
+    html+='<div class="team-meta">'+cat+'</div>';
+    html+='<div class="match-count">'+ms.length+' ottelua</div>';
+    html+='</div>';
+    html+='<div class="round-group">';
 
     // Group by date
     var days={};var dayOrder=[];
@@ -278,50 +314,54 @@ function rn(){
 
     for(var di=0;di<dayOrder.length;di++){
       var dk=dayOrder[di];var dm=days[dk];
-      var dt=pd(dk);var dayName=dt?DS[dt.getDay()]:'';
+      var dt=pd(dk);var dayAbbr=dt?DS[dt.getDay()]:'';
 
-      html+='<div class="day">';
-      html+='<div class="day-hdr"><span class="d">'+dayName+'</span> '+dk+'</div>';
+      html+='<div class="date-group">';
+      html+='<div class="date-venue-row">';
+      html+='<div class="date-badge">'+dayAbbr+' &nbsp;'+dk+'</div>';
 
-      // Show venue if same for all
+      // Venue
       var venues={};
       for(var k=0;k<dm.length;k++){if(dm[k].v)venues[dm[k].v]=1}
       var vk=Object.keys(venues);
-      if(vk.length===1) html+='<div class="day-venue">📍 '+vk[0]+'</div>';
+      if(vk.length===1) html+='<div class="venue-tag"><span class="pin">📍</span> '+vk[0]+'</div>';
+      html+='</div>';
 
-      html+='<table class="mtbl"><tbody>';
+      // Match table
+      html+='<table class="match-table">';
       for(var k=0;k<dm.length;k++){
         var m=dm[k];
         var hi=ii(m.h);
-        var hc=hi?'ilves':'team';
-        var ac=ii(m.a)?'ilves':'team';
-        var ha=hi?'h':'a';
-        var haL=hi?'KOTI':'VIERAS';
+        var ai=ii(m.a);
+        var rowClass=hi?'home-match':'away-match';
+        var homeHtml=hi?'<span class="ilves">'+m.h+'</span>':m.h;
+        var awayHtml=ai?'<span class="ilves">'+m.a+'</span>':m.a;
         var hs=m.s&&m.s.trim()!==''&&m.s.trim()!=='-';
+        var scoreClass='col-score'+(hs?' played':'');
 
-        html+='<tr>';
-        html+='<td class="time">'+m.t+'</td>';
-        html+='<td class="'+hc+'">'+m.h+'</td>';
-        html+='<td class="sc">'+(hs?m.s:'—')+'</td>';
-        html+='<td class="'+ac+'">'+m.a+'</td>';
-        html+='<td class="ha"><span class="ha-tag '+ha+'">'+haL+'</span></td>';
-        if(vk.length>1) html+='<td style="font-size:11px;color:var(--mute)">📍 '+m.v+'</td>';
+        html+='<tr class="'+rowClass+'">';
+        html+='<td class="col-time">'+m.t+'</td>';
+        html+='<td class="col-home">'+homeHtml+'</td>';
+        html+='<td class="col-vs">—</td>';
+        html+='<td class="col-away">'+awayHtml+'</td>';
+        html+='<td class="'+scoreClass+'">'+(hs?m.s:'—')+'</td>';
         html+='</tr>';
       }
-      html+='</tbody></table></div>';
+      html+='</table>';
+
+      // Show extra venues if multiple
+      if(vk.length>1){
+        for(var vi=0;vi<dm.length;vi++){
+          // venue shown per-match in this case — skip for simplicity
+        }
+      }
+      html+='</div>';
     }
-    html+='</div>';
+
+    html+='</div></div>';
   }
 
   document.getElementById('content').innerHTML=html;
-}
-
-function filt(f,el){
-  F=f;
-  var b=document.querySelectorAll('.tab');
-  for(var i=0;i<b.length;i++)b[i].classList.remove('on');
-  el.classList.add('on');
-  rn();
 }
 </script>
 </body>
