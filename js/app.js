@@ -11,6 +11,9 @@
     {id: '35213617', key: 'ZV5D4CPTYF', name: 'Ilves/Vihre\u00e4 A', div: 'P8 \u00b7 Taso 2', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 2', taso: 2, divIdx: 2}
   ];
 
+  /* store parsed matches per team index for calendar export */
+  var allResults = [];
+
   function esc(s) {
     var d = document.createElement('div');
     d.textContent = s || '';
@@ -76,10 +79,100 @@
     return matches;
   }
 
-  function renderTeamCard(team, matches, taso) {
+  /* ── ICS CALENDAR GENERATION ── */
+
+  function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function parseMatchDate(dateStr, timeStr) {
+    /* dateStr = "1.6.2026", timeStr = "10:00" */
+    var dp = dateStr.split('.');
+    if (dp.length < 3) { return null; }
+    var day = parseInt(dp[0], 10);
+    var mon = parseInt(dp[1], 10);
+    var year = parseInt(dp[2], 10);
+    if (year < 100) { year += 2000; }
+    var hour = 0, min = 0;
+    if (timeStr) {
+      var tp = timeStr.split(':');
+      hour = parseInt(tp[0], 10) || 0;
+      min = parseInt(tp[1], 10) || 0;
+    }
+    return new Date(year, mon - 1, day, hour, min, 0);
+  }
+
+  function toICSDate(dt) {
+    return dt.getFullYear() +
+      pad2(dt.getMonth() + 1) +
+      pad2(dt.getDate()) + 'T' +
+      pad2(dt.getHours()) +
+      pad2(dt.getMinutes()) + '00';
+  }
+
+  function icsEscape(s) {
+    return (s || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+  }
+
+  function generateICS(teamIdx) {
+    var team = TEAMS[teamIdx];
+    var matches = allResults[teamIdx] || [];
+    if (!matches.length) { return; }
+
+    var lines = [];
+    lines.push('BEGIN:VCALENDAR');
+    lines.push('VERSION:2.0');
+    lines.push('PRODID:-//IlvesP2018//Ottelukalenteri//FI');
+    lines.push('CALSCALE:GREGORIAN');
+    lines.push('X-WR-CALNAME:' + icsEscape(team.name));
+
+    for (var i = 0; i < matches.length; i++) {
+      var mx = matches[i];
+      var hasScore = mx.s && mx.s.trim() !== '' && mx.s.trim() !== '-' && mx.s.trim() !== '\u2013' && mx.s.trim().toLowerCase() !== 'ennakko';
+      if (hasScore) { continue; } /* skip played matches */
+
+      var start = parseMatchDate(mx.d, mx.t);
+      if (!start) { continue; }
+      var end = new Date(start.getTime() + 60 * 60 * 1000); /* 1h duration */
+
+      var summary = mx.h + ' \u2013 ' + mx.a;
+      var location = mx.v || '';
+
+      lines.push('BEGIN:VEVENT');
+      lines.push('DTSTART:' + toICSDate(start));
+      lines.push('DTEND:' + toICSDate(end));
+      lines.push('SUMMARY:' + icsEscape(summary));
+      if (location) { lines.push('LOCATION:' + icsEscape(location)); }
+      lines.push('DESCRIPTION:' + icsEscape(team.div + ' \\n' + team.name));
+      lines.push('UID:ilves-p2018-' + team.id + '-' + i + '@ottelukalenteri');
+      lines.push('END:VEVENT');
+    }
+
+    lines.push('END:VCALENDAR');
+
+    var blob = new Blob([lines.join('\r\n')], {type: 'text/calendar;charset=utf-8'});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = team.name.replace(/[\/\\]/g, '-') + '-ottelut.ics';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+  }
+
+  /* ── RENDERING ── */
+
+  function renderTeamCard(team, matches, taso, teamIdx) {
     var t2 = (taso === 2);
     var tName = team.name;
     var html = '';
+
+    /* count upcoming matches */
+    var upcoming = 0;
+    for (var u = 0; u < matches.length; u++) {
+      var sc = matches[u].s;
+      var played = sc && sc.trim() !== '' && sc.trim() !== '-' && sc.trim() !== '\u2013' && sc.trim().toLowerCase() !== 'ennakko';
+      if (!played) { upcoming++; }
+    }
 
     html += '<div class="team-card">';
     html += '<div class="team-header' + (t2 ? ' taso2' : '') + '">';
@@ -90,6 +183,16 @@
     html += '<div class="accordion-arrow">\u25BE</div>';
     html += '</div>';
     html += '<div class="round-group collapsed">';
+
+    /* Calendar export button */
+    if (upcoming > 0) {
+      html += '<div class="cal-export-wrap">';
+      html += '<button class="cal-export-btn" data-team-idx="' + teamIdx + '">';
+      html += '<span class="cal-icon">\uD83D\uDCC5</span>';
+      html += '<span class="cal-text">Vie ' + upcoming + ' ottelua kalenteriin</span>';
+      html += '</button>';
+      html += '</div>';
+    }
 
     var days = [];
     var dayMap = {};
@@ -157,6 +260,7 @@
   }
 
   function renderAll(results) {
+    allResults = results;
     var el = document.getElementById('content');
     var html = '';
     var lastDivIdx = -1;
@@ -174,13 +278,22 @@
         lastDivIdx = team.divIdx;
       }
 
-      html += renderTeamCard(team, matches, team.taso);
+      html += renderTeamCard(team, matches, team.taso, i);
     }
 
     el.innerHTML = html;
 
-    /* Mobile: tap to expand/collapse match row */
+    /* Event delegation */
     el.addEventListener('click', function (e) {
+      /* Calendar export */
+      var calBtn = e.target.closest('.cal-export-btn');
+      if (calBtn) {
+        e.stopPropagation();
+        var idx = parseInt(calBtn.getAttribute('data-team-idx'), 10);
+        generateICS(idx);
+        return;
+      }
+
       /* Accordion: toggle team card */
       var header = e.target.closest('.team-header');
       if (header) {
