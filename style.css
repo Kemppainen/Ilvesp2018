@@ -134,6 +134,16 @@ td.col-away .ilves { font-weight: 700; color: #fff; }
 }
 .col-score.played { color: var(--yellow-light); background: rgba(245,176,0,0.08); border-radius: 4px; }
 
+/* ── FIELD DETAIL (kenttätarkenne, esim. TN 2) ── */
+.field-detail {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #B0CCBA;
+  opacity: 1;
+}
+
 /* ── LOADING ── */
 .loading { text-align: center; padding: 60px 20px; color: var(--text-muted); }
 .loading-icon { font-size: 38px; margin-bottom: 12px; animation: pulse 1.5s ease-in-out infinite; }
@@ -177,5 +187,6 @@ footer a:hover { text-decoration: underline; }
   .col-vs { width: 18px; font-size: 11px; padding: 0 2px; }
   .col-away { font-size: 12px; width: 32%; }
   .col-score { width: 46px; font-size: 13px; padding-right: 6px !important; }
+  .field-detail { margin-left: 5px; font-size: 10px; }
   footer { padding: 18px 16px; font-size: 11px; }
 }
