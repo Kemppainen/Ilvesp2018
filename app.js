@@ -11,7 +11,6 @@
     {id: '35213617', key: 'ZV5D4CPTYF', name: 'Ilves/Vihre\u00e4 A', div: 'P8 \u00b7 Taso 2', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 2', taso: 2, divIdx: 2}
   ];
 
-  /* store parsed matches per team index for calendar export */
   var allResults = [];
 
   function esc(s) {
@@ -84,7 +83,6 @@
   function pad2(n) { return n < 10 ? '0' + n : '' + n; }
 
   function parseMatchDate(dateStr, timeStr) {
-    /* dateStr = "1.6.2026", timeStr = "10:00" */
     var dp = dateStr.split('.');
     if (dp.length < 3) { return null; }
     var day = parseInt(dp[0], 10);
@@ -128,12 +126,10 @@
       var mx = matches[i];
       var start = parseMatchDate(mx.d, mx.t);
       if (!start) { continue; }
-
-      /* skip past matches */
       var now = new Date();
       now.setHours(0, 0, 0, 0);
       if (start < now) { continue; }
-      var end = new Date(start.getTime() + 60 * 60 * 1000); /* 1h duration */
+      var end = new Date(start.getTime() + 60 * 60 * 1000);
 
       var summary = mx.h + ' \u2013 ' + mx.a;
       var location = mx.v || '';
@@ -168,7 +164,6 @@
     var tName = team.name;
     var html = '';
 
-    /* count upcoming matches */
     var upcoming = 0;
     var today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -185,9 +180,10 @@
     html += '<div class="match-count">' + matches.length + ' ottelua</div>';
     html += '<div class="accordion-arrow">\u25BE</div>';
     html += '</div>';
+
     html += '<div class="round-group collapsed">';
 
-    /* Players accordion */
+    /* ── Players accordion ── */
     html += '<div class="players-section">';
     html += '<div class="players-header">';
     html += '<span class="players-icon">\u26BD</span>';
@@ -199,6 +195,7 @@
     html += '</div>';
     html += '</div>';
 
+    /* ── Match days ── */
     var days = [];
     var dayMap = {};
     for (var i = 0; i < matches.length; i++) {
@@ -259,7 +256,7 @@
       html += '</div>';
     }
 
-    /* Calendar export button at bottom */
+    /* ── Calendar export button ── */
     if (upcoming > 0) {
       html += '<div class="cal-export-wrap">';
       html += '<button class="cal-export-btn" data-team-idx="' + teamIdx + '">';
@@ -269,8 +266,8 @@
       html += '</div>';
     }
 
-    html += '</div>';
-    html += '</div>';
+    html += '</div>'; /* close round-group */
+    html += '</div>'; /* close team-card */
     return html;
   }
 
@@ -322,9 +319,7 @@
       var header = e.target.closest('.team-header');
       if (header) {
         var card = header.closest('.team-card');
-        if (card) {
-          card.classList.toggle('open');
-        }
+        if (card) { card.classList.toggle('open'); }
         return;
       }
 
