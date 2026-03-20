@@ -19,10 +19,13 @@
     return d.innerHTML;
   }
 
-  function isIlves(n) { return n && n.toLowerCase().indexOf('ilves') !== -1; }
+  function isOurTeam(n, teamName) {
+    if (!n || !teamName) { return false; }
+    return n.trim().toLowerCase() === teamName.trim().toLowerCase();
+  }
 
-  function tag(n) {
-    if (isIlves(n)) { return '<span class="ilves">' + esc(n) + '</span>'; }
+  function tag(n, teamName) {
+    if (isOurTeam(n, teamName)) { return '<span class="ilves">' + esc(n) + '</span>'; }
     return esc(n);
   }
 
@@ -70,6 +73,7 @@
 
   function renderTeamCard(team, matches, taso) {
     var t2 = (taso === 2);
+    var tName = team.name;
     var html = '';
     html += '<div class="team-card">';
     html += '<div class="team-header' + (t2 ? ' taso2' : '') + '">';
@@ -108,7 +112,7 @@
       html += '<table class="match-table">';
       for (var k2 = 0; k2 < dm.length; k2++) {
         var mx = dm[k2];
-        var hi = isIlves(mx.h);
+        var hi = isOurTeam(mx.h, tName);
         var rowCls = hi ? 'home-match' : 'away-match';
         var timeCls = 'col-time' + (t2 ? ' taso2' : '');
         var hasScore = mx.s && mx.s.trim() !== '' && mx.s.trim() !== '-' && mx.s.trim() !== '\u2013';
@@ -116,9 +120,9 @@
 
         html += '<tr class="' + rowCls + '">';
         html += '<td class="' + timeCls + '">' + esc(mx.t) + '</td>';
-        html += '<td class="col-home">' + tag(mx.h) + '</td>';
+        html += '<td class="col-home">' + tag(mx.h, tName) + '</td>';
         html += '<td class="col-vs">\u2014</td>';
-        html += '<td class="col-away">' + tag(mx.a) + '</td>';
+        html += '<td class="col-away">' + tag(mx.a, tName) + '</td>';
         html += '<td class="' + scoreCls + '">' + (hasScore ? esc(mx.s) : '\u2014') + '</td>';
         if (vk.length > 1) {
           html += '<td style="font-size:11px;color:var(--text-muted)">\uD83D\uDCCD ' + esc(mx.v) + '</td>';
