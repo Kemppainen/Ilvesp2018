@@ -1,0 +1,285 @@
+import { useState, useEffect, useRef } from "react";
+
+const WIDGET_URL = "https://spl.torneopal.fi/torneopal/ajax/[torneopal:team_schedule:team=35213605&key=Z4QDRKWRTR]";
+const DAYS_LONG = ["Sunnuntai","Maanantai","Tiistai","Keskiviikko","Torstai","Perjantai","Lauantai"];
+
+function parseMatchesFromHTML(html) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  const rows = doc.querySelectorAll("tr");
+  const matches = [];
+  for (let i = 1; i < rows.length; i++) {
+    const cells = rows[i].querySelectorAll("td");
+    if (cells.length < 4) continue;
+    const date = cells[0]?.textContent?.trim() || "";
+    const time = cells[1]?.textContent?.trim() || "";
+    const home = cells[2]?.textContent?.trim() || "";
+    const away = cells[3]?.textContent?.trim() || "";
+    const score = cells.length > 4 ? cells[4]?.textContent?.trim() : "";
+    const venue = cells.length > 5 ? cells[5]?.textContent?.trim() : "";
+    const cat = cells.length > 6 ? cells[6]?.textContent?.trim() : "";
+    if (home || away) matches.push({ date, time, home, away, score, venue, cat });
+  }
+  return matches;
+}
+
+function getDemoMatches() {
+  return [
+    { date:"12.4.2026", time:"10:00", home:"Ilves P2018", away:"TamU", score:"", venue:"Kauppi 1 TN", cat:"P8 Kevät" },
+    { date:"19.4.2026", time:"11:00", home:"FC Haka jun.", away:"Ilves P2018", score:"", venue:"Valkeakosken stadion TN", cat:"P8 Kevät" },
+    { date:"26.4.2026", time:"10:00", home:"Ilves P2018", away:"TPV", score:"", venue:"Kauppi 1 TN", cat:"P8 Kevät" },
+    { date:"3.5.2026", time:"12:00", home:"Ilves P2018", away:"Nokian Pyry", score:"", venue:"Kauppi 1 TN", cat:"P8 Kevät" },
+    { date:"10.5.2026", time:"10:00", home:"Kangasalan Kaari", away:"Ilves P2018", score:"", venue:"Kangasalan urheilukenttä TN", cat:"P8 Kevät" },
+    { date:"17.5.2026", time:"11:00", home:"Ilves P2018", away:"KäPa", score:"", venue:"Kauppi 1 TN", cat:"P8 Kevät" },
+    { date:"24.5.2026", time:"10:00", home:"LeKi", away:"Ilves P2018", score:"", venue:"Lempäälän urheilukenttä TN", cat:"P8 Kevät" },
+    { date:"31.5.2026", time:"10:00", home:"Ilves P2018", away:"Ilves/2 P2018", score:"", venue:"Kauppi 1 TN", cat:"P8 Kevät" },
+    { date:"7.6.2026", time:"11:00", home:"TP-49", away:"Ilves P2018", score:"", venue:"Toijalan urheilukenttä", cat:"P8 Kevät" },
+    { date:"14.6.2026", time:"10:00", home:"Ilves P2018", away:"FC Kangasala", score:"", venue:"Kauppi 1 TN", cat:"P8 Kevät" },
+  ];
+}
+
+function parseDateFI(s) {
+  if (!s) return null;
+  const p = s.split(".");
+  if (p.length < 3) return null;
+  return new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
+}
+
+function MatchCard({ m }) {
+  const isHome = m.home.toLowerCase().includes("ilves") && !m.away.toLowerCase().includes("ilves");
+  const isAway = m.away.toLowerCase().includes("ilves") && !m.home.toLowerCase().includes("ilves");
+  const ha = isHome ? "KOTI" : isAway ? "VIERAS" : "KOTI";
+  const haColor = ha === "KOTI" ? "#16a34a" : "#ca8a04";
+  const opponent = isHome ? m.away : isAway ? m.home : m.away;
+  const dt = parseDateFI(m.date);
+  const isPast = dt && dt < new Date();
+  const dayName = dt ? DAYS_LONG[dt.getDay()] : "";
+  const hasScore = m.score && m.score !== "-" && m.score.trim() !== "";
+
+  return (
+    <div style={{
+      background: isPast ? "#fafafa" : "#fff",
+      border: isPast ? "1px solid #e5e7eb" : "1px solid #d1fae5",
+      borderLeft: `4px solid ${haColor}`,
+      borderRadius: 12,
+      padding: "14px 18px",
+      marginBottom: 10,
+      opacity: isPast ? 0.7 : 1,
+      position: "relative",
+      transition: "box-shadow 0.2s",
+    }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+        <span style={{
+          background: haColor, color: "#fff", fontSize: 10, fontWeight: 700,
+          padding: "2px 8px", borderRadius: 4, letterSpacing: 0.8
+        }}>{ha}</span>
+        {m.cat && <span style={{ fontSize: 11, color: "#9ca3af" }}>{m.cat}</span>}
+      </div>
+      <div style={{ fontSize: 17, fontWeight: 700, color: "#14532d", margin: "4px 0" }}>
+        {isHome ? "Ilves" : opponent}
+        <span style={{ color: "#9ca3af", fontWeight: 400, margin: "0 6px" }}>vs</span>
+        {isHome ? opponent : "Ilves"}
+      </div>
+      {hasScore && (
+        <div style={{
+          position: "absolute", top: 14, right: 16,
+          background: "#166534", color: "#fff", fontWeight: 800,
+          fontSize: 16, padding: "5px 14px", borderRadius: 8, letterSpacing: 1
+        }}>{m.score}</div>
+      )}
+      <div style={{ display: "flex", gap: 16, marginTop: 6, flexWrap: "wrap", fontSize: 12, color: "#6b7280" }}>
+        {m.date && <span>{"📅"} {dayName} {m.date}</span>}
+        {m.time && <span>{"⏰"} {m.time}</span>}
+        {m.venue && <span>{"📍"} {m.venue}</span>}
+      </div>
+    </div>
+  );
+}
+
+export default function App() {
+  const [matches, setMatches] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  const [view, setView] = useState("cards");
+  const [filter, setFilter] = useState("all");
+  const tableRef = useRef(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      try {
+        const res = await fetch(WIDGET_URL);
+        const text = await res.text();
+        if (!cancelled) {
+          const parsed = parseMatchesFromHTML(text);
+          if (parsed.length > 0) {
+            setMatches(parsed);
+            if (tableRef.current) tableRef.current.innerHTML = text;
+          } else {
+            setError(true);
+            setMatches(getDemoMatches());
+          }
+        }
+      } catch (e) {
+        if (!cancelled) {
+          setError(true);
+          setMatches(getDemoMatches());
+        }
+      }
+      if (!cancelled) setLoading(false);
+    }
+    load();
+    return () => { cancelled = true; };
+  }, []);
+
+  const now = new Date();
+  const filtered = matches.filter(m => {
+    const dt = parseDateFI(m.date);
+    if (filter === "upcoming") return dt && dt >= now;
+    if (filter === "past") return dt && dt < now;
+    return true;
+  });
+
+  const upcoming = matches.filter(m => { const d = parseDateFI(m.date); return d && d >= now; }).length;
+
+  return (
+    <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", maxWidth: 780, margin: "0 auto", padding: "0 16px" }}>
+      {/* Header */}
+      <div style={{
+        background: "linear-gradient(135deg, #0a3d1a 0%, #14532d 40%, #166534 100%)",
+        borderRadius: 16, padding: "26px 30px", color: "#fff",
+        position: "relative", overflow: "hidden", marginBottom: 20
+      }}>
+        <div style={{ position: "absolute", top: -30, right: -30, width: 140, height: 140, borderRadius: "50%", background: "rgba(255,255,255,0.04)" }} />
+        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 6 }}>
+          <span style={{ fontSize: 30 }}>{"⚽"}</span>
+          <div>
+            <div style={{ fontSize: 23, fontWeight: 900, letterSpacing: -0.5 }}>ILVES P2018</div>
+            <div style={{ fontSize: 13, opacity: 0.75 }}>Ottelukalenteri · Kausi 2025–2026</div>
+          </div>
+        </div>
+        <div style={{ display: "flex", gap: 14, marginTop: 14 }}>
+          <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: 8, padding: "6px 14px", textAlign: "center" }}>
+            <div style={{ fontSize: 20, fontWeight: 800 }}>{matches.length}</div>
+            <div style={{ fontSize: 10, opacity: 0.8 }}>OTTELUA</div>
+          </div>
+          <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: 8, padding: "6px 14px", textAlign: "center" }}>
+            <div style={{ fontSize: 20, fontWeight: 800 }}>{upcoming}</div>
+            <div style={{ fontSize: 10, opacity: 0.8 }}>TULOSSA</div>
+          </div>
+          <div style={{ background: "rgba(255,255,255,0.1)", borderRadius: 8, padding: "6px 14px", display: "flex", alignItems: "center", fontSize: 12 }}>
+            {"📍"} Tampere
+          </div>
+        </div>
+      </div>
+
+      {/* Warning */}
+      {error && (
+        <div style={{
+          background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 10,
+          padding: "12px 16px", marginBottom: 16, fontSize: 13, color: "#92400e",
+          display: "flex", alignItems: "flex-start", gap: 10
+        }}>
+          <span style={{ fontSize: 18, flexShrink: 0 }}>{"⚠️"}</span>
+          <div>
+            <strong>Palloliiton rajapintaan ei saatu yhteyttä</strong> (CORS-rajoitus).
+            Alla näytetään esimerkkiotteluita. Upottamalla tämän kalenterin omalle verkkosivulle widget latautuu normaalisti.
+          </div>
+        </div>
+      )}
+
+      {/* Controls */}
+      <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", background: "#f3f4f6", borderRadius: 8, overflow: "hidden" }}>
+          {[["cards", "🃏 Kortit"], ["table", "📋 Taulukko"]].map(([v, label]) => (
+            <button key={v} onClick={() => setView(v)} style={{
+              padding: "8px 16px", border: "none", cursor: "pointer", fontSize: 13,
+              fontWeight: 600, fontFamily: "inherit",
+              background: view === v ? "#166534" : "transparent",
+              color: view === v ? "#fff" : "#4b5563"
+            }}>{label}</button>
+          ))}
+        </div>
+        <div style={{ display: "flex", background: "#f3f4f6", borderRadius: 8, overflow: "hidden" }}>
+          {[["all", "Kaikki"], ["upcoming", "Tulevat"], ["past", "Menneet"]].map(([f, label]) => (
+            <button key={f} onClick={() => setFilter(f)} style={{
+              padding: "8px 14px", border: "none", cursor: "pointer", fontSize: 13,
+              fontWeight: 600, fontFamily: "inherit",
+              background: filter === f ? "#166534" : "transparent",
+              color: filter === f ? "#fff" : "#4b5563"
+            }}>{label}</button>
+          ))}
+        </div>
+      </div>
+
+      {/* Loading */}
+      {loading && (
+        <div style={{ textAlign: "center", padding: 50, color: "#6b7280" }}>
+          <div style={{ fontSize: 32, marginBottom: 10 }}>{"⚽"}</div>
+          <div>Haetaan ottelutietoja Palloliiton tulospalvelusta...</div>
+        </div>
+      )}
+
+      {/* Cards view */}
+      {!loading && view === "cards" && (
+        <div>
+          {filtered.length === 0 ? (
+            <div style={{ textAlign: "center", padding: 40, color: "#9ca3af" }}>
+              Ei otteluita valitulla suodattimella.
+            </div>
+          ) : filtered.map((m, i) => <MatchCard key={i} m={m} />)}
+        </div>
+      )}
+
+      {/* Table view */}
+      {!loading && view === "table" && (
+        <div style={{
+          background: "#fff", borderRadius: 12, border: "1px solid #e5e7eb",
+          overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.04)"
+        }}>
+          {error ? (
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
+              <thead>
+                <tr>
+                  {["Pvm", "Aika", "Koti", "Vieras", "Tulos", "Kenttä", "Sarja"].map(h => (
+                    <th key={h} style={{
+                      background: "#14532d", color: "#fff", padding: "11px 14px",
+                      fontWeight: 700, fontSize: 11, textTransform: "uppercase",
+                      letterSpacing: 0.8, textAlign: "left", border: "none"
+                    }}>{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.map((m, i) => {
+                  const isHome = m.home.toLowerCase().includes("ilves");
+                  return (
+                    <tr key={i} style={{ borderBottom: "1px solid #f3f4f6" }}>
+                      <td style={{ padding: "10px 14px", fontSize: 13 }}>{m.date}</td>
+                      <td style={{ padding: "10px 14px", fontSize: 13 }}>{m.time}</td>
+                      <td style={{ padding: "10px 14px", fontSize: 13, fontWeight: isHome ? 700 : 400, color: isHome ? "#14532d" : "#374151" }}>{m.home}</td>
+                      <td style={{ padding: "10px 14px", fontSize: 13, fontWeight: !isHome ? 700 : 400, color: !isHome ? "#14532d" : "#374151" }}>{m.away}</td>
+                      <td style={{ padding: "10px 14px", fontSize: 13, fontWeight: 700 }}>{m.score || "-"}</td>
+                      <td style={{ padding: "10px 14px", fontSize: 12, color: "#6b7280" }}>{m.venue}</td>
+                      <td style={{ padding: "10px 14px", fontSize: 12, color: "#9ca3af" }}>{m.cat}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          ) : (
+            <div ref={tableRef} />
+          )}
+        </div>
+      )}
+
+      {/* Footer */}
+      <div style={{
+        textAlign: "center", padding: "16px 0", marginTop: 20,
+        borderTop: "1px solid #e5e7eb", fontSize: 11, color: "#9ca3af"
+      }}>
+        Tiedot: Suomen Palloliitto / Tulospalvelu · Ilves ry · P2018
+      </div>
+    </div>
+  );
+}
