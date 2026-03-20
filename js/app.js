@@ -133,7 +133,7 @@
         hasScore = mx.s && mx.s.trim() !== '' && mx.s.trim() !== '-' && mx.s.trim() !== '\u2013' && mx.s.trim().toLowerCase() !== 'ennakko';
         scoreCls = 'col-score' + (hasScore ? ' played' : '');
         vSplit = splitVenue(mx.v);
-        detailHtml = vSplit.detail ? ' <span style="font-size:10px;color:var(--text-muted);font-weight:400;opacity:0.7">' + esc(vSplit.detail) + '</span>' : '';
+        detailHtml = vSplit.detail ? '<span class="field-detail">' + esc(vSplit.detail) + '</span>' : '';
 
         html += '<tr class="' + rowCls + '">';
         html += '<td class="' + timeCls + '">' + esc(mx.t) + detailHtml + '</td>';
