@@ -1,16 +1,14 @@
 (function () {
   'use strict';
 
-  var KEY = 'Z4QDRKWRTR';
-
   var TEAMS = [
-    {id: '35213605', name: 'Ilves/P2018/A', div: 'P9 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 0},
-    {id: '35213607', name: 'Ilves/P2018/B', div: 'P9 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 0},
-    {id: '35213608', name: 'Ilves/Keltainen A', div: 'P8 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 1},
-    {id: '35213611', name: 'Ilves/Keltainen B', div: 'P8 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 1},
-    {id: '35213613', name: 'Ilves/Keltavihre\u00e4 A', div: 'P8 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 1},
-    {id: '35213615', name: 'Ilves/Keltavihre\u00e4 B', div: 'P8 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 1},
-    {id: '35213617', name: 'Ilves/Vihre\u00e4 A', div: 'P8 \u00b7 Taso 2', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 2', taso: 2, divIdx: 2}
+    {id: '35213605', key: 'Z4QDRKWRTR', name: 'Ilves/P2018/A', div: 'P9 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 0},
+    {id: '35213607', key: 'R8C3ZUZPBX', name: 'Ilves/P2018/B', div: 'P9 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 0},
+    {id: '35213608', key: '2CNSGFS7V5', name: 'Ilves/Keltainen A', div: 'P8 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 1},
+    {id: '35213611', key: 'K9N7PPBTBF', name: 'Ilves/Keltainen B', div: 'P8 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 1},
+    {id: '35213613', key: 'NKW75YPCGN', name: 'Ilves/Keltavihre\u00e4 A', div: 'P8 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 1},
+    {id: '35213615', key: 'SGTRRP6YUB', name: 'Ilves/Keltavihre\u00e4 B', div: 'P8 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 1},
+    {id: '35213617', key: 'ZV5D4CPTYF', name: 'Ilves/Vihre\u00e4 A', div: 'P8 \u00b7 Taso 2', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 2', taso: 2, divIdx: 2}
   ];
 
   function esc(s) {
@@ -36,9 +34,9 @@
     return {arena: v, detail: ''};
   }
 
-  function fetchWidget(teamId) {
-    var url = 'https://spl.torneopal.fi/torneopal/ajax/[torneopal:team_schedule:team=' + teamId + String.fromCharCode(38) + 'key=' + KEY + ']';
-    return fetch(url)
+  function fetchWidget(teamId, teamKey) {
+    var url = 'https://spl.torneopal.fi/torneopal/ajax/[torneopal:team_schedule:team=' + teamId + String.fromCharCode(38) + 'key=' + teamKey + ']';
+    return fetch(url, {cache: 'no-store'})
       .then(function (r) { return r.text(); })
       .then(function (txt) {
         var m = txt.match(/innerHTML\s*=\s*"([\s\S]*?)";/);
@@ -190,7 +188,7 @@
   function load() {
     var promises = [];
     for (var i = 0; i < TEAMS.length; i++) {
-      promises.push(fetchWidget(TEAMS[i].id));
+      promises.push(fetchWidget(TEAMS[i].id, TEAMS[i].key));
     }
 
     Promise.all(promises)
