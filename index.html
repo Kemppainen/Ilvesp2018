@@ -7,124 +7,186 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg-dark: #0a0a0a;
+      --bg-card: #141414;
+      --bg-card-hover: #1a1a1a;
+      --border: #222;
+      --border-light: #2a2a2a;
+      --green: #1db954;
+      --green-dim: #168a3f;
+      --green-glow: rgba(29,185,84,0.15);
+      --yellow: #e5b800;
+      --yellow-dim: rgba(229,184,0,0.15);
+      --text: #ffffff;
+      --text-dim: #8a8a8a;
+      --text-muted: #555;
+    }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: #f5f7f5; color: #1a1a1a; min-height: 100vh;
+      background: var(--bg-dark); color: var(--text); min-height: 100vh;
       -webkit-font-smoothing: antialiased;
     }
-    .container { max-width: 800px; margin: 0 auto; padding: 20px 16px; }
-    .header {
-      background: linear-gradient(135deg, #0a3d1a 0%, #14532d 40%, #166534 100%);
-      border-radius: 18px; padding: 30px 34px; color: #fff;
-      position: relative; overflow: hidden; margin-bottom: 22px;
-      box-shadow: 0 4px 24px rgba(10,61,26,0.25);
+    .container { max-width: 860px; margin: 0 auto; padding: 24px 16px; }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative; overflow: hidden;
+      background: linear-gradient(160deg, #0d1f0d 0%, #0a0a0a 50%, #111 100%);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 40px 32px;
+      margin-bottom: 28px;
     }
-    .header::before {
-      content: ''; position: absolute; top: -50px; right: -50px;
-      width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,0.04);
+    .hero::before {
+      content: ''; position: absolute; top: -80px; right: -60px;
+      width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(29,185,84,0.08) 0%, transparent 70%);
     }
-    .header::after {
-      content: ''; position: absolute; bottom: -30px; right: 80px;
-      width: 100px; height: 100px; border-radius: 50%; background: rgba(255,255,255,0.03);
+    .hero::after {
+      content: ''; position: absolute; bottom: -40px; left: 30%;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(29,185,84,0.04) 0%, transparent 70%);
     }
-    .header-row { display: flex; align-items: center; gap: 16px; }
-    .header-icon { font-size: 36px; }
-    .header-title { font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
-    .header-sub { font-size: 14px; opacity: 0.75; margin-top: 2px; }
-    .header-badges { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
-    .badge {
-      background: rgba(255,255,255,0.14); border-radius: 8px;
-      padding: 7px 16px; text-align: center; backdrop-filter: blur(4px);
+    .hero-top { display: flex; align-items: center; gap: 18px; position: relative; z-index: 1; }
+    .hero-logo {
+      width: 64px; height: 64px; border-radius: 14px;
+      background: var(--green); display: flex; align-items: center; justify-content: center;
+      font-size: 32px; box-shadow: 0 0 30px rgba(29,185,84,0.2);
     }
-    .badge-num { font-size: 22px; font-weight: 800; line-height: 1.2; }
-    .badge-label { font-size: 10px; opacity: 0.7; letter-spacing: 0.8px; }
-    .controls { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
-    .btn-group { display: flex; background: #e8ece8; border-radius: 9px; overflow: hidden; }
+    .hero-title { font-size: 28px; font-weight: 900; letter-spacing: -1px; line-height: 1.1; }
+    .hero-title span { color: var(--green); }
+    .hero-sub { font-size: 14px; color: var(--text-dim); margin-top: 4px; font-weight: 500; }
+    .hero-stats {
+      display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; position: relative; z-index: 1;
+    }
+    .stat {
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 12px; padding: 10px 20px; text-align: center;
+      backdrop-filter: blur(8px);
+    }
+    .stat-num { font-size: 26px; font-weight: 900; color: var(--green); line-height: 1.1; }
+    .stat-label { font-size: 10px; color: var(--text-dim); letter-spacing: 1.2px; font-weight: 600; margin-top: 2px; }
+    .stat-loc {
+      display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--text-dim);
+      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: 12px; padding: 10px 18px;
+    }
+
+    /* ── Controls ── */
+    .controls { display: flex; gap: 10px; margin-bottom: 24px; flex-wrap: wrap; }
+    .btn-group {
+      display: flex; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 10px; overflow: hidden;
+    }
     .btn {
-      padding: 9px 18px; border: none; cursor: pointer; font-size: 13px;
-      font-weight: 600; font-family: inherit; background: transparent; color: #4b5563;
-      transition: all 0.15s;
+      padding: 10px 20px; border: none; cursor: pointer; font-size: 13px;
+      font-weight: 600; font-family: inherit; background: transparent;
+      color: var(--text-dim); transition: all 0.2s; border-right: 1px solid var(--border);
     }
-    .btn:hover { background: #d1d5db; }
-    .btn.active { background: #166534; color: #fff; }
-    .loading { text-align: center; padding: 60px 20px; color: #6b7280; }
-    .loading-icon { font-size: 38px; margin-bottom: 12px; animation: bounce 1s infinite; }
-    @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+    .btn:last-child { border-right: none; }
+    .btn:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .btn.active { background: var(--green); color: #000; font-weight: 700; }
+
+    /* ── Loading ── */
+    .loading { text-align: center; padding: 80px 20px; color: var(--text-dim); }
+    .loading-icon { font-size: 42px; margin-bottom: 16px; animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.95)} }
+
+    /* ── Match Cards ── */
     .match-card {
-      background: #fff; border: 1px solid #e2e8e2; border-radius: 14px;
-      padding: 16px 20px; margin-bottom: 10px; position: relative; transition: all 0.2s;
+      background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px 22px; margin-bottom: 10px;
+      position: relative; transition: all 0.25s; cursor: default;
     }
-    .match-card:hover { border-color: #a7f3d0; box-shadow: 0 3px 16px rgba(22,163,74,0.08); }
-    .match-card.home { border-left: 5px solid #16a34a; }
-    .match-card.away { border-left: 5px solid #ca8a04; }
-    .match-card.past { opacity: 0.6; }
+    .match-card:hover { background: var(--bg-card-hover); border-color: var(--border-light); transform: translateY(-1px); }
+    .match-card.home { border-left: 4px solid var(--green); }
+    .match-card.away { border-left: 4px solid var(--yellow); }
+    .match-card.past { opacity: 0.45; }
+    .match-card.past:hover { opacity: 0.65; }
+    .match-row-top { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
     .match-tag {
-      display: inline-block; font-size: 10px; font-weight: 700;
-      padding: 2px 9px; border-radius: 5px; letter-spacing: 0.8px;
-      color: #fff; margin-right: 8px;
+      font-size: 10px; font-weight: 800; padding: 3px 10px; border-radius: 5px;
+      letter-spacing: 1px; text-transform: uppercase;
     }
-    .match-tag.home { background: #16a34a; }
-    .match-tag.away { background: #ca8a04; }
-    .match-cat { font-size: 11px; color: #9ca3af; }
-    .match-teams { font-size: 17px; font-weight: 700; color: #14532d; margin: 5px 0; }
-    .match-teams .vs { color: #a3a3a3; font-weight: 400; margin: 0 5px; }
+    .match-tag.home { background: var(--green); color: #000; }
+    .match-tag.away { background: var(--yellow); color: #000; }
+    .match-cat { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+    .match-teams { font-size: 18px; font-weight: 800; color: var(--text); margin: 4px 0; letter-spacing: -0.3px; }
+    .match-teams .ilves { color: var(--green); }
+    .match-teams .vs { color: var(--text-muted); font-weight: 400; margin: 0 6px; font-size: 14px; }
     .match-score {
-      position: absolute; top: 15px; right: 18px;
-      background: #166534; color: #fff; font-weight: 800; font-size: 17px;
-      padding: 5px 16px; border-radius: 9px; letter-spacing: 1px;
+      position: absolute; top: 18px; right: 22px;
+      background: var(--green); color: #000; font-weight: 900; font-size: 18px;
+      padding: 6px 18px; border-radius: 10px; letter-spacing: 1.5px;
+      box-shadow: 0 0 20px rgba(29,185,84,0.2);
     }
-    .match-meta { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 7px; font-size: 12px; color: #6b7280; }
+    .match-meta { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 8px; font-size: 12px; color: var(--text-dim); }
     .match-meta span { display: flex; align-items: center; gap: 5px; }
+
+    /* ── Table ── */
     .table-wrap {
-      background: #fff; border-radius: 14px; border: 1px solid #e2e8e2;
-      overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+      background: var(--bg-card); border-radius: 14px; border: 1px solid var(--border);
+      overflow: hidden;
     }
     .table-wrap table { width: 100%; border-collapse: collapse; }
     .table-wrap th {
-      background: #14532d; color: #fff; padding: 12px 16px; font-weight: 700;
-      font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; text-align: left;
+      background: #111; color: var(--green); padding: 14px 18px; font-weight: 700;
+      font-size: 10px; text-transform: uppercase; letter-spacing: 1.2px; text-align: left;
+      border-bottom: 1px solid var(--border);
     }
     .table-wrap td {
-      padding: 11px 16px; border-bottom: 1px solid #f3f4f6; font-size: 13px; color: #374151;
+      padding: 12px 18px; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--text-dim);
     }
     .table-wrap tr:last-child td { border-bottom: none; }
-    .table-wrap tr:hover td { background: #f0fdf4; }
-    .table-wrap .bold { font-weight: 700; color: #14532d; }
+    .table-wrap tr:hover td { background: rgba(29,185,84,0.04); }
+    .table-wrap .bold { font-weight: 700; color: var(--green); }
+    .table-wrap .score-cell { font-weight: 800; color: var(--text); text-align: center; }
+
+    /* ── Footer ── */
     .footer {
-      text-align: center; padding: 20px 0; margin-top: 24px;
-      border-top: 1px solid #e5e7eb; font-size: 11px; color: #9ca3af;
+      text-align: center; padding: 24px 0; margin-top: 32px;
+      border-top: 1px solid var(--border); font-size: 11px; color: var(--text-muted);
     }
-    .footer a { color: #166534; text-decoration: none; }
+    .footer a { color: var(--green); text-decoration: none; }
     .footer a:hover { text-decoration: underline; }
+    .footer-brand { font-weight: 700; letter-spacing: 0.5px; margin-bottom: 4px; color: var(--text-dim); }
+
     .hidden { display: none !important; }
+
     @media (max-width: 600px) {
-      .header { padding: 22px 20px; }
-      .header-title { font-size: 21px; }
+      .hero { padding: 24px 20px 22px; }
+      .hero-title { font-size: 22px; }
+      .hero-logo { width: 50px; height: 50px; font-size: 26px; }
       .match-teams { font-size: 15px; }
-      .match-score { font-size: 14px; padding: 4px 12px; }
+      .match-score { font-size: 14px; padding: 4px 12px; top: 16px; right: 16px; }
+      .match-card { padding: 14px 16px; }
       .table-wrap { overflow-x: auto; }
+      .stat-num { font-size: 22px; }
     }
   </style>
 </head>
 <body>
 
 <div class="container">
-  <div class="header">
-    <div class="header-row">
-      <span class="header-icon">⚽</span>
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-top">
+      <div class="hero-logo">⚽</div>
       <div>
-        <div class="header-title">ILVES P2018</div>
-        <div class="header-sub">Ottelukalenteri · Kausi 2025–2026</div>
+        <div class="hero-title">ILVES <span>P2018</span></div>
+        <div class="hero-sub">Ottelukalenteri · Kausi 2025–2026</div>
       </div>
     </div>
-    <div class="header-badges">
-      <div class="badge"><div class="badge-num" id="matchCount">-</div><div class="badge-label">OTTELUA</div></div>
-      <div class="badge"><div class="badge-num" id="upcomingCount">-</div><div class="badge-label">TULOSSA</div></div>
-      <div class="badge" style="display:flex;align-items:center;font-size:13px">📍 Tampere</div>
+    <div class="hero-stats">
+      <div class="stat"><div class="stat-num" id="matchCount">-</div><div class="stat-label">OTTELUA</div></div>
+      <div class="stat"><div class="stat-num" id="upcomingCount">-</div><div class="stat-label">TULOSSA</div></div>
+      <div class="stat-loc">📍 Tampere</div>
     </div>
   </div>
 
+  <!-- Controls -->
   <div class="controls">
     <div class="btn-group">
       <button class="btn active" data-view="cards" onclick="switchView('cards',this)">🃏 Kortit</button>
@@ -137,6 +199,7 @@
     </div>
   </div>
 
+  <!-- Loading -->
   <div id="loading" class="loading">
     <div class="loading-icon">⚽</div>
     <div>Haetaan ottelutietoja Palloliiton tulospalvelusta...</div>
@@ -146,8 +209,10 @@
   <div id="tableView" class="hidden"></div>
   <div id="widgetRaw" style="display:none"></div>
 
+  <!-- Footer -->
   <div class="footer">
-    Tiedot: <a href="https://tulospalvelu.palloliitto.fi" target="_blank" rel="noopener">Suomen Palloliitto / Tulospalvelu</a> · Ilves ry · P2018
+    <div class="footer-brand">ILVES P2018</div>
+    Tiedot: <a href="https://tulospalvelu.palloliitto.fi" target="_blank" rel="noopener">Suomen Palloliitto / Tulospalvelu</a> · <a href="https://www.ilvesfootball.com" target="_blank" rel="noopener">ilvesfootball.com</a>
   </div>
 </div>
 
@@ -174,13 +239,9 @@ function processWidget() {
   processed = true;
   document.write = originalWrite;
   var raw = widgetChunks.join('');
-  if (raw) {
-    document.getElementById('widgetRaw').innerHTML = raw;
-  }
+  if (raw) { document.getElementById('widgetRaw').innerHTML = raw; }
   var table = document.querySelector('#widgetRaw table');
-  if (table) {
-    allMatches = parseTable(table);
-  }
+  if (table) { allMatches = parseTable(table); }
   document.getElementById('loading').classList.add('hidden');
   updateCounts();
   render();
@@ -255,7 +316,7 @@ function render() {
 
 function renderCards(list) {
   if (!list.length) {
-    document.getElementById('cardsView').innerHTML = '<div style="text-align:center;padding:40px;color:#9ca3af">Ei otteluita valitulla suodattimella.</div>';
+    document.getElementById('cardsView').innerHTML = '<div style="text-align:center;padding:60px;color:#555">Ei otteluita valitulla suodattimella.</div>';
     return;
   }
   var now = new Date(); now.setHours(0,0,0,0);
@@ -271,11 +332,15 @@ function renderCards(list) {
     var day = dt ? DAYS[dt.getDay()] : '';
     var hasScore = m.score && m.score.trim() !== '' && m.score.trim() !== '-';
     html += '<div class="match-card ' + ha + (isPast ? ' past' : '') + '">';
-    html += '<div><span class="match-tag ' + ha + '">' + haLabel + '</span>';
+    html += '<div class="match-row-top"><span class="match-tag ' + ha + '">' + haLabel + '</span>';
     if (m.cat) html += '<span class="match-cat">' + m.cat + '</span>';
     html += '</div>';
     html += '<div class="match-teams">';
-    html += (homeIsIlves ? 'Ilves' : opp) + '<span class="vs">vs</span>' + (homeIsIlves ? opp : 'Ilves');
+    if (homeIsIlves) {
+      html += '<span class="ilves">Ilves</span><span class="vs">vs</span>' + opp;
+    } else {
+      html += opp + '<span class="vs">vs</span><span class="ilves">Ilves</span>';
+    }
     html += '</div>';
     if (hasScore) html += '<div class="match-score">' + m.score + '</div>';
     html += '<div class="match-meta">';
@@ -289,11 +354,11 @@ function renderCards(list) {
 
 function renderTable(list) {
   if (!list.length) {
-    document.getElementById('tableView').innerHTML = '<div style="text-align:center;padding:40px;color:#9ca3af">Ei otteluita.</div>';
+    document.getElementById('tableView').innerHTML = '<div style="text-align:center;padding:60px;color:#555">Ei otteluita.</div>';
     return;
   }
   var html = '<div class="table-wrap"><table><thead><tr>';
-  var headers = ['Pvm','Aika','Koti','Tulos','Vieras','Kenttä','Sarja'];
+  var headers = ['PVM','AIKA','KOTI','TULOS','VIERAS','KENTTÄ','SARJA'];
   for (var h = 0; h < headers.length; h++) html += '<th>' + headers[h] + '</th>';
   html += '</tr></thead><tbody>';
   for (var i = 0; i < list.length; i++) {
@@ -304,10 +369,10 @@ function renderTable(list) {
     html += '<td>' + (m.date || '') + '</td>';
     html += '<td>' + (m.time || '') + '</td>';
     html += '<td' + hb + '>' + (m.home || '') + '</td>';
-    html += '<td style="font-weight:700">' + (m.score || '-') + '</td>';
+    html += '<td class="score-cell">' + (m.score || '-') + '</td>';
     html += '<td' + ab + '>' + (m.away || '') + '</td>';
-    html += '<td style="color:#6b7280;font-size:12px">' + (m.venue || '') + '</td>';
-    html += '<td style="color:#9ca3af;font-size:12px">' + (m.cat || '') + '</td>';
+    html += '<td style="font-size:12px">' + (m.venue || '') + '</td>';
+    html += '<td style="color:#555;font-size:12px">' + (m.cat || '') + '</td>';
     html += '</tr>';
   }
   html += '</tbody></table></div>';
