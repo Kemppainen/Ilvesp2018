@@ -1,285 +1,323 @@
-import { useState, useEffect, useRef } from "react";
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f5f7f5; color: #1a1a1a; min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 800px; margin: 0 auto; padding: 20px 16px; }
+  .header {
+    background: linear-gradient(135deg, #0a3d1a 0%, #14532d 40%, #166534 100%);
+    border-radius: 18px; padding: 30px 34px; color: #fff;
+    position: relative; overflow: hidden; margin-bottom: 22px;
+    box-shadow: 0 4px 24px rgba(10,61,26,0.25);
+  }
+  .header::before {
+    content: ''; position: absolute; top: -50px; right: -50px;
+    width: 180px; height: 180px; border-radius: 50%; background: rgba(255,255,255,0.04);
+  }
+  .header::after {
+    content: ''; position: absolute; bottom: -30px; right: 80px;
+    width: 100px; height: 100px; border-radius: 50%; background: rgba(255,255,255,0.03);
+  }
+  .header-row { display: flex; align-items: center; gap: 16px; }
+  .header-icon { font-size: 36px; }
+  .header-title { font-size: 26px; font-weight: 900; letter-spacing: -0.5px; }
+  .header-sub { font-size: 14px; opacity: 0.75; margin-top: 2px; }
+  .header-badges { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+  .badge {
+    background: rgba(255,255,255,0.14); border-radius: 8px;
+    padding: 7px 16px; text-align: center; backdrop-filter: blur(4px);
+  }
+  .badge-num { font-size: 22px; font-weight: 800; line-height: 1.2; }
+  .badge-label { font-size: 10px; opacity: 0.7; letter-spacing: 0.8px; }
+  .controls { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+  .btn-group { display: flex; background: #e8ece8; border-radius: 9px; overflow: hidden; }
+  .btn {
+    padding: 9px 18px; border: none; cursor: pointer; font-size: 13px;
+    font-weight: 600; font-family: inherit; background: transparent; color: #4b5563;
+    transition: all 0.15s;
+  }
+  .btn:hover { background: #d1d5db; }
+  .btn.active { background: #166534; color: #fff; }
+  .loading { text-align: center; padding: 60px 20px; color: #6b7280; }
+  .loading-icon { font-size: 38px; margin-bottom: 12px; animation: bounce 1s infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .match-card {
+    background: #fff; border: 1px solid #e2e8e2; border-radius: 14px;
+    padding: 16px 20px; margin-bottom: 10px; position: relative; transition: all 0.2s;
+  }
+  .match-card:hover { border-color: #a7f3d0; box-shadow: 0 3px 16px rgba(22,163,74,0.08); }
+  .match-card.home { border-left: 5px solid #16a34a; }
+  .match-card.away { border-left: 5px solid #ca8a04; }
+  .match-card.past { opacity: 0.6; }
+  .match-tag {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 2px 9px; border-radius: 5px; letter-spacing: 0.8px;
+    color: #fff; margin-right: 8px;
+  }
+  .match-tag.home { background: #16a34a; }
+  .match-tag.away { background: #ca8a04; }
+  .match-cat { font-size: 11px; color: #9ca3af; }
+  .match-teams { font-size: 17px; font-weight: 700; color: #14532d; margin: 5px 0; }
+  .match-teams .vs { color: #a3a3a3; font-weight: 400; margin: 0 5px; }
+  .match-score {
+    position: absolute; top: 15px; right: 18px;
+    background: #166534; color: #fff; font-weight: 800; font-size: 17px;
+    padding: 5px 16px; border-radius: 9px; letter-spacing: 1px;
+  }
+  .match-meta { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 7px; font-size: 12px; color: #6b7280; }
+  .match-meta span { display: flex; align-items: center; gap: 5px; }
+  .table-wrap {
+    background: #fff; border-radius: 14px; border: 1px solid #e2e8e2;
+    overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  }
+  .table-wrap table { width: 100%; border-collapse: collapse; }
+  .table-wrap th {
+    background: #14532d; color: #fff; padding: 12px 16px; font-weight: 700;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px; text-align: left;
+  }
+  .table-wrap td {
+    padding: 11px 16px; border-bottom: 1px solid #f3f4f6; font-size: 13px; color: #374151;
+  }
+  .table-wrap tr:last-child td { border-bottom: none; }
+  .table-wrap tr:hover td { background: #f0fdf4; }
+  .table-wrap .bold { font-weight: 700; color: #14532d; }
+  .footer {
+    text-align: center; padding: 20px 0; margin-top: 24px;
+    border-top: 1px solid #e5e7eb; font-size: 11px; color: #9ca3af;
+  }
+  .footer a { color: #166534; text-decoration: none; }
+  .footer a:hover { text-decoration: underline; }
+  .hidden { display: none !important; }
+  @media (max-width: 600px) {
+    .header { padding: 22px 20px; }
+    .header-title { font-size: 21px; }
+    .match-teams { font-size: 15px; }
+    .match-score { font-size: 14px; padding: 4px 12px; }
+    .table-wrap { overflow-x: auto; }
+  }
+</style>
 
-const WIDGET_URL = "https://spl.torneopal.fi/torneopal/ajax/[torneopal:team_schedule:team=35213605&key=Z4QDRKWRTR]";
-const DAYS_LONG = ["Sunnuntai","Maanantai","Tiistai","Keskiviikko","Torstai","Perjantai","Lauantai"];
+<div class="container">
+  <div class="header">
+    <div class="header-row">
+      <span class="header-icon">⚽</span>
+      <div>
+        <div class="header-title">ILVES P2018</div>
+        <div class="header-sub">Ottelukalenteri · Kausi 2025–2026</div>
+      </div>
+    </div>
+    <div class="header-badges">
+      <div class="badge"><div class="badge-num" id="matchCount">-</div><div class="badge-label">OTTELUA</div></div>
+      <div class="badge"><div class="badge-num" id="upcomingCount">-</div><div class="badge-label">TULOSSA</div></div>
+      <div class="badge" style="display:flex;align-items:center;font-size:13px">📍 Tampere</div>
+    </div>
+  </div>
 
-function parseMatchesFromHTML(html) {
-  const parser = new DOMParser();
-  const doc = parser.parseFromString(html, "text/html");
-  const rows = doc.querySelectorAll("tr");
-  const matches = [];
-  for (let i = 1; i < rows.length; i++) {
-    const cells = rows[i].querySelectorAll("td");
+  <div class="controls">
+    <div class="btn-group">
+      <button class="btn active" data-view="cards" onclick="switchView('cards',this)">🃏 Kortit</button>
+      <button class="btn" data-view="table" onclick="switchView('table',this)">📋 Taulukko</button>
+    </div>
+    <div class="btn-group">
+      <button class="btn active" data-filter="all" onclick="applyFilter('all',this)">Kaikki</button>
+      <button class="btn" data-filter="upcoming" onclick="applyFilter('upcoming',this)">Tulevat</button>
+      <button class="btn" data-filter="past" onclick="applyFilter('past',this)">Menneet</button>
+    </div>
+  </div>
+
+  <div id="loading" class="loading">
+    <div class="loading-icon">⚽</div>
+    <div>Haetaan ottelutietoja Palloliiton tulospalvelusta...</div>
+  </div>
+
+  <div id="cardsView"></div>
+  <div id="tableView" class="hidden"></div>
+  <div id="widgetRaw" style="display:none"></div>
+
+  <div class="footer">
+    Tiedot: <a href="https://tulospalvelu.palloliitto.fi" target="_blank" rel="noopener">Suomen Palloliitto / Tulospalvelu</a> · Ilves ry · P2018
+  </div>
+</div>
+
+<script>
+var allMatches = [];
+var currentView = 'cards';
+var currentFilter = 'all';
+var DAYS = ['Sunnuntai','Maanantai','Tiistai','Keskiviikko','Torstai','Perjantai','Lauantai'];
+
+var widgetChunks = [];
+var originalWrite = document.write.bind(document);
+document.write = function(html) { widgetChunks.push(html); };
+
+var s = document.createElement('script');
+s.src = "https://spl.torneopal.fi/torneopal/ajax/[torneopal:team_schedule:team=35213605&key=Z4QDRKWRTR]";
+s.onload = function() { setTimeout(processWidget, 300); };
+s.onerror = function() { setTimeout(processWidget, 300); };
+document.getElementById('widgetRaw').appendChild(s);
+setTimeout(processWidget, 6000);
+
+var processed = false;
+function processWidget() {
+  if (processed) return;
+  processed = true;
+  document.write = originalWrite;
+  var raw = widgetChunks.join('');
+  if (raw) {
+    document.getElementById('widgetRaw').innerHTML = raw;
+  }
+  var table = document.querySelector('#widgetRaw table');
+  if (table) {
+    allMatches = parseTable(table);
+  }
+  document.getElementById('loading').classList.add('hidden');
+  updateCounts();
+  render();
+}
+
+function parseTable(table) {
+  var matches = [];
+  var rows = table.querySelectorAll('tr');
+  for (var i = 1; i < rows.length; i++) {
+    var cells = rows[i].querySelectorAll('td');
     if (cells.length < 4) continue;
-    const date = cells[0]?.textContent?.trim() || "";
-    const time = cells[1]?.textContent?.trim() || "";
-    const home = cells[2]?.textContent?.trim() || "";
-    const away = cells[3]?.textContent?.trim() || "";
-    const score = cells.length > 4 ? cells[4]?.textContent?.trim() : "";
-    const venue = cells.length > 5 ? cells[5]?.textContent?.trim() : "";
-    const cat = cells.length > 6 ? cells[6]?.textContent?.trim() : "";
-    if (home || away) matches.push({ date, time, home, away, score, venue, cat });
+    var m = {};
+    if (cells.length >= 7) {
+      m = { date: cells[0].textContent.trim(), time: cells[1].textContent.trim(),
+        home: cells[2].textContent.trim(), score: cells[3].textContent.trim(),
+        away: cells[4].textContent.trim(), venue: cells[5].textContent.trim(),
+        cat: cells[6].textContent.trim() };
+    } else if (cells.length >= 5) {
+      m = { date: cells[0].textContent.trim(), time: cells[1].textContent.trim(),
+        home: cells[2].textContent.trim(), score: cells[3].textContent.trim(),
+        away: cells[4].textContent.trim(), venue: cells.length > 5 ? cells[5].textContent.trim() : '', cat: '' };
+    } else {
+      m = { date: cells[0].textContent.trim(), time: '',
+        home: cells[1].textContent.trim(), score: cells[2].textContent.trim(),
+        away: cells[3].textContent.trim(), venue: '', cat: '' };
+    }
+    if (m.home || m.away) matches.push(m);
   }
   return matches;
 }
 
-function getDemoMatches() {
-  return [
-    { date:"12.4.2026", time:"10:00", home:"Ilves P2018", away:"TamU", score:"", venue:"Kauppi 1 TN", cat:"P8 Kevät" },
-    { date:"19.4.2026", time:"11:00", home:"FC Haka jun.", away:"Ilves P2018", score:"", venue:"Valkeakosken stadion TN", cat:"P8 Kevät" },
-    { date:"26.4.2026", time:"10:00", home:"Ilves P2018", away:"TPV", score:"", venue:"Kauppi 1 TN", cat:"P8 Kevät" },
-    { date:"3.5.2026", time:"12:00", home:"Ilves P2018", away:"Nokian Pyry", score:"", venue:"Kauppi 1 TN", cat:"P8 Kevät" },
-    { date:"10.5.2026", time:"10:00", home:"Kangasalan Kaari", away:"Ilves P2018", score:"", venue:"Kangasalan urheilukenttä TN", cat:"P8 Kevät" },
-    { date:"17.5.2026", time:"11:00", home:"Ilves P2018", away:"KäPa", score:"", venue:"Kauppi 1 TN", cat:"P8 Kevät" },
-    { date:"24.5.2026", time:"10:00", home:"LeKi", away:"Ilves P2018", score:"", venue:"Lempäälän urheilukenttä TN", cat:"P8 Kevät" },
-    { date:"31.5.2026", time:"10:00", home:"Ilves P2018", away:"Ilves/2 P2018", score:"", venue:"Kauppi 1 TN", cat:"P8 Kevät" },
-    { date:"7.6.2026", time:"11:00", home:"TP-49", away:"Ilves P2018", score:"", venue:"Toijalan urheilukenttä", cat:"P8 Kevät" },
-    { date:"14.6.2026", time:"10:00", home:"Ilves P2018", away:"FC Kangasala", score:"", venue:"Kauppi 1 TN", cat:"P8 Kevät" },
-  ];
-}
-
 function parseDateFI(s) {
   if (!s) return null;
-  const p = s.split(".");
+  var p = s.split('.');
   if (p.length < 3) return null;
   return new Date(parseInt(p[2]), parseInt(p[1]) - 1, parseInt(p[0]));
 }
 
-function MatchCard({ m }) {
-  const isHome = m.home.toLowerCase().includes("ilves") && !m.away.toLowerCase().includes("ilves");
-  const isAway = m.away.toLowerCase().includes("ilves") && !m.home.toLowerCase().includes("ilves");
-  const ha = isHome ? "KOTI" : isAway ? "VIERAS" : "KOTI";
-  const haColor = ha === "KOTI" ? "#16a34a" : "#ca8a04";
-  const opponent = isHome ? m.away : isAway ? m.home : m.away;
-  const dt = parseDateFI(m.date);
-  const isPast = dt && dt < new Date();
-  const dayName = dt ? DAYS_LONG[dt.getDay()] : "";
-  const hasScore = m.score && m.score !== "-" && m.score.trim() !== "";
-
-  return (
-    <div style={{
-      background: isPast ? "#fafafa" : "#fff",
-      border: isPast ? "1px solid #e5e7eb" : "1px solid #d1fae5",
-      borderLeft: `4px solid ${haColor}`,
-      borderRadius: 12,
-      padding: "14px 18px",
-      marginBottom: 10,
-      opacity: isPast ? 0.7 : 1,
-      position: "relative",
-      transition: "box-shadow 0.2s",
-    }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
-        <span style={{
-          background: haColor, color: "#fff", fontSize: 10, fontWeight: 700,
-          padding: "2px 8px", borderRadius: 4, letterSpacing: 0.8
-        }}>{ha}</span>
-        {m.cat && <span style={{ fontSize: 11, color: "#9ca3af" }}>{m.cat}</span>}
-      </div>
-      <div style={{ fontSize: 17, fontWeight: 700, color: "#14532d", margin: "4px 0" }}>
-        {isHome ? "Ilves" : opponent}
-        <span style={{ color: "#9ca3af", fontWeight: 400, margin: "0 6px" }}>vs</span>
-        {isHome ? opponent : "Ilves"}
-      </div>
-      {hasScore && (
-        <div style={{
-          position: "absolute", top: 14, right: 16,
-          background: "#166534", color: "#fff", fontWeight: 800,
-          fontSize: 16, padding: "5px 14px", borderRadius: 8, letterSpacing: 1
-        }}>{m.score}</div>
-      )}
-      <div style={{ display: "flex", gap: 16, marginTop: 6, flexWrap: "wrap", fontSize: 12, color: "#6b7280" }}>
-        {m.date && <span>{"📅"} {dayName} {m.date}</span>}
-        {m.time && <span>{"⏰"} {m.time}</span>}
-        {m.venue && <span>{"📍"} {m.venue}</span>}
-      </div>
-    </div>
-  );
+function updateCounts() {
+  var now = new Date(); now.setHours(0,0,0,0);
+  var up = 0;
+  for (var i = 0; i < allMatches.length; i++) {
+    var d = parseDateFI(allMatches[i].date);
+    if (d && d >= now) up++;
+  }
+  document.getElementById('matchCount').textContent = allMatches.length;
+  document.getElementById('upcomingCount').textContent = up;
 }
 
-export default function App() {
-  const [matches, setMatches] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-  const [view, setView] = useState("cards");
-  const [filter, setFilter] = useState("all");
-  const tableRef = useRef(null);
-
-  useEffect(() => {
-    let cancelled = false;
-    async function load() {
-      try {
-        const res = await fetch(WIDGET_URL);
-        const text = await res.text();
-        if (!cancelled) {
-          const parsed = parseMatchesFromHTML(text);
-          if (parsed.length > 0) {
-            setMatches(parsed);
-            if (tableRef.current) tableRef.current.innerHTML = text;
-          } else {
-            setError(true);
-            setMatches(getDemoMatches());
-          }
-        }
-      } catch (e) {
-        if (!cancelled) {
-          setError(true);
-          setMatches(getDemoMatches());
-        }
-      }
-      if (!cancelled) setLoading(false);
-    }
-    load();
-    return () => { cancelled = true; };
-  }, []);
-
-  const now = new Date();
-  const filtered = matches.filter(m => {
-    const dt = parseDateFI(m.date);
-    if (filter === "upcoming") return dt && dt >= now;
-    if (filter === "past") return dt && dt < now;
-    return true;
-  });
-
-  const upcoming = matches.filter(m => { const d = parseDateFI(m.date); return d && d >= now; }).length;
-
-  return (
-    <div style={{ fontFamily: "'Inter', -apple-system, sans-serif", maxWidth: 780, margin: "0 auto", padding: "0 16px" }}>
-      {/* Header */}
-      <div style={{
-        background: "linear-gradient(135deg, #0a3d1a 0%, #14532d 40%, #166534 100%)",
-        borderRadius: 16, padding: "26px 30px", color: "#fff",
-        position: "relative", overflow: "hidden", marginBottom: 20
-      }}>
-        <div style={{ position: "absolute", top: -30, right: -30, width: 140, height: 140, borderRadius: "50%", background: "rgba(255,255,255,0.04)" }} />
-        <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 6 }}>
-          <span style={{ fontSize: 30 }}>{"⚽"}</span>
-          <div>
-            <div style={{ fontSize: 23, fontWeight: 900, letterSpacing: -0.5 }}>ILVES P2018</div>
-            <div style={{ fontSize: 13, opacity: 0.75 }}>Ottelukalenteri · Kausi 2025–2026</div>
-          </div>
-        </div>
-        <div style={{ display: "flex", gap: 14, marginTop: 14 }}>
-          <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: 8, padding: "6px 14px", textAlign: "center" }}>
-            <div style={{ fontSize: 20, fontWeight: 800 }}>{matches.length}</div>
-            <div style={{ fontSize: 10, opacity: 0.8 }}>OTTELUA</div>
-          </div>
-          <div style={{ background: "rgba(255,255,255,0.15)", borderRadius: 8, padding: "6px 14px", textAlign: "center" }}>
-            <div style={{ fontSize: 20, fontWeight: 800 }}>{upcoming}</div>
-            <div style={{ fontSize: 10, opacity: 0.8 }}>TULOSSA</div>
-          </div>
-          <div style={{ background: "rgba(255,255,255,0.1)", borderRadius: 8, padding: "6px 14px", display: "flex", alignItems: "center", fontSize: 12 }}>
-            {"📍"} Tampere
-          </div>
-        </div>
-      </div>
-
-      {/* Warning */}
-      {error && (
-        <div style={{
-          background: "#fffbeb", border: "1px solid #fde68a", borderRadius: 10,
-          padding: "12px 16px", marginBottom: 16, fontSize: 13, color: "#92400e",
-          display: "flex", alignItems: "flex-start", gap: 10
-        }}>
-          <span style={{ fontSize: 18, flexShrink: 0 }}>{"⚠️"}</span>
-          <div>
-            <strong>Palloliiton rajapintaan ei saatu yhteyttä</strong> (CORS-rajoitus).
-            Alla näytetään esimerkkiotteluita. Upottamalla tämän kalenterin omalle verkkosivulle widget latautuu normaalisti.
-          </div>
-        </div>
-      )}
-
-      {/* Controls */}
-      <div style={{ display: "flex", gap: 8, marginBottom: 16, flexWrap: "wrap" }}>
-        <div style={{ display: "flex", background: "#f3f4f6", borderRadius: 8, overflow: "hidden" }}>
-          {[["cards", "🃏 Kortit"], ["table", "📋 Taulukko"]].map(([v, label]) => (
-            <button key={v} onClick={() => setView(v)} style={{
-              padding: "8px 16px", border: "none", cursor: "pointer", fontSize: 13,
-              fontWeight: 600, fontFamily: "inherit",
-              background: view === v ? "#166534" : "transparent",
-              color: view === v ? "#fff" : "#4b5563"
-            }}>{label}</button>
-          ))}
-        </div>
-        <div style={{ display: "flex", background: "#f3f4f6", borderRadius: 8, overflow: "hidden" }}>
-          {[["all", "Kaikki"], ["upcoming", "Tulevat"], ["past", "Menneet"]].map(([f, label]) => (
-            <button key={f} onClick={() => setFilter(f)} style={{
-              padding: "8px 14px", border: "none", cursor: "pointer", fontSize: 13,
-              fontWeight: 600, fontFamily: "inherit",
-              background: filter === f ? "#166534" : "transparent",
-              color: filter === f ? "#fff" : "#4b5563"
-            }}>{label}</button>
-          ))}
-        </div>
-      </div>
-
-      {/* Loading */}
-      {loading && (
-        <div style={{ textAlign: "center", padding: 50, color: "#6b7280" }}>
-          <div style={{ fontSize: 32, marginBottom: 10 }}>{"⚽"}</div>
-          <div>Haetaan ottelutietoja Palloliiton tulospalvelusta...</div>
-        </div>
-      )}
-
-      {/* Cards view */}
-      {!loading && view === "cards" && (
-        <div>
-          {filtered.length === 0 ? (
-            <div style={{ textAlign: "center", padding: 40, color: "#9ca3af" }}>
-              Ei otteluita valitulla suodattimella.
-            </div>
-          ) : filtered.map((m, i) => <MatchCard key={i} m={m} />)}
-        </div>
-      )}
-
-      {/* Table view */}
-      {!loading && view === "table" && (
-        <div style={{
-          background: "#fff", borderRadius: 12, border: "1px solid #e5e7eb",
-          overflow: "hidden", boxShadow: "0 1px 3px rgba(0,0,0,0.04)"
-        }}>
-          {error ? (
-            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
-              <thead>
-                <tr>
-                  {["Pvm", "Aika", "Koti", "Vieras", "Tulos", "Kenttä", "Sarja"].map(h => (
-                    <th key={h} style={{
-                      background: "#14532d", color: "#fff", padding: "11px 14px",
-                      fontWeight: 700, fontSize: 11, textTransform: "uppercase",
-                      letterSpacing: 0.8, textAlign: "left", border: "none"
-                    }}>{h}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map((m, i) => {
-                  const isHome = m.home.toLowerCase().includes("ilves");
-                  return (
-                    <tr key={i} style={{ borderBottom: "1px solid #f3f4f6" }}>
-                      <td style={{ padding: "10px 14px", fontSize: 13 }}>{m.date}</td>
-                      <td style={{ padding: "10px 14px", fontSize: 13 }}>{m.time}</td>
-                      <td style={{ padding: "10px 14px", fontSize: 13, fontWeight: isHome ? 700 : 400, color: isHome ? "#14532d" : "#374151" }}>{m.home}</td>
-                      <td style={{ padding: "10px 14px", fontSize: 13, fontWeight: !isHome ? 700 : 400, color: !isHome ? "#14532d" : "#374151" }}>{m.away}</td>
-                      <td style={{ padding: "10px 14px", fontSize: 13, fontWeight: 700 }}>{m.score || "-"}</td>
-                      <td style={{ padding: "10px 14px", fontSize: 12, color: "#6b7280" }}>{m.venue}</td>
-                      <td style={{ padding: "10px 14px", fontSize: 12, color: "#9ca3af" }}>{m.cat}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          ) : (
-            <div ref={tableRef} />
-          )}
-        </div>
-      )}
-
-      {/* Footer */}
-      <div style={{
-        textAlign: "center", padding: "16px 0", marginTop: 20,
-        borderTop: "1px solid #e5e7eb", fontSize: 11, color: "#9ca3af"
-      }}>
-        Tiedot: Suomen Palloliitto / Tulospalvelu · Ilves ry · P2018
-      </div>
-    </div>
-  );
+function getFiltered() {
+  var now = new Date(); now.setHours(0,0,0,0);
+  var result = [];
+  for (var i = 0; i < allMatches.length; i++) {
+    var m = allMatches[i];
+    var d = parseDateFI(m.date);
+    if (currentFilter === 'upcoming' && (!d || d < now)) continue;
+    if (currentFilter === 'past' && (!d || d >= now)) continue;
+    result.push(m);
+  }
+  return result;
 }
+
+function isIlves(name) { return name && name.toLowerCase().indexOf('ilves') !== -1; }
+
+function render() {
+  var list = getFiltered();
+  renderCards(list);
+  renderTable(list);
+  document.getElementById('cardsView').className = currentView === 'cards' ? '' : 'hidden';
+  document.getElementById('tableView').className = currentView === 'table' ? '' : 'hidden';
+}
+
+function renderCards(list) {
+  if (!list.length) {
+    document.getElementById('cardsView').innerHTML = '<div style="text-align:center;padding:40px;color:#9ca3af">Ei otteluita valitulla suodattimella.</div>';
+    return;
+  }
+  var now = new Date(); now.setHours(0,0,0,0);
+  var html = '';
+  for (var i = 0; i < list.length; i++) {
+    var m = list[i];
+    var homeIsIlves = isIlves(m.home);
+    var ha = homeIsIlves ? 'home' : 'away';
+    var haLabel = homeIsIlves ? 'KOTI' : 'VIERAS';
+    var opp = homeIsIlves ? m.away : m.home;
+    var dt = parseDateFI(m.date);
+    var isPast = dt && dt < now;
+    var day = dt ? DAYS[dt.getDay()] : '';
+    var hasScore = m.score && m.score.trim() !== '' && m.score.trim() !== '-';
+
+    html += '<div class="match-card ' + ha + (isPast ? ' past' : '') + '">';
+    html += '<div><span class="match-tag ' + ha + '">' + haLabel + '</span>';
+    if (m.cat) html += '<span class="match-cat">' + m.cat + '</span>';
+    html += '</div>';
+    html += '<div class="match-teams">';
+    html += (homeIsIlves ? 'Ilves' : opp) + '<span class="vs">vs</span>' + (homeIsIlves ? opp : 'Ilves');
+    html += '</div>';
+    if (hasScore) html += '<div class="match-score">' + m.score + '</div>';
+    html += '<div class="match-meta">';
+    if (m.date) html += '<span>📅 ' + day + ' ' + m.date + '</span>';
+    if (m.time) html += '<span>⏰ ' + m.time + '</span>';
+    if (m.venue) html += '<span>📍 ' + m.venue + '</span>';
+    html += '</div></div>';
+  }
+  document.getElementById('cardsView').innerHTML = html;
+}
+
+function renderTable(list) {
+  if (!list.length) {
+    document.getElementById('tableView').innerHTML = '<div style="text-align:center;padding:40px;color:#9ca3af">Ei otteluita.</div>';
+    return;
+  }
+  var html = '<div class="table-wrap"><table><thead><tr>';
+  var headers = ['Pvm','Aika','Koti','Tulos','Vieras','Kenttä','Sarja'];
+  for (var h = 0; h < headers.length; h++) html += '<th>' + headers[h] + '</th>';
+  html += '</tr></thead><tbody>';
+  for (var i = 0; i < list.length; i++) {
+    var m = list[i];
+    var hb = isIlves(m.home) ? ' class="bold"' : '';
+    var ab = isIlves(m.away) ? ' class="bold"' : '';
+    html += '<tr>';
+    html += '<td>' + (m.date || '') + '</td>';
+    html += '<td>' + (m.time || '') + '</td>';
+    html += '<td' + hb + '>' + (m.home || '') + '</td>';
+    html += '<td style="font-weight:700">' + (m.score || '-') + '</td>';
+    html += '<td' + ab + '>' + (m.away || '') + '</td>';
+    html += '<td style="color:#6b7280;font-size:12px">' + (m.venue || '') + '</td>';
+    html += '<td style="color:#9ca3af;font-size:12px">' + (m.cat || '') + '</td>';
+    html += '</tr>';
+  }
+  html += '</tbody></table></div>';
+  document.getElementById('tableView').innerHTML = html;
+}
+
+function switchView(view, el) {
+  currentView = view;
+  var btns = document.querySelectorAll('[data-view]');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  el.classList.add('active');
+  render();
+}
+function applyFilter(f, el) {
+  currentFilter = f;
+  var btns = document.querySelectorAll('[data-filter]');
+  for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+  el.classList.add('active');
+  render();
+}
+</script>
