@@ -52,10 +52,10 @@
       if (cells.length < 6) { continue; }
       var dateText = (cells[1] || {}).textContent || '';
       var timeText = (cells[2] || {}).textContent || '';
-      var homeText = (cells[3] || {}).textContent || '';
-      var awayText = (cells[4] || {}).textContent || '';
-      var scoreText = (cells[5] || {}).textContent || '';
-      var venueText = (cells[6]) ? cells[6].textContent : '';
+      var venueText = (cells[3] || {}).textContent || '';
+      var homeText = (cells[4] || {}).textContent || '';
+      var awayText = (cells[5] || {}).textContent || '';
+      var scoreText = (cells[6] || {}).textContent || '';
       dateText = dateText.trim();
       timeText = timeText.trim();
       homeText = homeText.trim();
