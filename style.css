@@ -218,6 +218,12 @@ footer a:hover { text-decoration: underline; }
   .match-count { font-size: 11px; padding: 2px 8px; }
   .accordion-arrow { font-size: 15px; }
 
+  /* Players accordion mobile */
+  .players-header { padding: 9px 10px; gap: 8px; }
+  .players-title { font-size: 12.5px; }
+  .players-icon { font-size: 13px; }
+  .players-arrow { font-size: 13px; }
+
   /* Calendar button mobile */
   .cal-export-wrap { justify-content: center; }
   .cal-export-btn { font-size: 11.5px; gap: 6px; }
