@@ -124,26 +124,31 @@
       }
       html += '</div>';
 
-      html += '<table class="match-table">';
+      html += '<div class="match-list">';
       for (k2 = 0; k2 < dm.length; k2++) {
         mx = dm[k2];
         hi = isOurTeam(mx.h, tName);
-        rowCls = hi ? 'home-match' : 'away-match';
+        rowCls = 'match-row ' + (hi ? 'home-match' : 'away-match');
         timeCls = 'col-time' + (t2 ? ' taso2' : '');
         hasScore = mx.s && mx.s.trim() !== '' && mx.s.trim() !== '-' && mx.s.trim() !== '\u2013' && mx.s.trim().toLowerCase() !== 'ennakko';
         scoreCls = 'col-score' + (hasScore ? ' played' : '');
         vSplit = splitVenue(mx.v);
         detailHtml = vSplit.detail ? '<span class="field-detail">' + esc(vSplit.detail) + '</span>' : '';
 
-        html += '<tr class="' + rowCls + '">';
-        html += '<td class="' + timeCls + '">' + esc(mx.t) + detailHtml + '</td>';
-        html += '<td class="col-home">' + tag(mx.h, tName) + '</td>';
-        html += '<td class="col-vs">\u2014</td>';
-        html += '<td class="col-away">' + tag(mx.a, tName) + '</td>';
-        html += '<td class="' + scoreCls + '">' + (hasScore ? esc(mx.s) : '\u2014') + '</td>';
-        html += '</tr>';
+        html += '<div class="' + rowCls + '">';
+        html += '<div class="match-row-top">';
+        html += '<span class="' + timeCls + '">' + esc(mx.t) + '</span>';
+        html += detailHtml;
+        html += '</div>';
+        html += '<div class="match-row-bottom">';
+        html += '<span class="col-home">' + tag(mx.h, tName) + '</span>';
+        html += '<span class="col-vs">\u2014</span>';
+        html += '<span class="col-away">' + tag(mx.a, tName) + '</span>';
+        html += '<span class="' + scoreCls + '">' + (hasScore ? esc(mx.s) : '\u2014') + '</span>';
+        html += '</div>';
+        html += '</div>';
       }
-      html += '</table>';
+      html += '</div>';
       html += '</div>';
     }
 
