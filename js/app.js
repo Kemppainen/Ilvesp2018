@@ -29,6 +29,13 @@
     return esc(n);
   }
 
+  function splitVenue(v) {
+    if (!v) { return {arena: '', detail: ''}; }
+    var m = v.match(/^(.+?)\s+(TN\s*.+|N\s+[A-Z].*)$/i);
+    if (m) { return {arena: m[1].trim(), detail: m[2].trim()}; }
+    return {arena: v, detail: ''};
+  }
+
   function fetchWidget(teamId) {
     var url = 'https://spl.torneopal.fi/torneopal/ajax/[torneopal:team_schedule:team=' + teamId + String.fromCharCode(38) + 'key=' + KEY + ']';
     return fetch(url)
