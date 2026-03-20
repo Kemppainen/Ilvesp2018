@@ -105,7 +105,7 @@
       for (var k = 0; k < dm.length; k++) { if (dm[k].v) { venues[dm[k].v] = 1; } }
       var vk = Object.keys(venues);
       if (vk.length === 1) {
-        html += '<div class="venue-tag"><span class="pin">\uD83D\uDCCD</span> ' + esc(vk[0]) + '</div>';
+        html += '<a class="venue-tag" href="https://www.google.com/maps/search/' + encodeURIComponent(vk[0]) + '" target="_blank" rel="noopener"><span class="pin">\uD83D\uDCCD</span> ' + esc(vk[0]) + '</a>';
       }
       html += '</div>';
 
@@ -125,7 +125,7 @@
         html += '<td class="col-away">' + tag(mx.a, tName) + '</td>';
         html += '<td class="' + scoreCls + '">' + (hasScore ? esc(mx.s) : '\u2014') + '</td>';
         if (vk.length > 1) {
-          html += '<td style="font-size:11px;color:var(--text-muted)">\uD83D\uDCCD ' + esc(mx.v) + '</td>';
+          html += '<td style="font-size:11px;color:var(--text-muted)"><a href="https://www.google.com/maps/search/' + encodeURIComponent(mx.v) + '" target="_blank" rel="noopener" style="color:var(--text-muted);text-decoration:none">\uD83D\uDCCD ' + esc(mx.v) + '</a></td>';
         }
         html += '</tr>';
       }
