@@ -178,6 +178,14 @@
 
     el.innerHTML = html;
 
+    /* Mobile: tap to expand/collapse match row */
+    el.addEventListener('click', function (e) {
+      var row = e.target.closest('.match-row');
+      if (!row) { return; }
+      if (window.innerWidth > 650) { return; }
+      row.classList.toggle('expanded');
+    });
+
     var upd = document.getElementById('updated-date');
     if (upd) {
       var now = new Date();
