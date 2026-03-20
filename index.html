@@ -2,268 +2,199 @@
 <html lang="fi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#0a0a0a">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5">
+  <meta name="theme-color" content="#0b0b0b">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Ilves P2018 – Ottelukalenteri</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚽</text></svg>">
+  <title>Ilves P2018 – Otteluohjelma</title>
+  <link rel="icon" href="https://tulospalvelu.palloliitto.fi/logo/palloliitto/21x.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg: #0a0a0a;
-      --bg-card: #141414;
-      --bg-hover: #1a1a1a;
-      --border: #222;
-      --border-lt: #2a2a2a;
-      --green: #1db954;
-      --green-dim: #168a3f;
-      --green-glow: rgba(29,185,84,0.12);
-      --yellow: #e5b800;
-      --txt: #fff;
-      --txt-dim: #8a8a8a;
-      --txt-mute: #555;
+    :root{
+      --bg:#0b0b0b;--surface:#131313;--surface2:#1a1a1a;
+      --border:#1e1e1e;--border2:#2a2a2a;
+      --green:#1db954;--green-d:rgba(29,185,84,.12);
+      --yellow:#f0c000;--yellow-d:rgba(240,192,0,.12);
+      --txt:#eee;--dim:#888;--mute:#555;
     }
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    *{margin:0;padding:0;box-sizing:border-box}
     html{-webkit-text-size-adjust:100%}
-    body{
-      font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-      background:var(--bg);color:var(--txt);min-height:100vh;min-height:100dvh;
-      -webkit-font-smoothing:antialiased;overflow-x:hidden;
-    }
-    .c{max-width:860px;margin:0 auto;padding:16px 12px}
+    body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--txt);-webkit-font-smoothing:antialiased}
+    a{color:var(--green);text-decoration:none}
+    a:hover{text-decoration:underline}
 
-    /* ── Hero ── */
-    .hero{
-      position:relative;overflow:hidden;
-      background:linear-gradient(160deg,#0d1f0d 0%,#0a0a0a 50%,#111 100%);
-      border:1px solid var(--border);border-radius:18px;
-      padding:28px 24px 24px;margin-bottom:20px;
+    .wrap{max-width:900px;margin:0 auto;padding:24px 20px 40px}
+
+    /* ── Header ── */
+    .hdr{text-align:center;padding:48px 20px 40px;position:relative}
+    .hdr::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80px;height:3px;background:var(--green);border-radius:2px}
+    .hdr img{width:72px;height:72px;margin-bottom:16px;filter:drop-shadow(0 0 20px rgba(29,185,84,.2))}
+    .hdr h1{font-size:32px;font-weight:900;letter-spacing:-1px;line-height:1}
+    .hdr h1 span{color:var(--green)}
+    .hdr p{color:var(--dim);font-size:14px;margin-top:8px;font-weight:500}
+    .hdr .sub{font-size:12px;color:var(--mute);margin-top:4px}
+
+    /* ── Stats row ── */
+    .stats{display:flex;justify-content:center;gap:12px;margin:28px 0 32px;flex-wrap:wrap}
+    .st{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 24px;text-align:center;min-width:90px}
+    .st-n{font-size:28px;font-weight:900;color:var(--green)}
+    .st-l{font-size:9px;color:var(--dim);letter-spacing:1.5px;font-weight:700;margin-top:2px}
+
+    /* ── Filter tabs ── */
+    .tabs{display:flex;justify-content:center;gap:6px;margin-bottom:32px;flex-wrap:wrap}
+    .tab{
+      padding:9px 22px;border:1px solid var(--border);border-radius:8px;
+      background:var(--surface);color:var(--dim);font-size:13px;font-weight:600;
+      font-family:inherit;cursor:pointer;transition:all .2s;
     }
-    .hero::before{
-      content:'';position:absolute;top:-80px;right:-60px;
-      width:250px;height:250px;border-radius:50%;
-      background:radial-gradient(circle,rgba(29,185,84,0.08) 0%,transparent 70%);
+    .tab:hover{border-color:var(--border2);color:var(--txt)}
+    .tab.on{background:var(--green);color:#000;border-color:var(--green);font-weight:700}
+
+    /* ── Section (sarjat) ── */
+    .sec{margin-bottom:40px}
+    .sec-hdr{
+      display:flex;align-items:center;gap:14px;
+      padding:16px 20px;background:var(--surface);
+      border:1px solid var(--border);border-radius:14px;margin-bottom:16px;
     }
-    .hero-top{display:flex;align-items:center;gap:14px;position:relative;z-index:1}
-    .hero-logo{
-      width:56px;height:56px;border-radius:13px;flex-shrink:0;
-      background:var(--green);display:flex;align-items:center;justify-content:center;
-      font-size:28px;box-shadow:0 0 24px rgba(29,185,84,0.2);
+    .sec-badge{
+      font-size:11px;font-weight:800;letter-spacing:1px;
+      background:var(--green);color:#000;padding:5px 12px;border-radius:6px;
     }
-    .hero-title{font-size:26px;font-weight:900;letter-spacing:-1px;line-height:1.1}
-    .hero-title span{color:var(--green)}
-    .hero-sub{font-size:13px;color:var(--txt-dim);margin-top:3px;font-weight:500}
-    .hero-stats{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap;position:relative;z-index:1}
-    .stat{
-      background:rgba(255,255,255,0.04);border:1px solid var(--border);
-      border-radius:11px;padding:8px 16px;text-align:center;flex:1;min-width:80px;
+    .sec-title{font-size:18px;font-weight:800;letter-spacing:-.3px;flex:1}
+    .sec-count{font-size:12px;color:var(--dim);font-weight:600}
+
+    /* ── Day group ── */
+    .day{margin-bottom:14px}
+    .day-hdr{
+      display:flex;align-items:center;gap:10px;
+      padding:10px 16px;font-size:14px;font-weight:700;color:var(--txt);
     }
-    .stat-num{font-size:24px;font-weight:900;color:var(--green);line-height:1.1}
-    .stat-label{font-size:9px;color:var(--txt-dim);letter-spacing:1.2px;font-weight:600;margin-top:2px}
-    .stat-loc{
-      display:flex;align-items:center;gap:5px;font-size:12px;color:var(--txt-dim);
-      background:rgba(255,255,255,0.04);border:1px solid var(--border);
-      border-radius:11px;padding:8px 14px;
+    .day-hdr .d{color:var(--green);text-transform:lowercase;font-weight:800}
+    .day-venue{
+      display:flex;align-items:center;gap:6px;
+      padding:0 16px 8px;font-size:12px;color:var(--dim);
     }
 
-    /* ── Controls ── */
-    .ctrls{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
-    .bg{
-      display:flex;background:var(--bg-card);border:1px solid var(--border);
-      border-radius:10px;overflow:hidden;flex:1;min-width:0;
+    /* ── Match row ── */
+    .mtbl{width:100%;border-collapse:collapse}
+    .mtbl td{padding:10px 14px;border-bottom:1px solid var(--border);font-size:14px;vertical-align:middle}
+    .mtbl tr:last-child td{border-bottom:none}
+    .mtbl tr:hover td{background:var(--green-d)}
+    .mtbl .time{color:var(--dim);font-weight:600;width:60px;font-variant-numeric:tabular-nums}
+    .mtbl .team{font-weight:600}
+    .mtbl .ilves{color:var(--green);font-weight:700}
+    .mtbl .vs{color:var(--mute);text-align:center;width:30px;font-size:12px}
+    .mtbl .sc{text-align:center;font-weight:800;width:50px;color:var(--txt);font-variant-numeric:tabular-nums}
+    .mtbl .ha{width:55px;text-align:center}
+    .ha-tag{
+      font-size:9px;font-weight:800;letter-spacing:.8px;
+      padding:3px 8px;border-radius:4px;display:inline-block;
     }
-    .b{
-      flex:1;padding:10px 6px;border:none;cursor:pointer;font-size:12px;
-      font-weight:600;font-family:inherit;background:transparent;
-      color:var(--txt-dim);transition:all .2s;white-space:nowrap;text-align:center;
-      border-right:1px solid var(--border);
-    }
-    .b:last-child{border-right:none}
-    .b:hover{color:var(--txt);background:rgba(255,255,255,0.04)}
-    .b.on{background:var(--green);color:#000;font-weight:700}
+    .ha-tag.h{background:var(--green-d);color:var(--green)}
+    .ha-tag.a{background:var(--yellow-d);color:var(--yellow)}
 
-    /* ── Loading ── */
-    .ld{text-align:center;padding:60px 20px;color:var(--txt-dim)}
-    .ld-i{font-size:38px;margin-bottom:14px;animation:pulse 1.5s ease-in-out infinite}
-    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.95)}}
-
-    /* ── Match Cards ── */
-    .mc{
-      background:var(--bg-card);border:1px solid var(--border);
-      border-radius:14px;padding:16px 18px;margin-bottom:10px;
-      position:relative;transition:all .2s;
-    }
-    .mc:hover{background:var(--bg-hover);border-color:var(--border-lt)}
-    .mc:active{transform:scale(0.99)}
-    .mc.h{border-left:4px solid var(--green)}
-    .mc.a{border-left:4px solid var(--yellow)}
-    .mc.p{opacity:.4}
-    .mc.p:hover{opacity:.6}
-    .mc-top{display:flex;align-items:center;gap:8px;margin-bottom:5px}
-    .mt{
-      font-size:10px;font-weight:800;padding:3px 9px;border-radius:5px;
-      letter-spacing:.8px;
-    }
-    .mt.h{background:var(--green);color:#000}
-    .mt.a{background:var(--yellow);color:#000}
-    .mc-cat{font-size:11px;color:var(--txt-mute);font-weight:500}
-    .mc-teams{font-size:17px;font-weight:800;color:var(--txt);margin:3px 0;letter-spacing:-.3px;padding-right:80px}
-    .mc-teams .iv{color:var(--green)}
-    .mc-teams .vs{color:var(--txt-mute);font-weight:400;margin:0 5px;font-size:13px}
-    .mc-sc{
-      position:absolute;top:16px;right:16px;
-      background:var(--green);color:#000;font-weight:900;font-size:16px;
-      padding:5px 14px;border-radius:9px;letter-spacing:1.5px;
-      box-shadow:0 0 16px rgba(29,185,84,0.2);
-    }
-    .mc-meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:12px;color:var(--txt-dim)}
-    .mc-meta span{display:flex;align-items:center;gap:4px}
-
-    /* ── Table ── */
-    .tw{
-      background:var(--bg-card);border-radius:14px;border:1px solid var(--border);
-      overflow-x:auto;-webkit-overflow-scrolling:touch;
-    }
-    .tw table{width:100%;border-collapse:collapse;min-width:600px}
-    .tw th{
-      background:#111;color:var(--green);padding:12px 14px;font-weight:700;
-      font-size:10px;text-transform:uppercase;letter-spacing:1.2px;text-align:left;
-      border-bottom:1px solid var(--border);position:sticky;top:0;
-    }
-    .tw td{padding:11px 14px;border-bottom:1px solid var(--border);font-size:13px;color:var(--txt-dim)}
-    .tw tr:last-child td{border-bottom:none}
-    .tw tr:hover td{background:rgba(29,185,84,0.04)}
-    .tw .bo{font-weight:700;color:var(--green)}
-    .tw .sc{font-weight:800;color:var(--txt);text-align:center}
+    /* ── Empty state ── */
+    .empty{text-align:center;padding:60px 20px;color:var(--mute)}
 
     /* ── Footer ── */
-    .ft{
-      text-align:center;padding:20px 0;margin-top:28px;
-      border-top:1px solid var(--border);font-size:11px;color:var(--txt-mute);
-    }
-    .ft a{color:var(--green);text-decoration:none}
-    .ft a:hover{text-decoration:underline}
-    .ft-br{font-weight:700;letter-spacing:.5px;margin-bottom:4px;color:var(--txt-dim)}
+    .ftr{text-align:center;padding:24px 0;margin-top:20px;border-top:1px solid var(--border);font-size:11px;color:var(--mute)}
+    .ftr-b{font-weight:700;color:var(--dim);letter-spacing:.5px;margin-bottom:4px}
 
     .hd{display:none!important}
 
-    /* ── Responsive ── */
+    /* ── Loading ── */
+    .ld{text-align:center;padding:80px 20px;color:var(--dim)}
+    .ld-i{font-size:40px;margin-bottom:14px;animation:p 1.5s ease-in-out infinite}
+    @keyframes p{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.92)}}
+
+    /* ── Mobile ── */
     @media(max-width:640px){
-      .c{padding:12px 10px}
-      .hero{padding:22px 18px 20px;border-radius:14px}
-      .hero-logo{width:46px;height:46px;font-size:24px;border-radius:10px}
-      .hero-title{font-size:22px}
-      .hero-sub{font-size:12px}
-      .hero-stats{gap:8px}
-      .stat{padding:7px 12px}
-      .stat-num{font-size:20px}
-      .stat-label{font-size:8px}
-      .stat-loc{font-size:11px;padding:7px 12px}
-      .ctrls{gap:6px}
-      .b{padding:9px 4px;font-size:11px}
-      .mc{padding:14px 14px;border-radius:12px;margin-bottom:8px}
-      .mc-teams{font-size:15px;padding-right:70px}
-      .mc-sc{font-size:14px;padding:4px 11px;top:14px;right:12px}
-      .mc-meta{gap:8px;font-size:11px;margin-top:6px}
-      .mc-meta span{gap:3px}
-      .ft{padding:16px 0;margin-top:20px;font-size:10px}
+      .wrap{padding:16px 12px 32px}
+      .hdr{padding:36px 16px 32px}
+      .hdr h1{font-size:26px}
+      .hdr img{width:56px;height:56px}
+      .stats{gap:8px;margin:20px 0 24px}
+      .st{padding:10px 16px;min-width:75px}
+      .st-n{font-size:22px}
+      .tabs{gap:4px;margin-bottom:24px}
+      .tab{padding:8px 14px;font-size:12px}
+      .sec-hdr{padding:12px 14px;border-radius:10px}
+      .sec-title{font-size:15px}
+      .day-hdr{padding:8px 12px;font-size:13px}
+      .day-venue{padding:0 12px 6px;font-size:11px}
+      .mtbl td{padding:9px 10px;font-size:13px}
+      .mtbl .time{width:50px}
+      .mtbl .vs{width:24px;font-size:11px}
+      .mtbl .sc{width:40px}
+      .mtbl .ha{width:45px}
+      .ha-tag{font-size:8px;padding:2px 6px}
     }
     @media(max-width:380px){
-      .hero-title{font-size:20px}
-      .hero-logo{width:40px;height:40px;font-size:20px}
-      .mc-teams{font-size:14px;padding-right:0}
-      .mc-sc{position:static;display:inline-block;margin-top:8px}
-      .b{font-size:10px;padding:8px 2px}
-      .stat{min-width:60px;padding:6px 8px}
-      .stat-num{font-size:18px}
+      .hdr h1{font-size:22px}
+      .mtbl td{padding:8px 6px;font-size:12px}
+      .mtbl .ha{display:none}
+      .tab{padding:7px 10px;font-size:11px}
     }
-
-    /* ── Safe area (notch) ── */
     @supports(padding:max(0px)){
-      .c{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
-      .ft{padding-bottom:max(20px,env(safe-area-inset-bottom))}
-    }
-
-    /* ── Pull-to-refresh hint ── */
-    .ptr{text-align:center;padding:10px;font-size:11px;color:var(--txt-mute);display:none}
-
-    /* ── Touch feedback ── */
-    @media(hover:none){
-      .mc:active{background:var(--bg-hover);border-color:var(--border-lt);transform:scale(0.98)}
-      .b:active{opacity:.7}
-    }
-
-    /* ── Landscape phone ── */
-    @media(max-height:500px) and (orientation:landscape){
-      .hero{padding:16px 18px;margin-bottom:14px}
-      .hero-stats{margin-top:10px}
-      .mc{padding:12px 14px;margin-bottom:6px}
+      .wrap{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
+      .ftr{padding-bottom:max(24px,env(safe-area-inset-bottom))}
     }
   </style>
 </head>
 <body>
-
-<div class="c">
-  <!-- Hero -->
-  <div class="hero">
-    <div class="hero-top">
-      <div class="hero-logo">⚽</div>
-      <div>
-        <div class="hero-title">ILVES <span>P2018</span></div>
-        <div class="hero-sub">Ottelukalenteri · Kausi 2025–2026</div>
-      </div>
-    </div>
-    <div class="hero-stats">
-      <div class="stat"><div class="stat-num" id="mc">-</div><div class="stat-label">OTTELUA</div></div>
-      <div class="stat"><div class="stat-num" id="uc">-</div><div class="stat-label">TULOSSA</div></div>
-      <div class="stat-loc">📍 Tampere</div>
-    </div>
+<div class="wrap">
+  <!-- Header -->
+  <div class="hdr">
+    <img src="https://tulospalvelu.palloliitto.fi/logo/palloliitto/21x.png" alt="Ilves">
+    <h1>ILVES <span>P2018</span> PIIRISARJAT</h1>
+    <p>Otteluohjelmat · Kevät 2026 · P8</p>
+    <div class="sub">Kausi 2025–2026</div>
   </div>
 
-  <!-- Controls -->
-  <div class="ctrls">
-    <div class="bg">
-      <button class="b on" data-v="cards" onclick="sv('cards',this)">🃏 Kortit</button>
-      <button class="b" data-v="table" onclick="sv('table',this)">📋 Taulukko</button>
-    </div>
-    <div class="bg">
-      <button class="b on" data-f="all" onclick="sf('all',this)">Kaikki</button>
-      <button class="b" data-f="upcoming" onclick="sf('upcoming',this)">Tulevat</button>
-      <button class="b" data-f="past" onclick="sf('past',this)">Menneet</button>
-    </div>
+  <!-- Stats -->
+  <div class="stats">
+    <div class="st"><div class="st-n" id="mc">-</div><div class="st-l">OTTELUA</div></div>
+    <div class="st"><div class="st-n" id="uc">-</div><div class="st-l">TULOSSA</div></div>
+    <div class="st"><div class="st-n" id="nc">-</div><div class="st-l">SEURAAVA PV</div></div>
+  </div>
+
+  <!-- Tabs -->
+  <div class="tabs">
+    <button class="tab on" onclick="filt('all',this)">Kaikki</button>
+    <button class="tab" onclick="filt('upcoming',this)">Tulevat</button>
+    <button class="tab" onclick="filt('past',this)">Pelatut</button>
   </div>
 
   <!-- Loading -->
-  <div id="ld" class="ld">
-    <div class="ld-i">⚽</div>
-    <div>Haetaan ottelutietoja...</div>
-  </div>
+  <div id="ld" class="ld"><div class="ld-i">⚽</div><div>Haetaan ottelutietoja...</div></div>
 
-  <div id="cv"></div>
-  <div id="tv" class="hd"></div>
+  <!-- Content -->
+  <div id="content"></div>
+
+  <!-- Widget container -->
   <div id="wr" style="display:none"></div>
 
   <!-- Footer -->
-  <div class="ft">
-    <div class="ft-br">ILVES P2018</div>
-    <a href="https://tulospalvelu.palloliitto.fi" target="_blank" rel="noopener">Tulospalvelu</a> · <a href="https://www.ilvesfootball.com" target="_blank" rel="noopener">ilvesfootball.com</a>
+  <div class="ftr">
+    <div class="ftr-b">ILVES P2018</div>
+    Tiedot: <a href="https://tulospalvelu.palloliitto.fi" target="_blank">tulospalvelu.palloliitto.fi</a> · <a href="https://www.ilvesfootball.com" target="_blank">ilvesfootball.com</a>
   </div>
 </div>
 
 <script>
-var M=[],V='cards',F='all',D=['Su','Ma','Ti','Ke','To','Pe','La'],
-DL=['Sunnuntai','Maanantai','Tiistai','Keskiviikko','Torstai','Perjantai','Lauantai'];
+var M=[],F='all';
+var DL=['Sunnuntai','Maanantai','Tiistai','Keskiviikko','Torstai','Perjantai','Lauantai'];
+var DS=['su','ma','ti','ke','to','pe','la'];
 
+// Load widget
 var wc=[];var ow=document.write.bind(document);
 document.write=function(h){wc.push(h)};
-
-var s=document.createElement('script');
-s.src="https://spl.torneopal.fi/torneopal/ajax/[torneopal:team_schedule:team=35213605&key=Z4QDRKWRTR]";
-s.onload=function(){setTimeout(pw,300)};
-s.onerror=function(){setTimeout(pw,300)};
-document.getElementById('wr').appendChild(s);
+var sc=document.createElement('script');
+sc.src="https://spl.torneopal.fi/torneopal/ajax/[torneopal:team_schedule:team=35213605&key=Z4QDRKWRTR]";
+sc.onload=function(){setTimeout(pw,300)};
+sc.onerror=function(){setTimeout(pw,300)};
+document.getElementById('wr').appendChild(sc);
 setTimeout(pw,6000);
 
 var done=false;
@@ -281,37 +212,29 @@ function pw(){
 function pt(t){
   var m=[];var rows=t.querySelectorAll('tr');
   for(var i=1;i<rows.length;i++){
-    var c=rows[i].querySelectorAll('td');
-    if(c.length<4)continue;
+    var c=rows[i].querySelectorAll('td');if(c.length<4)continue;
     var o={};
-    if(c.length>=7){
-      o={d:c[0].textContent.trim(),t:c[1].textContent.trim(),h:c[2].textContent.trim(),
-        s:c[3].textContent.trim(),a:c[4].textContent.trim(),v:c[5].textContent.trim(),
-        c:c[6].textContent.trim()};
-    }else if(c.length>=5){
-      o={d:c[0].textContent.trim(),t:c[1].textContent.trim(),h:c[2].textContent.trim(),
-        s:c[3].textContent.trim(),a:c[4].textContent.trim(),
-        v:c.length>5?c[5].textContent.trim():'',c:''};
-    }else{
-      o={d:c[0].textContent.trim(),t:'',h:c[1].textContent.trim(),
-        s:c[2].textContent.trim(),a:c[3].textContent.trim(),v:'',c:''};
-    }
+    if(c.length>=7) o={d:c[0].textContent.trim(),t:c[1].textContent.trim(),h:c[2].textContent.trim(),s:c[3].textContent.trim(),a:c[4].textContent.trim(),v:c[5].textContent.trim(),c:c[6].textContent.trim()};
+    else if(c.length>=5) o={d:c[0].textContent.trim(),t:c[1].textContent.trim(),h:c[2].textContent.trim(),s:c[3].textContent.trim(),a:c[4].textContent.trim(),v:c.length>5?c[5].textContent.trim():'',c:''};
+    else o={d:c[0].textContent.trim(),t:'',h:c[1].textContent.trim(),s:c[2].textContent.trim(),a:c[3].textContent.trim(),v:'',c:''};
     if(o.h||o.a)m.push(o);
   }
   return m;
 }
 
-function pd(s){
-  if(!s)return null;var p=s.split('.');
-  if(p.length<3)return null;
-  return new Date(parseInt(p[2]),parseInt(p[1])-1,parseInt(p[0]));
-}
+function pd(s){if(!s)return null;var p=s.split('.');if(p.length<3)return null;return new Date(parseInt(p[2]),parseInt(p[1])-1,parseInt(p[0]))}
+function ii(n){return n&&n.toLowerCase().indexOf('ilves')!==-1}
 
 function uc(){
-  var n=new Date();n.setHours(0,0,0,0);var u=0;
-  for(var i=0;i<M.length;i++){var x=pd(M[i].d);if(x&&x>=n)u++}
+  var n=new Date();n.setHours(0,0,0,0);
+  var up=0,nd=null;
+  for(var i=0;i<M.length;i++){
+    var x=pd(M[i].d);
+    if(x&&x>=n){up++;if(!nd)nd=M[i].d}
+  }
   document.getElementById('mc').textContent=M.length;
-  document.getElementById('uc').textContent=u;
+  document.getElementById('uc').textContent=up;
+  document.getElementById('nc').textContent=nd||'-';
 }
 
 function gf(){
@@ -325,65 +248,80 @@ function gf(){
   return r;
 }
 
-function ii(n){return n&&n.toLowerCase().indexOf('ilves')!==-1}
-
 function rn(){
-  var l=gf();rc(l);rt(l);
-  document.getElementById('cv').className=V==='cards'?'':'hd';
-  document.getElementById('tv').className=V==='table'?'':'hd';
-}
+  var list=gf();
+  if(!list.length){document.getElementById('content').innerHTML='<div class="empty">Ei otteluita valitulla suodattimella.</div>';return}
 
-function rc(l){
-  if(!l.length){document.getElementById('cv').innerHTML='<div style="text-align:center;padding:60px;color:#555">Ei otteluita valitulla suodattimella.</div>';return}
-  var n=new Date();n.setHours(0,0,0,0);var html='';
-  for(var i=0;i<l.length;i++){
-    var m=l[i],hi=ii(m.h),ha=hi?'h':'a',hl=hi?'KOTI':'VIERAS',
-    op=hi?m.a:m.h,dt=pd(m.d),ip=dt&&dt<n,dy=dt?DL[dt.getDay()]:'',
-    hs=m.s&&m.s.trim()!==''&&m.s.trim()!=='-';
-    html+='<div class="mc '+ha+(ip?' p':'')+'">';
-    html+='<div class="mc-top"><span class="mt '+ha+'">'+hl+'</span>';
-    if(m.c)html+='<span class="mc-cat">'+m.c+'</span>';
-    html+='</div><div class="mc-teams">';
-    if(hi)html+='<span class="iv">Ilves</span><span class="vs">vs</span>'+op;
-    else html+=op+'<span class="vs">vs</span><span class="iv">Ilves</span>';
+  // Group by category, then by date
+  var cats={};
+  for(var i=0;i<list.length;i++){
+    var m=list[i],ck=m.c||'Ottelut';
+    if(!cats[ck])cats[ck]=[];
+    cats[ck].push(m);
+  }
+
+  var html='';
+  for(var cat in cats){
+    var ms=cats[cat];
+    html+='<div class="sec">';
+    html+='<div class="sec-hdr"><span class="sec-badge">P8</span>';
+    html+='<span class="sec-title">'+cat+'</span>';
+    html+='<span class="sec-count">'+ms.length+' ottelua</span></div>';
+
+    // Group by date
+    var days={};var dayOrder=[];
+    for(var j=0;j<ms.length;j++){
+      var dk=ms[j].d;
+      if(!days[dk]){days[dk]=[];dayOrder.push(dk)}
+      days[dk].push(ms[j]);
+    }
+
+    for(var di=0;di<dayOrder.length;di++){
+      var dk=dayOrder[di];var dm=days[dk];
+      var dt=pd(dk);var dayName=dt?DS[dt.getDay()]:'';
+
+      html+='<div class="day">';
+      html+='<div class="day-hdr"><span class="d">'+dayName+'</span> '+dk+'</div>';
+
+      // Show venue if same for all
+      var venues={};
+      for(var k=0;k<dm.length;k++){if(dm[k].v)venues[dm[k].v]=1}
+      var vk=Object.keys(venues);
+      if(vk.length===1) html+='<div class="day-venue">📍 '+vk[0]+'</div>';
+
+      html+='<table class="mtbl"><tbody>';
+      for(var k=0;k<dm.length;k++){
+        var m=dm[k];
+        var hi=ii(m.h);
+        var hc=hi?'ilves':'team';
+        var ac=ii(m.a)?'ilves':'team';
+        var ha=hi?'h':'a';
+        var haL=hi?'KOTI':'VIERAS';
+        var hs=m.s&&m.s.trim()!==''&&m.s.trim()!=='-';
+
+        html+='<tr>';
+        html+='<td class="time">'+m.t+'</td>';
+        html+='<td class="'+hc+'">'+m.h+'</td>';
+        html+='<td class="sc">'+(hs?m.s:'—')+'</td>';
+        html+='<td class="'+ac+'">'+m.a+'</td>';
+        html+='<td class="ha"><span class="ha-tag '+ha+'">'+haL+'</span></td>';
+        if(vk.length>1) html+='<td style="font-size:11px;color:var(--mute)">📍 '+m.v+'</td>';
+        html+='</tr>';
+      }
+      html+='</tbody></table></div>';
+    }
     html+='</div>';
-    if(hs)html+='<div class="mc-sc">'+m.s+'</div>';
-    html+='<div class="mc-meta">';
-    if(m.d)html+='<span>📅 '+dy+' '+m.d+'</span>';
-    if(m.t)html+='<span>⏰ '+m.t+'</span>';
-    if(m.v)html+='<span>📍 '+m.v+'</span>';
-    html+='</div></div>';
   }
-  document.getElementById('cv').innerHTML=html;
+
+  document.getElementById('content').innerHTML=html;
 }
 
-function rt(l){
-  if(!l.length){document.getElementById('tv').innerHTML='<div style="text-align:center;padding:60px;color:#555">Ei otteluita.</div>';return}
-  var html='<div class="tw"><table><thead><tr>';
-  var hd=['PVM','AIKA','KOTI','TULOS','VIERAS','KENTTÄ','SARJA'];
-  for(var j=0;j<hd.length;j++)html+='<th>'+hd[j]+'</th>';
-  html+='</tr></thead><tbody>';
-  for(var i=0;i<l.length;i++){
-    var m=l[i],hb=ii(m.h)?' class="bo"':'',ab=ii(m.a)?' class="bo"':'';
-    html+='<tr><td>'+(m.d||'')+'</td><td>'+(m.t||'')+'</td>';
-    html+='<td'+hb+'>'+(m.h||'')+'</td><td class="sc">'+(m.s||'-')+'</td>';
-    html+='<td'+ab+'>'+(m.a||'')+'</td>';
-    html+='<td style="font-size:12px">'+(m.v||'')+'</td>';
-    html+='<td style="color:#555;font-size:12px">'+(m.c||'')+'</td></tr>';
-  }
-  html+='</tbody></table></div>';
-  document.getElementById('tv').innerHTML=html;
-}
-
-function sv(v,e){
-  V=v;var b=document.querySelectorAll('[data-v]');
+function filt(f,el){
+  F=f;
+  var b=document.querySelectorAll('.tab');
   for(var i=0;i<b.length;i++)b[i].classList.remove('on');
-  e.classList.add('on');rn();
-}
-function sf(f,e){
-  F=f;var b=document.querySelectorAll('[data-f]');
-  for(var i=0;i<b.length;i++)b[i].classList.remove('on');
-  e.classList.add('on');rn();
+  el.classList.add('on');
+  rn();
 }
 </script>
 </body>
