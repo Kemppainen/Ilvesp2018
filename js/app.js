@@ -126,11 +126,13 @@
 
     for (var i = 0; i < matches.length; i++) {
       var mx = matches[i];
-      var hasScore = mx.s && mx.s.trim() !== '' && mx.s.trim() !== '-' && mx.s.trim() !== '\u2013' && mx.s.trim().toLowerCase() !== 'ennakko';
-      if (hasScore) { continue; } /* skip played matches */
-
       var start = parseMatchDate(mx.d, mx.t);
       if (!start) { continue; }
+
+      /* skip past matches */
+      var now = new Date();
+      now.setHours(0, 0, 0, 0);
+      if (start < now) { continue; }
       var end = new Date(start.getTime() + 60 * 60 * 1000); /* 1h duration */
 
       var summary = mx.h + ' \u2013 ' + mx.a;
@@ -168,10 +170,11 @@
 
     /* count upcoming matches */
     var upcoming = 0;
+    var today = new Date();
+    today.setHours(0, 0, 0, 0);
     for (var u = 0; u < matches.length; u++) {
-      var sc = matches[u].s;
-      var played = sc && sc.trim() !== '' && sc.trim() !== '-' && sc.trim() !== '\u2013' && sc.trim().toLowerCase() !== 'ennakko';
-      if (!played) { upcoming++; }
+      var mDate = parseMatchDate(matches[u].d, matches[u].t);
+      if (mDate && mDate >= today) { upcoming++; }
     }
 
     html += '<div class="team-card">';
@@ -184,15 +187,7 @@
     html += '</div>';
     html += '<div class="round-group collapsed">';
 
-    /* Calendar export button */
-    if (upcoming > 0) {
-      html += '<div class="cal-export-wrap">';
-      html += '<button class="cal-export-btn" data-team-idx="' + teamIdx + '">';
-      html += '<span class="cal-icon">\uD83D\uDCC5</span>';
-      html += '<span class="cal-text">Vie ' + upcoming + ' ottelua kalenteriin</span>';
-      html += '</button>';
-      html += '</div>';
-    }
+
 
     var days = [];
     var dayMap = {};
@@ -251,6 +246,16 @@
         html += '</div>';
       }
       html += '</div>';
+      html += '</div>';
+    }
+
+    /* Calendar export button at bottom */
+    if (upcoming > 0) {
+      html += '<div class="cal-export-wrap">';
+      html += '<button class="cal-export-btn" data-team-idx="' + teamIdx + '">';
+      html += '<svg class="cal-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 8h16" stroke="currentColor" stroke-width="1.5"/><path d="M6 2v4M14 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 11.5h2M9 11.5h2M12 11.5h2M6 14.5h2M9 14.5h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>';
+      html += '<span class="cal-text">Vie ' + upcoming + (upcoming === 1 ? ' ottelu' : ' ottelua') + ' kalenteriin</span>';
+      html += '</button>';
       html += '</div>';
     }
 
