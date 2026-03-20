@@ -299,6 +299,15 @@
         return;
       }
 
+      /* Players accordion */
+      var plHeader = e.target.closest('.players-header');
+      if (plHeader) {
+        e.stopPropagation();
+        var section = plHeader.closest('.players-section');
+        if (section) { section.classList.toggle('open'); }
+        return;
+      }
+
       /* Accordion: toggle team card */
       var header = e.target.closest('.team-header');
       if (header) {
