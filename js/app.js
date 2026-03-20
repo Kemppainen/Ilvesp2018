@@ -1,217 +1,242 @@
-(function () {
-  'use strict';
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-  var TEAMS = [
-    {id: '35213605', key: 'Z4QDRKWRTR', name: 'Ilves/P2018/A', div: 'P9 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 0},
-    {id: '35213607', key: 'R8C3ZUZPBX', name: 'Ilves/P2018/B', div: 'P9 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 0},
-    {id: '35213608', key: '2CNSGFS7V5', name: 'Ilves/Keltainen A', div: 'P8 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 1},
-    {id: '35213611', key: 'K9N7PPBTBF', name: 'Ilves/Keltainen B', div: 'P8 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 1},
-    {id: '35213613', key: 'NKW75YPCGN', name: 'Ilves/Keltavihre\u00e4 A', div: 'P8 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 1},
-    {id: '35213615', key: 'SGTRRP6YUB', name: 'Ilves/Keltavihre\u00e4 B', div: 'P8 \u00b7 Taso 1', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 1', taso: 1, divIdx: 1},
-    {id: '35213617', key: 'ZV5D4CPTYF', name: 'Ilves/Vihre\u00e4 A', div: 'P8 \u00b7 Taso 2', divTitle: 'Pojat 2018 \u2013 Piirisarja Taso 2', taso: 2, divIdx: 2}
-  ];
+:root {
+  --green-dark:   #042E12;
+  --green-mid:    #073D18;
+  --green-card:   #0A4D1F;
+  --green-border: #1A6B35;
+  --yellow:       #F5B000;
+  --yellow-light: #FFD04A;
+  --text-primary: #F0F0F0;
+  --text-muted:   #8BAF95;
+  --home-bg:      rgba(245,176,0,0.07);
+  --away-bg:      rgba(255,255,255,0.02);
+  --t2-accent:    #E07B00;
+}
 
-  function esc(s) {
-    var d = document.createElement('div');
-    d.textContent = s || '';
-    return d.innerHTML;
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--green-dark);
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+header {
+  background: linear-gradient(135deg, #021A0A 0%, #063015 60%, #021A0A 100%);
+  border-bottom: 3px solid var(--yellow);
+  padding: 28px 40px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.logo-wrap {
+  width: 72px; height: 72px;
+  background: var(--yellow);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(245,176,0,0.35);
+  overflow: hidden;
+}
+.logo-wrap img { width: 64px; height: 64px; object-fit: contain; }
+header h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; line-height: 1.15; }
+header h1 span { color: var(--yellow); }
+header p { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+.season-badge {
+  margin-left: auto;
+  background: var(--yellow); color: #0A2A14;
+  font-weight: 800; font-size: 13px;
+  padding: 6px 16px; border-radius: 20px;
+  letter-spacing: 0.5px; white-space: nowrap;
+}
+
+/* ── LAYOUT ── */
+main { max-width: 1100px; margin: 0 auto; padding: 32px 24px 60px; }
+
+/* ── DIVISION ── */
+.division-header { display: flex; align-items: center; gap: 12px; margin: 40px 0 16px; }
+.division-header:first-child { margin-top: 0; }
+.division-pill {
+  background: var(--yellow); color: #042E12;
+  font-size: 11px; font-weight: 800; letter-spacing: 1.2px;
+  text-transform: uppercase; padding: 5px 14px; border-radius: 20px;
+}
+.division-pill.taso2 { background: var(--t2-accent); color: #fff; }
+.division-title { font-size: 19px; font-weight: 700; color: #E0F0E5; }
+
+/* ── TEAM CARD ── */
+.team-card {
+  background: var(--green-card); border: 1px solid var(--green-border);
+  border-radius: 12px; overflow: hidden; margin-bottom: 20px;
+}
+.team-header {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 20px; background: var(--green-mid);
+  border-bottom: 2px solid var(--yellow);
+}
+.team-header.taso2 { border-bottom-color: var(--t2-accent); }
+.team-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--yellow); flex-shrink: 0; }
+.team-dot.taso2 { background: var(--t2-accent); }
+.team-name { font-size: 16px; font-weight: 700; }
+.team-meta { margin-left: auto; font-size: 12px; color: var(--text-muted); }
+.match-count {
+  background: rgba(245,176,0,0.12); border: 1px solid rgba(245,176,0,0.25);
+  padding: 3px 10px; border-radius: 12px; font-size: 12px; color: var(--yellow-light);
+}
+
+/* ── ROUND / DATE ── */
+.round-group { padding: 16px 20px 8px; }
+.date-group { margin-bottom: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.06); }
+.date-group:first-child { border-top: none; padding-top: 0; }
+.date-venue-row {
+  display: flex; align-items: stretch; gap: 10px;
+  margin-bottom: 8px; flex-wrap: wrap;
+}
+.date-badge {
+  display: flex; align-items: center;
+  font-size: 12px; font-weight: 700;
+  background: rgba(245,176,0,0.12); border: 1px solid rgba(245,176,0,0.3);
+  border-radius: 6px; padding: 5px 12px; color: var(--yellow-light); white-space: nowrap;
+}
+.venue-tag {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11.5px; color: var(--text-muted);
+  background: rgba(255,255,255,0.04); border-radius: 6px;
+  padding: 5px 10px; border: 1px solid var(--green-border);
+  text-decoration: none; transition: border-color 0.15s, color 0.15s;
+}
+.venue-tag:hover {
+  border-color: var(--yellow);
+  color: var(--yellow-light);
+  text-decoration: none;
+}
+.venue-tag .pin { font-size: 12px; }
+
+/* ── MATCH LIST (div-based layout) ── */
+.match-list { width: 100%; }
+
+.match-row {
+  display: flex; align-items: center;
+  padding: 9px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.12s;
+}
+.match-row:last-child { border-bottom: none; }
+.match-row.home-match { background: var(--home-bg); }
+.match-row.away-match { background: var(--away-bg); }
+.match-row:hover { background: rgba(245,176,0,0.10); }
+
+/* Desktop: single row — top and bottom inline */
+.match-row-top {
+  display: flex; align-items: center;
+  flex-shrink: 0; width: 90px;
+}
+.match-row-bottom {
+  display: flex; align-items: center;
+  flex: 1; min-width: 0;
+}
+
+.col-time { font-weight: 800; color: var(--yellow); font-size: 14px; white-space: nowrap; }
+.col-time.taso2 { color: var(--t2-accent); }
+.col-home { text-align: right; flex: 1; font-weight: 400; color: #C8E0CE; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.col-home .ilves { font-weight: 700; color: #fff; }
+.col-vs { text-align: center; width: 30px; flex-shrink: 0; color: var(--text-muted); font-size: 11px; font-weight: 600; }
+.col-away { flex: 1; font-weight: 400; color: #C8E0CE; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.col-away .ilves { font-weight: 700; color: #fff; }
+.col-score {
+  text-align: center; font-weight: 700; font-size: 15px;
+  color: var(--text-muted); min-width: 54px; flex-shrink: 0; white-space: nowrap;
+}
+.col-score.played { color: var(--yellow-light); background: rgba(245,176,0,0.08); border-radius: 4px; padding: 2px 6px; }
+
+/* ── FIELD DETAIL (kenttätarkenne, esim. TN 2) ── */
+.field-detail {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #B0CCBA;
+}
+
+/* ── LOADING ── */
+.loading { text-align: center; padding: 60px 20px; color: var(--text-muted); }
+.loading-icon { font-size: 38px; margin-bottom: 12px; animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.4;transform:scale(.92)} }
+.hidden { display: none !important; }
+
+/* ── FOOTER ── */
+footer {
+  text-align: center; padding: 24px; font-size: 12px;
+  color: var(--text-muted); border-top: 1px solid var(--green-border); margin-top: 20px;
+}
+footer a { color: var(--yellow); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ── MOBILE: two-row layout ── */
+@media (max-width: 650px) {
+  header { padding: 14px 16px 12px; flex-wrap: wrap; gap: 10px; }
+  .logo-wrap { width: 48px; height: 48px; }
+  .logo-wrap img { width: 42px; height: 42px; }
+  header h1 { font-size: 17px; }
+  header p { font-size: 11px; margin-top: 2px; }
+  .season-badge { font-size: 11px; padding: 5px 11px; }
+  main { padding: 20px 10px 48px; }
+  .division-header { margin: 28px 0 12px; gap: 8px; }
+  .division-title { font-size: 15px; }
+  .division-pill { font-size: 10px; padding: 4px 10px; }
+  .team-card { border-radius: 10px; margin-bottom: 14px; }
+  .team-header { padding: 10px 14px; gap: 10px; }
+  .team-name { font-size: 14px; }
+  .team-meta { display: none; }
+  .match-count { font-size: 11px; padding: 2px 8px; }
+  .round-group { padding: 12px 10px 6px; }
+  .date-group { margin-bottom: 12px; }
+  .date-venue-row { gap: 6px; margin-bottom: 6px; }
+  .date-badge { font-size: 11px; padding: 4px 9px; }
+  .venue-tag { font-size: 10.5px; }
+
+  /* Two-row match layout */
+  .match-row {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 10px;
+    gap: 3px;
   }
 
-  function isOurTeam(n, teamName) {
-    if (!n || !teamName) { return false; }
-    return n.trim().toLowerCase() === teamName.trim().toLowerCase();
+  .match-row-top {
+    width: auto;
+    gap: 6px;
+  }
+  .col-time { font-size: 12px; }
+  .field-detail { margin-left: 4px; font-size: 10px; }
+
+  .match-row-bottom {
+    display: flex;
+    align-items: center;
+  }
+  .col-home { font-size: 12.5px; }
+  .col-vs { width: 22px; font-size: 10px; }
+  .col-away { font-size: 12.5px; }
+  .col-score { min-width: 42px; font-size: 13px; }
+
+  /* Expandable names on tap */
+  .match-row { cursor: pointer; }
+  .match-row .col-home,
+  .match-row .col-away {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .match-row.expanded .col-home,
+  .match-row.expanded .col-away {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    word-break: break-word;
   }
 
-  function tag(n, teamName) {
-    if (isOurTeam(n, teamName)) { return '<span class="ilves">' + esc(n) + '</span>'; }
-    return esc(n);
-  }
-
-  function splitVenue(v) {
-    if (!v) { return {arena: '', detail: ''}; }
-    var m = v.match(/^(.+?)\s+(TN\s*.+|N\s+[A-Z].*)$/i);
-    if (m) { return {arena: m[1].trim(), detail: m[2].trim()}; }
-    return {arena: v, detail: ''};
-  }
-
-  function fetchWidget(teamId, teamKey) {
-    var url = 'https://spl.torneopal.fi/torneopal/ajax/[torneopal:team_schedule:team=' + teamId + String.fromCharCode(38) + 'key=' + teamKey + ']';
-    return fetch(url, {cache: 'no-store'})
-      .then(function (r) { return r.text(); })
-      .then(function (txt) {
-        var m = txt.match(/innerHTML\s*=\s*"([\s\S]*?)";/);
-        if (!m) { return []; }
-        var html = m[1].replace(/\\"/g, '"').replace(/\\'/g, "'").replace(/\\\\/g, '\\');
-        var tmp = document.createElement('div');
-        tmp.innerHTML = html;
-        return parseTable(tmp);
-      })
-      .catch(function () { return []; });
-  }
-
-  function parseTable(container) {
-    var rows = container.querySelectorAll('tr');
-    var matches = [];
-    for (var i = 0; i < rows.length; i++) {
-      var cells = rows[i].querySelectorAll('td');
-      if (cells.length < 6) { continue; }
-      var dateText = (cells[1] || {}).textContent || '';
-      var timeText = (cells[2] || {}).textContent || '';
-      var venueText = (cells[3] || {}).textContent || '';
-      var homeText = (cells[4] || {}).textContent || '';
-      var awayText = (cells[5] || {}).textContent || '';
-      var scoreText = (cells[6] || {}).textContent || '';
-      dateText = dateText.trim();
-      timeText = timeText.trim();
-      homeText = homeText.trim();
-      awayText = awayText.trim();
-      scoreText = scoreText.trim();
-      venueText = venueText.trim();
-      if (!homeText && !awayText) { continue; }
-      var pvMatch = dateText.match(/^(ma|ti|ke|to|pe|la|su)\s+/i);
-      var pv = pvMatch ? pvMatch[1].toLowerCase() : '';
-      var dateOnly = dateText.replace(/^(ma|ti|ke|to|pe|la|su)\s+/i, '').trim();
-      matches.push({d: dateOnly, pv: pv, t: timeText, h: homeText, a: awayText, s: scoreText, v: venueText});
-    }
-    return matches;
-  }
-
-  function renderTeamCard(team, matches, taso) {
-    var t2 = (taso === 2);
-    var tName = team.name;
-    var html = '';
-
-    html += '<div class="team-card">';
-    html += '<div class="team-header' + (t2 ? ' taso2' : '') + '">';
-    html += '<div class="team-dot' + (t2 ? ' taso2' : '') + '"></div>';
-    html += '<div class="team-name">' + esc(team.name) + '</div>';
-    html += '<div class="team-meta">' + esc(team.div) + '</div>';
-    html += '<div class="match-count">' + matches.length + ' ottelua</div>';
-    html += '</div>';
-    html += '<div class="round-group">';
-
-    var days = [];
-    var dayMap = {};
-    for (var i = 0; i < matches.length; i++) {
-      var dk = matches[i].d;
-      if (!dayMap[dk]) { dayMap[dk] = []; days.push(dk); }
-      dayMap[dk].push(matches[i]);
-    }
-
-    var di, dk2, dm, pv, venues, vk, k, k2, mx, hi, rowCls, timeCls, hasScore, scoreCls, vSplit, detailHtml, arenaName;
-
-    for (di = 0; di < days.length; di++) {
-      dk2 = days[di];
-      dm = dayMap[dk2];
-      pv = dm[0].pv || '';
-
-      html += '<div class="date-group">';
-      html += '<div class="date-venue-row">';
-      html += '<div class="date-badge">' + pv + ' \u00a0' + esc(dk2) + '</div>';
-
-      venues = {};
-      for (k = 0; k < dm.length; k++) {
-        if (dm[k].v) {
-          arenaName = splitVenue(dm[k].v).arena;
-          venues[arenaName] = 1;
-        }
-      }
-      vk = Object.keys(venues);
-      if (vk.length >= 1) {
-        html += '<a class="venue-tag" href="https://www.google.com/maps/search/' + encodeURIComponent(vk[0]) + '" target="_blank" rel="noopener"><span class="pin">\uD83D\uDCCD</span> ' + esc(vk[0]) + '</a>';
-      }
-      html += '</div>';
-
-      html += '<div class="match-list">';
-      for (k2 = 0; k2 < dm.length; k2++) {
-        mx = dm[k2];
-        hi = isOurTeam(mx.h, tName);
-        rowCls = 'match-row ' + (hi ? 'home-match' : 'away-match');
-        timeCls = 'col-time' + (t2 ? ' taso2' : '');
-        hasScore = mx.s && mx.s.trim() !== '' && mx.s.trim() !== '-' && mx.s.trim() !== '\u2013' && mx.s.trim().toLowerCase() !== 'ennakko';
-        scoreCls = 'col-score' + (hasScore ? ' played' : '');
-        vSplit = splitVenue(mx.v);
-        detailHtml = vSplit.detail ? '<span class="field-detail">' + esc(vSplit.detail) + '</span>' : '';
-
-        html += '<div class="' + rowCls + '">';
-        html += '<div class="match-row-top">';
-        html += '<span class="' + timeCls + '">' + esc(mx.t) + '</span>';
-        html += detailHtml;
-        html += '</div>';
-        html += '<div class="match-row-bottom">';
-        html += '<span class="col-home">' + tag(mx.h, tName) + '</span>';
-        html += '<span class="col-vs">\u2014</span>';
-        html += '<span class="col-away">' + tag(mx.a, tName) + '</span>';
-        html += '<span class="' + scoreCls + '">' + (hasScore ? esc(mx.s) : '\u2014') + '</span>';
-        html += '</div>';
-        html += '</div>';
-      }
-      html += '</div>';
-      html += '</div>';
-    }
-
-    html += '</div>';
-    html += '</div>';
-    return html;
-  }
-
-  function renderAll(results) {
-    var el = document.getElementById('content');
-    var html = '';
-    var lastDivIdx = -1;
-
-    for (var i = 0; i < TEAMS.length; i++) {
-      var team = TEAMS[i];
-      var matches = results[i] || [];
-
-      if (team.divIdx !== lastDivIdx) {
-        var t2x = (team.taso === 2);
-        html += '<div class="division-header">';
-        html += '<div class="division-pill' + (t2x ? ' taso2' : '') + '">' + esc(team.div) + '</div>';
-        html += '<div class="division-title">' + esc(team.divTitle) + '</div>';
-        html += '</div>';
-        lastDivIdx = team.divIdx;
-      }
-
-      html += renderTeamCard(team, matches, team.taso);
-    }
-
-    el.innerHTML = html;
-
-    /* Mobile: tap to expand/collapse match row */
-    el.addEventListener('click', function (e) {
-      var row = e.target.closest('.match-row');
-      if (!row) { return; }
-      if (window.innerWidth > 650) { return; }
-      row.classList.toggle('expanded');
-    });
-
-    var upd = document.getElementById('updated-date');
-    if (upd) {
-      var now = new Date();
-      upd.textContent = now.getDate() + '.' + (now.getMonth() + 1) + '.' + now.getFullYear();
-    }
-  }
-
-  function load() {
-    var promises = [];
-    for (var i = 0; i < TEAMS.length; i++) {
-      promises.push(fetchWidget(TEAMS[i].id, TEAMS[i].key));
-    }
-
-    Promise.all(promises)
-      .then(function (results) {
-        document.getElementById('loading').classList.add('hidden');
-        renderAll(results);
-      })
-      .catch(function (err) {
-        document.getElementById('loading').innerHTML = '<div style="color:#F5B000">\u26A0\uFE0F Ottelutietoja ei voitu ladata.</div><div style="margin-top:8px;font-size:12px">' + esc(err.message) + '</div>';
-      });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', load);
-  } else {
-    load();
-  }
-})();
+  footer { padding: 18px 16px; font-size: 11px; }
+}
