@@ -113,26 +113,42 @@ main { max-width: 1100px; margin: 0 auto; padding: 32px 24px 60px; }
 }
 .venue-tag .pin { font-size: 12px; }
 
-/* ── MATCH TABLE ── */
-.match-table { width: 100%; border-collapse: collapse; }
-.match-table tr { border-bottom: 1px solid rgba(255,255,255,0.04); }
-.match-table tr:last-child { border-bottom: none; }
-.match-table tr.home-match { background: var(--home-bg); }
-.match-table tr.away-match { background: var(--away-bg); }
-.match-table tr:hover { background: rgba(245,176,0,0.10); transition: background 0.12s; }
-.match-table td { padding: 9px 10px; vertical-align: middle; font-size: 13.5px; }
-td.col-time { width: 60px; font-weight: 800; color: var(--yellow); font-size: 14px; white-space: nowrap; }
-td.col-time.taso2 { color: var(--t2-accent); }
-td.col-home { text-align: right; width: 34%; font-weight: 400; color: #C8E0CE; }
-td.col-home .ilves { font-weight: 700; color: #fff; }
-td.col-vs { text-align: center; width: 30px; color: var(--text-muted); font-size: 11px; font-weight: 600; }
-td.col-away { width: 34%; font-weight: 400; color: #C8E0CE; }
-td.col-away .ilves { font-weight: 700; color: #fff; }
+/* ── MATCH LIST (div-based layout) ── */
+.match-list { width: 100%; }
+
+.match-row {
+  display: flex; align-items: center;
+  padding: 9px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  transition: background 0.12s;
+}
+.match-row:last-child { border-bottom: none; }
+.match-row.home-match { background: var(--home-bg); }
+.match-row.away-match { background: var(--away-bg); }
+.match-row:hover { background: rgba(245,176,0,0.10); }
+
+/* Desktop: single row — top and bottom inline */
+.match-row-top {
+  display: flex; align-items: center;
+  flex-shrink: 0; width: 90px;
+}
+.match-row-bottom {
+  display: flex; align-items: center;
+  flex: 1; min-width: 0;
+}
+
+.col-time { font-weight: 800; color: var(--yellow); font-size: 14px; white-space: nowrap; }
+.col-time.taso2 { color: var(--t2-accent); }
+.col-home { text-align: right; flex: 1; font-weight: 400; color: #C8E0CE; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.col-home .ilves { font-weight: 700; color: #fff; }
+.col-vs { text-align: center; width: 30px; flex-shrink: 0; color: var(--text-muted); font-size: 11px; font-weight: 600; }
+.col-away { flex: 1; font-weight: 400; color: #C8E0CE; font-size: 13.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.col-away .ilves { font-weight: 700; color: #fff; }
 .col-score {
   text-align: center; font-weight: 700; font-size: 15px;
-  color: var(--text-muted); min-width: 64px; white-space: nowrap;
+  color: var(--text-muted); min-width: 54px; flex-shrink: 0; white-space: nowrap;
 }
-.col-score.played { color: var(--yellow-light); background: rgba(245,176,0,0.08); border-radius: 4px; }
+.col-score.played { color: var(--yellow-light); background: rgba(245,176,0,0.08); border-radius: 4px; padding: 2px 6px; }
 
 /* ── FIELD DETAIL (kenttätarkenne, esim. TN 2) ── */
 .field-detail {
@@ -141,7 +157,6 @@ td.col-away .ilves { font-weight: 700; color: #fff; }
   font-size: 11px;
   font-weight: 600;
   color: #B0CCBA;
-  opacity: 1;
 }
 
 /* ── LOADING ── */
@@ -158,7 +173,7 @@ footer {
 footer a { color: var(--yellow); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 
-/* ── MOBILE ── */
+/* ── MOBILE: two-row layout ── */
 @media (max-width: 650px) {
   header { padding: 14px 16px 12px; flex-wrap: wrap; gap: 10px; }
   .logo-wrap { width: 48px; height: 48px; }
@@ -180,13 +195,30 @@ footer a:hover { text-decoration: underline; }
   .date-venue-row { gap: 6px; margin-bottom: 6px; }
   .date-badge { font-size: 11px; padding: 4px 9px; }
   .venue-tag { font-size: 10.5px; }
-  .match-table { table-layout: fixed; }
-  .match-table td { padding: 8px 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .col-time { width: 44px; font-size: 13px; padding-left: 6px !important; }
-  .col-home { font-size: 12px; width: 32%; }
-  .col-vs { width: 18px; font-size: 11px; padding: 0 2px; }
-  .col-away { font-size: 12px; width: 32%; }
-  .col-score { width: 46px; font-size: 13px; padding-right: 6px !important; }
-  .field-detail { margin-left: 5px; font-size: 10px; }
+
+  /* Two-row match layout */
+  .match-row {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 8px 10px;
+    gap: 3px;
+  }
+
+  .match-row-top {
+    width: auto;
+    gap: 6px;
+  }
+  .col-time { font-size: 12px; }
+  .field-detail { margin-left: 4px; font-size: 10px; }
+
+  .match-row-bottom {
+    display: flex;
+    align-items: center;
+  }
+  .col-home { font-size: 12.5px; }
+  .col-vs { width: 22px; font-size: 10px; }
+  .col-away { font-size: 12.5px; }
+  .col-score { min-width: 42px; font-size: 13px; }
+
   footer { padding: 18px 16px; font-size: 11px; }
 }
