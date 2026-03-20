@@ -82,6 +82,7 @@
     var t2 = (taso === 2);
     var tName = team.name;
     var html = '';
+
     html += '<div class="team-card">';
     html += '<div class="team-header' + (t2 ? ' taso2' : '') + '">';
     html += '<div class="team-dot' + (t2 ? ' taso2' : '') + '"></div>';
@@ -99,41 +100,47 @@
       dayMap[dk].push(matches[i]);
     }
 
-    for (var di = 0; di < days.length; di++) {
-      var dk2 = days[di];
-      var dm = dayMap[dk2];
-      var pv = dm[0].pv || '';
+    var di, dk2, dm, pv, venues, vk, k, k2, mx, hi, rowCls, timeCls, hasScore, scoreCls, vSplit, detailHtml, arenaName;
+
+    for (di = 0; di < days.length; di++) {
+      dk2 = days[di];
+      dm = dayMap[dk2];
+      pv = dm[0].pv || '';
 
       html += '<div class="date-group">';
       html += '<div class="date-venue-row">';
       html += '<div class="date-badge">' + pv + ' \u00a0' + esc(dk2) + '</div>';
 
-      var venues = {};
-      for (var k = 0; k < dm.length; k++) { if (dm[k].v) { venues[dm[k].v] = 1; } }
-      var vk = Object.keys(venues);
-      if (vk.length === 1) {
+      venues = {};
+      for (k = 0; k < dm.length; k++) {
+        if (dm[k].v) {
+          arenaName = splitVenue(dm[k].v).arena;
+          venues[arenaName] = 1;
+        }
+      }
+      vk = Object.keys(venues);
+      if (vk.length >= 1) {
         html += '<a class="venue-tag" href="https://www.google.com/maps/search/' + encodeURIComponent(vk[0]) + '" target="_blank" rel="noopener"><span class="pin">\uD83D\uDCCD</span> ' + esc(vk[0]) + '</a>';
       }
       html += '</div>';
 
       html += '<table class="match-table">';
-      for (var k2 = 0; k2 < dm.length; k2++) {
-        var mx = dm[k2];
-        var hi = isOurTeam(mx.h, tName);
-        var rowCls = hi ? 'home-match' : 'away-match';
-        var timeCls = 'col-time' + (t2 ? ' taso2' : '');
-        var hasScore = mx.s && mx.s.trim() !== '' && mx.s.trim() !== '-' && mx.s.trim() !== '\u2013';
-        var scoreCls = 'col-score' + (hasScore ? ' played' : '');
+      for (k2 = 0; k2 < dm.length; k2++) {
+        mx = dm[k2];
+        hi = isOurTeam(mx.h, tName);
+        rowCls = hi ? 'home-match' : 'away-match';
+        timeCls = 'col-time' + (t2 ? ' taso2' : '');
+        hasScore = mx.s && mx.s.trim() !== '' && mx.s.trim() !== '-' && mx.s.trim() !== '\u2013' && mx.s.trim().toLowerCase() !== 'ennakko';
+        scoreCls = 'col-score' + (hasScore ? ' played' : '');
+        vSplit = splitVenue(mx.v);
+        detailHtml = vSplit.detail ? ' <span style="font-size:10px;color:var(--text-muted);font-weight:400;opacity:0.7">' + esc(vSplit.detail) + '</span>' : '';
 
         html += '<tr class="' + rowCls + '">';
-        html += '<td class="' + timeCls + '">' + esc(mx.t) + '</td>';
+        html += '<td class="' + timeCls + '">' + esc(mx.t) + detailHtml + '</td>';
         html += '<td class="col-home">' + tag(mx.h, tName) + '</td>';
         html += '<td class="col-vs">\u2014</td>';
         html += '<td class="col-away">' + tag(mx.a, tName) + '</td>';
         html += '<td class="' + scoreCls + '">' + (hasScore ? esc(mx.s) : '\u2014') + '</td>';
-        if (vk.length > 1) {
-          html += '<td style="font-size:11px;color:var(--text-muted)"><a href="https://www.google.com/maps/search/' + encodeURIComponent(mx.v) + '" target="_blank" rel="noopener" style="color:var(--text-muted);text-decoration:none">\uD83D\uDCCD ' + esc(mx.v) + '</a></td>';
-        }
         html += '</tr>';
       }
       html += '</table>';
@@ -155,9 +162,9 @@
       var matches = results[i] || [];
 
       if (team.divIdx !== lastDivIdx) {
-        var t2 = (team.taso === 2);
+        var t2x = (team.taso === 2);
         html += '<div class="division-header">';
-        html += '<div class="division-pill' + (t2 ? ' taso2' : '') + '">' + esc(team.div) + '</div>';
+        html += '<div class="division-pill' + (t2x ? ' taso2' : '') + '">' + esc(team.div) + '</div>';
         html += '<div class="division-title">' + esc(team.divTitle) + '</div>';
         html += '</div>';
         lastDivIdx = team.divIdx;
