@@ -173,7 +173,7 @@
     }
 
     html += '<div class="team-card">';
-    html += '<div class="team-header' + (t2 ? ' taso2' : '') + '">';
+    html += '<div class="team-header">';
     html += '<div class="team-dot' + (t2 ? ' taso2' : '') + '"></div>';
     html += '<div class="team-name">' + esc(team.name) + '</div>';
     html += '<div class="team-meta">' + esc(team.div) + '</div>';
@@ -233,7 +233,7 @@
         mx = dm[k2];
         hi = isOurTeam(mx.h, tName);
         rowCls = 'match-row ' + (hi ? 'home-match' : 'away-match');
-        timeCls = 'col-time' + (t2 ? ' taso2' : '');
+        timeCls = 'col-time';
         hasScore = mx.s && mx.s.trim() !== '' && mx.s.trim() !== '-' && mx.s.trim() !== '\u2013' && mx.s.trim().toLowerCase() !== 'ennakko';
         scoreCls = 'col-score' + (hasScore ? ' played' : '');
         vSplit = splitVenue(mx.v);
