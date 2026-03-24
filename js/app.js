@@ -2,13 +2,13 @@
   'use strict';
 
   var TEAMS = [
-    {id: '35213605', key: 'Z4QDRKWRTR', name: 'Ilves/P2018/A', div: 'P9', divTitle: 'Pojat 2017 \u2013 Piirisarja P9', taso: 1, divIdx: 0},
-    {id: '35213607', key: 'R8C3ZUZPBX', name: 'Ilves/P2018/B', div: 'P9', divTitle: 'Pojat 2017 \u2013 Piirisarja P9', taso: 1, divIdx: 0},
-    {id: '35213608', key: '2CNSGFS7V5', name: 'Ilves/Keltainen A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1},
-    {id: '35213611', key: 'K9N7PPBTBF', name: 'Ilves/Keltainen B', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1},
-    {id: '35213613', key: 'NKW75YPCGN', name: 'Ilves/Keltavihre\u00e4 A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1},
-    {id: '35213615', key: 'SGTRRP6YUB', name: 'Ilves/Keltavihre\u00e4 B', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1},
-    {id: '35213617', key: 'ZV5D4CPTYF', name: 'Ilves/Vihre\u00e4 A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 2, divIdx: 1}
+    {id: '35213605', key: 'Z4QDRKWRTR', name: 'Ilves/P2018/A', div: 'P9', divTitle: 'Pojat 2017 \u2013 Piirisarja P9', taso: 1, divIdx: 0, players: ['Nooa Kemppainen','Mikke Laaksonen','Verneri Vatanen','Roger Wolanen','Eeli Saunam\u00e4ki','Jamiel Akalazu','Noel Lamminen','Otso Miranda','Jasper Havia','Emil Paloniemi','Venni Tauriainen','Oliver Kauppinen','Eliel Vaine','Emil Kruus','Pauli Ahonen','Edvin J\u00e4rvinen']},
+    {id: '35213607', key: 'R8C3ZUZPBX', name: 'Ilves/P2018/B', div: 'P9', divTitle: 'Pojat 2017 \u2013 Piirisarja P9', taso: 1, divIdx: 0, players: ['Justus Tiainen','Vilho Keisu','Lemmy Pitk\u00e4nen','Ruben Elomaa','Leo Mayomi','Milo Hermans','Patrick Kyll\u00f6nen','Moses Toppi','Oiva Rossi','Disuneth Withanage','Leevi Demin','Tapio Oinas','Emil N\u00e4ttinen','Otso Jokilehto','Elias Nieminen','Rasmus L\u00e4hteenm\u00e4ki','Matts Dunder']},
+    {id: '35213608', key: '2CNSGFS7V5', name: 'Ilves/Keltainen A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Eeli Huotari','Oliver M\u00e4kiranta','Thomas Tienviiri','Henrik Fischer','Adam Pyysalo','Eetu Palander','Josef Al-Bayati','Mikael Leino','Heikki L\u00e4hteenm\u00e4ki','Lukas Bassina','Erik Lindberg','Eeli Tahvanainen']},
+    {id: '35213611', key: 'K9N7PPBTBF', name: 'Ilves/Keltainen B', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Viljami Hanski','Elias Juutilainen','Santtu Sulonen','Elias Mattila','Mert Efe \u00d6zkan','Aslan Virtanen']},
+    {id: '35213613', key: 'NKW75YPCGN', name: 'Ilves/Keltavihre\u00e4 A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Leevi M\u00e4kinen','Vilho Anttila','An-nur Aminu']},
+    {id: '35213615', key: 'SGTRRP6YUB', name: 'Ilves/Keltavihre\u00e4 B', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Lukas Riponiemi','Veikko Aaltonen','Einari Orisp\u00e4\u00e4']},
+    {id: '35213617', key: 'ZV5D4CPTYF', name: 'Ilves/Vihre\u00e4 A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 2, divIdx: 1, players: ['Elmeri Taskinen']}
   ];
 
   var allResults = [];
@@ -187,11 +187,19 @@
     html += '<div class="players-section">';
     html += '<div class="players-header">';
     html += '<span class="players-icon">\u26BD</span>';
-    html += '<span class="players-title">Pelaajat</span>';
+    html += '<span class="players-title">Pelaajat (' + (team.players ? team.players.length : 0) + ')</span>';
     html += '<span class="players-arrow">\u25BE</span>';
     html += '</div>';
     html += '<div class="players-content">';
-    html += '<div class="players-empty">Pelaajatietoja ei ole viel\u00e4 lis\u00e4tty.</div>';
+    if (team.players && team.players.length > 0) {
+      html += '<div class="players-list">';
+      for (var p = 0; p < team.players.length; p++) {
+        html += '<span class="player-name">' + esc(team.players[p]) + '</span>';
+      }
+      html += '</div>';
+    } else {
+      html += '<div class="players-empty">Pelaajatietoja ei ole viel\u00e4 lis\u00e4tty.</div>';
+    }
     html += '</div>';
     html += '</div>';
 
