@@ -122,25 +122,67 @@
     lines.push('CALSCALE:GREGORIAN');
     lines.push('X-WR-CALNAME:' + icsEscape(team.name));
 
+    /* Group matches by date (= one event per match day) */
+    var days = [];
+    var dayMap = {};
     for (var i = 0; i < matches.length; i++) {
       var mx = matches[i];
-      var start = parseMatchDate(mx.d, mx.t);
-      if (!start) { continue; }
-      var now = new Date();
-      now.setHours(0, 0, 0, 0);
-      if (start < now) { continue; }
-      var end = new Date(start.getTime() + 60 * 60 * 1000);
+      var dk = mx.d;
+      if (!dayMap[dk]) { dayMap[dk] = []; days.push(dk); }
+      dayMap[dk].push(mx);
+    }
 
-      var summary = mx.h + ' \u2013 ' + mx.a;
-      var location = mx.v || '';
+    var now = new Date();
+    now.setHours(0, 0, 0, 0);
+
+    for (var di = 0; di < days.length; di++) {
+      var dayMatches = dayMap[days[di]];
+
+      /* Find earliest and latest time for the day */
+      var earliest = null;
+      var latest = null;
+      for (var k = 0; k < dayMatches.length; k++) {
+        var dt = parseMatchDate(dayMatches[k].d, dayMatches[k].t);
+        if (!dt) { continue; }
+        if (!earliest || dt < earliest) { earliest = dt; }
+        if (!latest || dt > latest) { latest = dt; }
+      }
+      if (!earliest) { continue; }
+      if (earliest < now) { continue; }
+
+      /* Event starts 30min before first match (gathering time) */
+      var gatherStart = new Date(earliest.getTime() - 30 * 60 * 1000);
+
+      /* Event ends 1h after last match */
+      var end = new Date((latest || earliest).getTime() + 60 * 60 * 1000);
+
+      /* Location: use venue from first match */
+      var location = dayMatches[0].v || '';
+
+      /* Gathering time string */
+      var gH = gatherStart.getHours();
+      var gM = gatherStart.getMinutes();
+      var gatherStr = pad2(gH) + ':' + pad2(gM);
+
+      /* Description: gathering + list all matches */
+      var descLines = [];
+      descLines.push('Kokoontuminen klo ' + gatherStr);
+      descLines.push('');
+      for (var m = 0; m < dayMatches.length; m++) {
+        var dm = dayMatches[m];
+        descLines.push(dm.t + '  ' + dm.h + ' - ' + dm.a + (dm.v ? '  (' + dm.v + ')' : ''));
+      }
+      var description = descLines.join('\\n');
+
+      var summary = 'Piirisarja ' + team.name;
 
       lines.push('BEGIN:VEVENT');
-      lines.push('DTSTART:' + toICSDate(start));
+      lines.push('DTSTART:' + toICSDate(gatherStart));
       lines.push('DTEND:' + toICSDate(end));
       lines.push('SUMMARY:' + icsEscape(summary));
       if (location) { lines.push('LOCATION:' + icsEscape(location)); }
-      lines.push('DESCRIPTION:' + icsEscape(team.div + ' \\n' + team.name));
-      lines.push('UID:ilves-p2018-' + team.id + '-' + i + '@ottelukalenteri');
+      lines.push('DESCRIPTION:' + icsEscape(description));
+      lines.push('UID:ilves-p2018-' + team.id + '-day-' + di + '@ottelukalenteri');
       lines.push('END:VEVENT');
     }
 
@@ -164,12 +206,17 @@
     var tName = team.name;
     var html = '';
 
+    /* count upcoming match days */
     var upcoming = 0;
     var today = new Date();
     today.setHours(0, 0, 0, 0);
+    var countedDays = {};
     for (var u = 0; u < matches.length; u++) {
       var mDate = parseMatchDate(matches[u].d, matches[u].t);
-      if (mDate && mDate >= today) { upcoming++; }
+      if (mDate && mDate >= today && !countedDays[matches[u].d]) {
+        countedDays[matches[u].d] = true;
+        upcoming++;
+      }
     }
 
     html += '<div class="team-card">';
@@ -236,6 +283,19 @@
       }
       html += '</div>';
 
+      /* Gathering time: 30min before first match */
+      var firstTime = dm[0].t;
+      if (firstTime) {
+        var ftParts = firstTime.split(':');
+        var ftH = parseInt(ftParts[0], 10) || 0;
+        var ftM = parseInt(ftParts[1], 10) || 0;
+        ftM -= 30;
+        if (ftM < 0) { ftM += 60; ftH -= 1; }
+        if (ftH < 0) { ftH = 0; ftM = 0; }
+        var gatherTime = pad2(ftH) + ':' + pad2(ftM);
+        html += '<div class="gather-time">\uD83D\uDCE2 Kokoontuminen klo ' + gatherTime + '</div>';
+      }
+
       html += '<div class="match-list">';
       for (k2 = 0; k2 < dm.length; k2++) {
         mx = dm[k2];
@@ -269,7 +329,7 @@
       html += '<div class="cal-export-wrap">';
       html += '<button class="cal-export-btn" data-team-idx="' + teamIdx + '">';
       html += '<svg class="cal-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 8h16" stroke="currentColor" stroke-width="1.5"/><path d="M6 2v4M14 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 11.5h2M9 11.5h2M12 11.5h2M6 14.5h2M9 14.5h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>';
-      html += '<span class="cal-text">Vie ' + upcoming + (upcoming === 1 ? ' ottelu' : ' ottelua') + ' kalenteriin</span>';
+      html += '<span class="cal-text">Vie ' + upcoming + (upcoming === 1 ? ' pelitapahtuma' : ' pelitapahtumaa') + ' kalenteriin</span>';
       html += '</button>';
       html += '</div>';
     }
