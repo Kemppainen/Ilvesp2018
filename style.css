@@ -258,6 +258,14 @@ footer {
 }
 footer a { color: var(--green); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
+#pdf-btn {
+  background: var(--green); color: #fff; border: none;
+  padding: 5px 14px; border-radius: 8px;
+  font-size: 12px; font-weight: 600; font-family: 'Inter', sans-serif;
+  cursor: pointer; transition: background 0.2s;
+  margin-left: 4px;
+}
+#pdf-btn:hover { background: #08491F; }
 
 /* ── MOBILE ── */
 @media (max-width: 650px) {
