@@ -11,6 +11,21 @@
     {id: '35213617', key: 'ZV5D4CPTYF', name: 'Ilves/Vihre\u00e4 A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 2, divIdx: 1, players: ['Elmeri Taskinen','Einari Orisp\u00e4\u00e4','Eeli Saunam\u00e4ki','Adam Pyysalo','Josef Al-Bayati','Leevi Demin','Otso Jokilehto','Edvin J\u00e4rvinen #48','Eeli Tahvanainen']}
   ];
 
+  var TAMPERE_VENUES = ['kauppi','tesoma','tammela','hervanta','hakamets','kissanmaa','pyynikki','kaleva','linnainmaa','multisilta','peltolammi','nekala','kaukaj\u00e4rvi','lukonm\u00e4ki','rahola'];
+
+  function isTampereVenue(v) {
+    if (!v) { return true; } /* default to local if unknown */
+    var low = v.toLowerCase();
+    for (var i = 0; i < TAMPERE_VENUES.length; i++) {
+      if (low.indexOf(TAMPERE_VENUES[i]) >= 0) { return true; }
+    }
+    return false;
+  }
+
+  function getGatherMinutes(venue) {
+    return isTampereVenue(venue) ? 30 : 45;
+  }
+
   var allResults = [];
 
   function esc(s) {
@@ -63,12 +78,9 @@
       var homeText = (cells[4] || {}).textContent || '';
       var awayText = (cells[5] || {}).textContent || '';
       var scoreText = (cells[6] || {}).textContent || '';
-      dateText = dateText.trim();
-      timeText = timeText.trim();
-      homeText = homeText.trim();
-      awayText = awayText.trim();
-      scoreText = scoreText.trim();
-      venueText = venueText.trim();
+      dateText = dateText.trim(); timeText = timeText.trim();
+      homeText = homeText.trim(); awayText = awayText.trim();
+      scoreText = scoreText.trim(); venueText = venueText.trim();
       if (!homeText && !awayText) { continue; }
       var pvMatch = dateText.match(/^(ma|ti|ke|to|pe|la|su)\s+/i);
       var pv = pvMatch ? pvMatch[1].toLowerCase() : '';
@@ -110,6 +122,14 @@
     return (s || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
   }
 
+  function calcGatherTime(earliest, gatherMin) {
+    return new Date(earliest.getTime() - gatherMin * 60 * 1000);
+  }
+
+  function formatTime(dt) {
+    return pad2(dt.getHours()) + ':' + pad2(dt.getMinutes());
+  }
+
   function generateICS(teamIdx) {
     var team = TEAMS[teamIdx];
     var matches = allResults[teamIdx] || [];
@@ -122,14 +142,11 @@
     lines.push('CALSCALE:GREGORIAN');
     lines.push('X-WR-CALNAME:' + icsEscape(team.name));
 
-    /* Group matches by date (= one event per match day) */
-    var days = [];
-    var dayMap = {};
+    var days = [], dayMap = {};
     for (var i = 0; i < matches.length; i++) {
-      var mx = matches[i];
-      var dk = mx.d;
+      var dk = matches[i].d;
       if (!dayMap[dk]) { dayMap[dk] = []; days.push(dk); }
-      dayMap[dk].push(mx);
+      dayMap[dk].push(matches[i]);
     }
 
     var now = new Date();
@@ -137,10 +154,7 @@
 
     for (var di = 0; di < days.length; di++) {
       var dayMatches = dayMap[days[di]];
-
-      /* Find earliest and latest time for the day */
-      var earliest = null;
-      var latest = null;
+      var earliest = null, latest = null;
       for (var k = 0; k < dayMatches.length; k++) {
         var dt = parseMatchDate(dayMatches[k].d, dayMatches[k].t);
         if (!dt) { continue; }
@@ -150,23 +164,13 @@
       if (!earliest) { continue; }
       if (earliest < now) { continue; }
 
-      /* Event starts 30min before first match (gathering time) */
-      var gatherStart = new Date(earliest.getTime() - 30 * 60 * 1000);
-
-      /* Event ends 1h after last match */
+      var gatherMin = getGatherMinutes(dayMatches[0].v);
+      var gatherStart = calcGatherTime(earliest, gatherMin);
       var end = new Date((latest || earliest).getTime() + 60 * 60 * 1000);
-
-      /* Location: use venue from first match */
       var location = dayMatches[0].v || '';
 
-      /* Gathering time string */
-      var gH = gatherStart.getHours();
-      var gM = gatherStart.getMinutes();
-      var gatherStr = pad2(gH) + ':' + pad2(gM);
-
-      /* Description: gathering + list all matches */
       var descLines = [];
-      descLines.push('Kokoontuminen klo ' + gatherStr);
+      descLines.push('Kokoontuminen klo ' + formatTime(gatherStart));
       descLines.push('');
       for (var m = 0; m < dayMatches.length; m++) {
         var dm = dayMatches[m];
@@ -238,7 +242,22 @@
       doc.text('Kev\u00e4t 2026', pw - mr, 13, {align: 'right'});
       doc.text(matches.length + ' ottelua', pw - mr, 20, {align: 'right'});
 
-      y = 36;
+      y = 34;
+
+      /* Players */
+      if (team.players && team.players.length > 0) {
+        doc.setFont('helvetica', 'bold'); doc.setFontSize(8);
+        doc.setTextColor(GREEN[0], GREEN[1], GREEN[2]);
+        doc.text('Pelaajat:', ml, y);
+        doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5);
+        doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+        var playerStr = team.players.join(', ');
+        var playerLines = doc.splitTextToSize(playerStr, cw - 18);
+        doc.text(playerLines, ml + 18, y);
+        y += playerLines.length * 3.5 + 4;
+      } else {
+        y += 2;
+      }
 
       /* Group by date */
       var days = [], dayMap = {};
@@ -254,10 +273,11 @@
       doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5);
       doc.setTextColor(255, 255, 255);
       doc.text('PVM', ml + 2, y + 5);
-      doc.text('KELLO', ml + 32, y + 5);
-      doc.text('KOTI', ml + 50, y + 5);
-      doc.text('VIERAS', ml + 110, y + 5);
-      doc.text('KENTT\u00c4', ml + 150, y + 5);
+      doc.text('KOKOONT.', ml + 30, y + 5);
+      doc.text('KELLO', ml + 50, y + 5);
+      doc.text('KOTI', ml + 66, y + 5);
+      doc.text('VIERAS', ml + 116, y + 5);
+      doc.text('KENTT\u00c4', ml + 152, y + 5);
       y += 9;
 
       var rowH = 6.2;
@@ -268,16 +288,18 @@
         var dm = dayMap[dk2];
         var pv = dm[0].pv || '';
 
-        /* Gather time calc */
+        /* Gather time */
+        var gMin = getGatherMinutes(dm[0].v);
         var gH = 0, gM = 0;
         if (dm[0].t) {
           var ftP = dm[0].t.split(':');
           gH = parseInt(ftP[0], 10) || 0;
           gM = parseInt(ftP[1], 10) || 0;
-          gM -= 30;
+          gM -= gMin;
           if (gM < 0) { gM += 60; gH--; }
           if (gH < 0) { gH = 0; gM = 0; }
         }
+        var gatherStr = pad2(gH) + ':' + pad2(gM);
 
         for (var k = 0; k < dm.length; k++) {
           var mx = dm[k];
@@ -287,45 +309,41 @@
             doc.rect(ml, y, cw, rowH, 'F');
           }
 
-          /* Date only on first match of day */
+          /* Date + gather on first match */
           if (k === 0) {
             doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5);
             doc.setTextColor(DARK[0], DARK[1], DARK[2]);
             doc.text(pv + ' ' + dk2, ml + 2, y + 4.2);
+
+            doc.setFont('helvetica', 'bold'); doc.setFontSize(7);
+            doc.setTextColor(GREEN[0], GREEN[1], GREEN[2]);
+            doc.text(gatherStr, ml + 30, y + 4.2);
           }
 
           /* Time */
           doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5);
           doc.setTextColor(GREEN[0], GREEN[1], GREEN[2]);
-          doc.text(mx.t, ml + 32, y + 4.2);
+          doc.text(mx.t, ml + 50, y + 4.2);
 
           /* Home */
           var isH = mx.h.toLowerCase().indexOf('ilves') >= 0;
           doc.setFont('helvetica', isH ? 'bold' : 'normal');
           doc.setTextColor(isH ? DARK[0] : MUTED[0], isH ? DARK[1] : MUTED[1], isH ? DARK[2] : MUTED[2]);
-          doc.text(mx.h, ml + 50, y + 4.2);
+          doc.text(mx.h, ml + 66, y + 4.2);
 
           /* Away */
           var isA = mx.a.toLowerCase().indexOf('ilves') >= 0;
           doc.setFont('helvetica', isA ? 'bold' : 'normal');
           doc.setTextColor(isA ? DARK[0] : MUTED[0], isA ? DARK[1] : MUTED[1], isA ? DARK[2] : MUTED[2]);
-          doc.text(mx.a, ml + 110, y + 4.2);
+          doc.text(mx.a, ml + 116, y + 4.2);
 
           /* Venue */
           doc.setFont('helvetica', 'normal'); doc.setFontSize(6.5);
           doc.setTextColor(MUTED[0], MUTED[1], MUTED[2]);
-          doc.text(mx.v || '', ml + 150, y + 4.2);
+          doc.text(mx.v || '', ml + 152, y + 4.2);
 
           y += rowH;
           alt = !alt;
-        }
-
-        /* Gather time row */
-        if (dm[0].t) {
-          doc.setFont('helvetica', 'normal'); doc.setFontSize(6.5);
-          doc.setTextColor(GREEN[0], GREEN[1], GREEN[2]);
-          doc.text('\u25B6 Kokoontuminen klo ' + pad2(gH) + ':' + pad2(gM), ml + 32, y + 3.5);
-          y += 5;
         }
 
         /* Day separator */
@@ -370,7 +388,6 @@
 
     html += '<div class="team-card">';
     html += '<div class="team-header">';
-    html += '<div class="team-dot' + (t2 ? ' taso2' : '') + '"></div>';
     html += '<div class="team-name">' + esc(team.name) + '</div>';
     html += '<div class="team-meta">' + esc(team.div) + '</div>';
     html += '<div class="match-count">' + matches.length + ' ottelua</div>';
@@ -400,8 +417,7 @@
     html += '</div>';
 
     /* ── Match days ── */
-    var days = [];
-    var dayMap = {};
+    var days = [], dayMap = {};
     for (var i = 0; i < matches.length; i++) {
       var dk = matches[i].d;
       if (!dayMap[dk]) { dayMap[dk] = []; days.push(dk); }
@@ -432,13 +448,14 @@
       }
       html += '</div>';
 
-      /* Gathering time: 30min before first match */
+      /* Gathering time before first match */
       var firstTime = dm[0].t;
       if (firstTime) {
+        var gMin = getGatherMinutes(dm[0].v);
         var ftParts = firstTime.split(':');
         var ftH = parseInt(ftParts[0], 10) || 0;
         var ftM = parseInt(ftParts[1], 10) || 0;
-        ftM -= 30;
+        ftM -= gMin;
         if (ftM < 0) { ftM += 60; ftH -= 1; }
         if (ftH < 0) { ftH = 0; ftM = 0; }
         var gatherTime = pad2(ftH) + ':' + pad2(ftM);
@@ -477,7 +494,7 @@
     if (upcoming > 0) {
       html += '<div class="cal-export-wrap">';
       html += '<button class="cal-export-btn" data-team-idx="' + teamIdx + '">';
-      html += '<svg class="cal-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 8h16" stroke="currentColor" stroke-width="1.5"/><path d="M6 2v4M14 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 11.5h2M9 11.5h2M12 11.5h2M6 14.5h2M9 14.5h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>';
+      html += '<svg class="cal-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="4" width="16" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M2 8h16" stroke="currentColor" stroke-width="1.5"/><path d="M6 2v4M14 2v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>';
       html += '<span class="cal-text">Vie ' + upcoming + (upcoming === 1 ? ' pelitapahtuma' : ' pelitapahtumaa') + ' kalenteriin</span>';
       html += '</button>';
       html += '</div>';
@@ -514,7 +531,6 @@
 
     /* Event delegation */
     el.addEventListener('click', function (e) {
-      /* Calendar export */
       var calBtn = e.target.closest('.cal-export-btn');
       if (calBtn) {
         e.stopPropagation();
@@ -523,7 +539,6 @@
         return;
       }
 
-      /* Players accordion */
       var plHeader = e.target.closest('.players-header');
       if (plHeader) {
         e.stopPropagation();
@@ -532,7 +547,6 @@
         return;
       }
 
-      /* Accordion: toggle team card */
       var header = e.target.closest('.team-header');
       if (header) {
         var card = header.closest('.team-card');
@@ -540,7 +554,6 @@
         return;
       }
 
-      /* Mobile: tap to expand name */
       var row = e.target.closest('.match-row');
       if (!row) { return; }
       if (window.innerWidth > 650) { return; }
