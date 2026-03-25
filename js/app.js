@@ -199,6 +199,155 @@
     setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
   }
 
+  /* ── PDF GENERATION ── */
+
+  window.generatePDF = function () {
+    if (!allResults.length) { return; }
+    var jsPDF = window.jspdf.jsPDF;
+    var doc = new jsPDF({orientation: 'portrait', unit: 'mm', format: 'a4'});
+    var pw = 210, ph = 297;
+    var ml = 14, mr = 14, mt = 14;
+    var cw = pw - ml - mr;
+
+    var GREEN = [10, 92, 47];
+    var YELLOW = [245, 176, 0];
+    var DARK = [30, 30, 30];
+    var MUTED = [100, 100, 100];
+    var LIGHT_BG = [255, 252, 240];
+
+    for (var ti = 0; ti < TEAMS.length; ti++) {
+      if (ti > 0) { doc.addPage(); }
+      var team = TEAMS[ti];
+      var matches = allResults[ti] || [];
+      var y = mt;
+
+      /* Header bar */
+      doc.setFillColor(YELLOW[0], YELLOW[1], YELLOW[2]);
+      doc.rect(0, 0, pw, 28, 'F');
+      doc.setFillColor(GREEN[0], GREEN[1], GREEN[2]);
+      doc.rect(0, 28, pw, 2, 'F');
+
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(16); doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+      doc.text(team.name, ml, 13);
+
+      doc.setFontSize(10); doc.setTextColor(GREEN[0], GREEN[1], GREEN[2]);
+      doc.text(team.divTitle, ml, 20);
+
+      doc.setFontSize(9); doc.setTextColor(MUTED[0], MUTED[1], MUTED[2]);
+      doc.text('Kev\u00e4t 2026', pw - mr, 13, {align: 'right'});
+      doc.text(matches.length + ' ottelua', pw - mr, 20, {align: 'right'});
+
+      y = 36;
+
+      /* Group by date */
+      var days = [], dayMap = {};
+      for (var j = 0; j < matches.length; j++) {
+        var dk = matches[j].d;
+        if (!dayMap[dk]) { dayMap[dk] = []; days.push(dk); }
+        dayMap[dk].push(matches[j]);
+      }
+
+      /* Table header */
+      doc.setFillColor(GREEN[0], GREEN[1], GREEN[2]);
+      doc.rect(ml, y, cw, 7, 'F');
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5);
+      doc.setTextColor(255, 255, 255);
+      doc.text('PVM', ml + 2, y + 5);
+      doc.text('KELLO', ml + 32, y + 5);
+      doc.text('KOTI', ml + 50, y + 5);
+      doc.text('VIERAS', ml + 110, y + 5);
+      doc.text('KENTT\u00c4', ml + 150, y + 5);
+      y += 9;
+
+      var rowH = 6.2;
+      var alt = false;
+
+      for (var di = 0; di < days.length; di++) {
+        var dk2 = days[di];
+        var dm = dayMap[dk2];
+        var pv = dm[0].pv || '';
+
+        /* Gather time calc */
+        var gH = 0, gM = 0;
+        if (dm[0].t) {
+          var ftP = dm[0].t.split(':');
+          gH = parseInt(ftP[0], 10) || 0;
+          gM = parseInt(ftP[1], 10) || 0;
+          gM -= 30;
+          if (gM < 0) { gM += 60; gH--; }
+          if (gH < 0) { gH = 0; gM = 0; }
+        }
+
+        for (var k = 0; k < dm.length; k++) {
+          var mx = dm[k];
+
+          if (alt) {
+            doc.setFillColor(LIGHT_BG[0], LIGHT_BG[1], LIGHT_BG[2]);
+            doc.rect(ml, y, cw, rowH, 'F');
+          }
+
+          /* Date only on first match of day */
+          if (k === 0) {
+            doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5);
+            doc.setTextColor(DARK[0], DARK[1], DARK[2]);
+            doc.text(pv + ' ' + dk2, ml + 2, y + 4.2);
+          }
+
+          /* Time */
+          doc.setFont('helvetica', 'bold'); doc.setFontSize(7.5);
+          doc.setTextColor(GREEN[0], GREEN[1], GREEN[2]);
+          doc.text(mx.t, ml + 32, y + 4.2);
+
+          /* Home */
+          var isH = mx.h.toLowerCase().indexOf('ilves') >= 0;
+          doc.setFont('helvetica', isH ? 'bold' : 'normal');
+          doc.setTextColor(isH ? DARK[0] : MUTED[0], isH ? DARK[1] : MUTED[1], isH ? DARK[2] : MUTED[2]);
+          doc.text(mx.h, ml + 50, y + 4.2);
+
+          /* Away */
+          var isA = mx.a.toLowerCase().indexOf('ilves') >= 0;
+          doc.setFont('helvetica', isA ? 'bold' : 'normal');
+          doc.setTextColor(isA ? DARK[0] : MUTED[0], isA ? DARK[1] : MUTED[1], isA ? DARK[2] : MUTED[2]);
+          doc.text(mx.a, ml + 110, y + 4.2);
+
+          /* Venue */
+          doc.setFont('helvetica', 'normal'); doc.setFontSize(6.5);
+          doc.setTextColor(MUTED[0], MUTED[1], MUTED[2]);
+          doc.text(mx.v || '', ml + 150, y + 4.2);
+
+          y += rowH;
+          alt = !alt;
+        }
+
+        /* Gather time row */
+        if (dm[0].t) {
+          doc.setFont('helvetica', 'normal'); doc.setFontSize(6.5);
+          doc.setTextColor(GREEN[0], GREEN[1], GREEN[2]);
+          doc.text('\u25B6 Kokoontuminen klo ' + pad2(gH) + ':' + pad2(gM), ml + 32, y + 3.5);
+          y += 5;
+        }
+
+        /* Day separator */
+        if (di < days.length - 1) {
+          doc.setDrawColor(230, 220, 190);
+          doc.line(ml, y, ml + cw, y);
+          y += 2;
+        }
+      }
+
+      /* Footer */
+      doc.setDrawColor(GREEN[0], GREEN[1], GREEN[2]);
+      doc.line(ml, ph - 12, ml + cw, ph - 12);
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(7);
+      doc.setTextColor(MUTED[0], MUTED[1], MUTED[2]);
+      doc.text('tulospalvelu.palloliitto.fi', ml, ph - 8);
+      doc.text('Ilves P2018 \u00b7 Kev\u00e4t 2026', pw - mr, ph - 8, {align: 'right'});
+    }
+
+    doc.save('Ilves-P2018-Otteluohjelmat-2026.pdf');
+  };
+
   /* ── RENDERING ── */
 
   function renderTeamCard(team, matches, taso, teamIdx) {
@@ -403,6 +552,9 @@
       var now = new Date();
       upd.textContent = now.getDate() + '.' + (now.getMonth() + 1) + '.' + now.getFullYear();
     }
+
+    var pdfBtn = document.getElementById('pdf-btn');
+    if (pdfBtn) { pdfBtn.style.display = 'inline-block'; }
   }
 
   function load() {
