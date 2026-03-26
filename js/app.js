@@ -11,7 +11,7 @@
     {id: '35213617', key: 'ZV5D4CPTYF', name: 'Ilves/Vihre\u00e4 A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 2, divIdx: 1, players: ['Elmeri Taskinen','Einari Orisp\u00e4\u00e4','Eeli Saunam\u00e4ki','Adam Pyysalo','Josef Al-Bayati','Leevi Demin','Otso Jokilehto','Edvin J\u00e4rvinen #48','Eeli Tahvanainen']}
   ];
 
-  var TAMPERE_VENUES = ['kauppi','tesoma','tammela','hervanta','hakamets','kissanmaa','pyynikki','kaleva','linnainmaa','multisilta','peltolammi','nekala','kaukaj\u00e4rvi','lukonm\u00e4ki','rahola'];
+  var TAMPERE_VENUES = ['kauppi','tesoma','tammela','hervanta','hakamets','kissanmaa','pyynikki','kaleva','linnainmaa','multisilta','peltolammi','nekala','kaukaj\u00e4rvi','lukonm\u00e4ki','rahola','ahvenisj\u00e4rvi','keskuskentt','yl\u00f6j\u00e4rven ilves','lamminrahka','hakkari','harjuniitty','suorama'];
 
   function isTampereVenue(v) {
     if (!v) { return true; } /* default to local if unknown */
@@ -24,6 +24,18 @@
 
   function getGatherMinutes(venue) {
     return isTampereVenue(venue) ? 30 : 45;
+  }
+
+  var VENUE_MAP_OVERRIDES = {
+    'keskuskentt\u00e4': 'Pirkkalan+keskuskentt\u00e4+Pirkkala'
+  };
+
+  function getMapQuery(arenaName) {
+    var low = arenaName.toLowerCase();
+    for (var key in VENUE_MAP_OVERRIDES) {
+      if (low.indexOf(key) >= 0) { return VENUE_MAP_OVERRIDES[key]; }
+    }
+    return arenaName;
   }
 
   var allResults = [];
@@ -444,7 +456,7 @@
       }
       vk = Object.keys(venues);
       if (vk.length >= 1) {
-        html += '<a class="venue-tag" href="https://www.google.com/maps/search/' + encodeURIComponent(vk[0]) + '" target="_blank" rel="noopener"><span class="pin">\uD83D\uDCCD</span> ' + esc(vk[0]) + '</a>';
+        html += '<a class="venue-tag" href="https://www.google.com/maps/search/' + encodeURIComponent(getMapQuery(vk[0])) + '" target="_blank" rel="noopener"><span class="pin">\uD83D\uDCCD</span> ' + esc(vk[0]) + '</a>';
       }
       html += '</div>';
 
