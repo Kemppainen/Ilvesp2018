@@ -338,13 +338,13 @@
           doc.text(mx.t, ml + 50, y + 4.2);
 
           /* Home */
-          var isH = mx.h.toLowerCase().indexOf('ilves') >= 0;
+          var isH = mx.h.trim().toLowerCase() === team.name.trim().toLowerCase();
           doc.setFont('helvetica', isH ? 'bold' : 'normal');
           doc.setTextColor(isH ? DARK[0] : MUTED[0], isH ? DARK[1] : MUTED[1], isH ? DARK[2] : MUTED[2]);
           doc.text(mx.h, ml + 66, y + 4.2);
 
           /* Away */
-          var isA = mx.a.toLowerCase().indexOf('ilves') >= 0;
+          var isA = mx.a.trim().toLowerCase() === team.name.trim().toLowerCase();
           doc.setFont('helvetica', isA ? 'bold' : 'normal');
           doc.setTextColor(isA ? DARK[0] : MUTED[0], isA ? DARK[1] : MUTED[1], isA ? DARK[2] : MUTED[2]);
           doc.text(mx.a, ml + 116, y + 4.2);
