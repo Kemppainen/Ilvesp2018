@@ -2,13 +2,13 @@
   'use strict';
 
   var TEAMS = [
-    {id: '35213605', key: 'Z4QDRKWRTR', name: 'Ilves/P2018/A', div: 'P9', divTitle: 'Pojat 2017 \u2013 Piirisarja P9', taso: 1, divIdx: 0, players: ['Nooa Kemppainen','Mikke Laaksonen','Verneri Vatanen','Leo Mayomi','Noel Lamminen','Aslan Virtanen','Heikki L\u00e4hteenm\u00e4ki','Lukas Bassina']},
-    {id: '35213607', key: 'R8C3ZUZPBX', name: 'Ilves/P2018/B', div: 'P9', divTitle: 'Pojat 2017 \u2013 Piirisarja P9', taso: 1, divIdx: 0, players: ['Justus Tiainen','Vilho Keisu','Lemmy Pitk\u00e4nen','Henrik Fischer','Patrick Kyll\u00f6nen','Jasper Havia','Venni Tauriainen','Emil Kruus']},
-    {id: '35213608', key: '2CNSGFS7V5', name: 'Ilves/Keltainen A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Eeli Huotari #66','Oliver M\u00e4kiranta','Thomas Tienvieri','Elias Mattila','Eetu Palander','Oiva Rossi','Tapio Oinas','Elias Nieminen']},
-    {id: '35213611', key: 'K9N7PPBTBF', name: 'Ilves/Keltainen B', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Viljami Hanski','Elias Juutilainen','Santtu Sulonen','An-nur Aminu','Mert Efe \u00d6zkan','Mikael Leino','Oliver Kauppinen','Pauli Ahonen']},
-    {id: '35213613', key: 'NKW75YPCGN', name: 'Ilves/Keltavihre\u00e4 A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Leevi M\u00e4kinen','Vilho Anttila','Roger Wolanen','Jamiel Akalazu','Otso Miranda','Disuneth Withanage','Emil N\u00e4ttinen','Rasmus L\u00e4hteenm\u00e4ki','Matts Dunder']},
-    {id: '35213615', key: 'SGTRRP6YUB', name: 'Ilves/Keltavihre\u00e4 B', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Lukas Riponiemi','Veikko Aaltonen','Ruben Elomaa','Milo Hermans','Moses Toppi','Emil Paloniemi','Eliel Vaine','Erik Lindberg']},
-    {id: '35213617', key: 'ZV5D4CPTYF', name: 'Ilves/Vihre\u00e4 A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 2, divIdx: 1, players: ['Elmeri Taskinen','Einari Orisp\u00e4\u00e4','Eeli Saunam\u00e4ki','Adam Pyysalo','Josef Al-Bayati','Leevi Demin','Otso Jokilehto','Edvin J\u00e4rvinen #48','Eeli Tahvanainen']}
+    {id: '35213605', key: 'Z4QDRKWRTR', name: 'Ilves/P2018/A', div: 'P9', divTitle: 'Pojat 2017 \u2013 Piirisarja P9', taso: 1, divIdx: 0, players: ['Nooa Kemppainen','Thomas Tienvieri','Noel Lamminen','Lemmy Pitk\u00e4nen','Elias Mattila','Jasper Havia','Veikko Aaltonen','Patrick Kyll\u00f6nen']},
+    {id: '35213607', key: 'R8C3ZUZPBX', name: 'Ilves/P2018/B', div: 'P9', divTitle: 'Pojat 2017 \u2013 Piirisarja P9', taso: 1, divIdx: 0, players: ['Aslan Virtanen','Heikki L\u00e4hteenm\u00e4ki','Henrik Fischer','Leo Mayomi','Santtu Sulonen','Verneri Vatanen','Venni Tauriainen','Vilho Anttila']},
+    {id: '35213608', key: '2CNSGFS7V5', name: 'Ilves/Keltainen A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Oiva Rossi','Oliver M\u00e4kiranta','Emil Kruus','Eeli Saunam\u00e4ki','Justus Tiainen','Jamiel Akalazu','Lakindu Gamlath','Tapio Oinas']},
+    {id: '35213611', key: 'K9N7PPBTBF', name: 'Ilves/Keltainen B', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Mikke Laaksonen','Lukas Bassina','Elias Juutilainen','Eeli Huotari #66','Eetu Palander','Eliel Vaine','Matts Dunder','Roger Wolanen']},
+    {id: '35213613', key: 'NKW75YPCGN', name: 'Ilves/Keltavihre\u00e4 A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Viljami Hanski','Vilho Keisu','Elias Nieminen','An-nur Aminu','Mikael Leino','Erik Lindberg','Moses Toppi','Ruben Elomaa']},
+    {id: '35213615', key: 'SGTRRP6YUB', name: 'Ilves/Keltavihre\u00e4 B', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Lukas Riponiemi','Leevi M\u00e4kinen','Milo Hermans','Emil Paloniemi','Otso Miranda','Oliver Kauppinen','Mert Efe \u00d6zkan','Pauli Ahonen']},
+    {id: '35213617', key: 'ZV5D4CPTYF', name: 'Ilves/Vihre\u00e4 A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 2, divIdx: 1, players: ['Edvin J\u00e4rvinen #48','Rasmus L\u00e4hteenm\u00e4ki','Adam Pyysalo','Eeli Tahvanainen','Einari Orisp\u00e4\u00e4','Elmeri Taskinen','Josef Al-Bayati','Leevi Demin','Otso Jokilehto']}
   ];
 
   var TAMPERE_VENUES = ['kauppi','tesoma','tammela','hervanta','hakamets','kissanmaa','pyynikki','kaleva','linnainmaa','multisilta','peltolammi','nekala','kaukaj\u00e4rvi','lukonm\u00e4ki','rahola','ahvenisj\u00e4rvi','keskuskentt','yl\u00f6j\u00e4rven ilves','lamminrahka','hakkari','harjuniitty','suorama'];
@@ -251,7 +251,7 @@
       doc.text(team.divTitle, ml, 20);
 
       doc.setFontSize(9); doc.setTextColor(MUTED[0], MUTED[1], MUTED[2]);
-      doc.text('Kev\u00e4t 2026', pw - mr, 13, {align: 'right'});
+      doc.text('Syksy 2026', pw - mr, 13, {align: 'right'});
       doc.text(matches.length + ' ottelua', pw - mr, 20, {align: 'right'});
 
       y = 34;
@@ -372,10 +372,10 @@
       doc.setFont('helvetica', 'normal'); doc.setFontSize(7);
       doc.setTextColor(MUTED[0], MUTED[1], MUTED[2]);
       doc.text('tulospalvelu.palloliitto.fi', ml, ph - 8);
-      doc.text('Ilves P2018 \u00b7 Kev\u00e4t 2026', pw - mr, ph - 8, {align: 'right'});
+      doc.text('Ilves P2018 \u00b7 Syksy 2026', pw - mr, ph - 8, {align: 'right'});
     }
 
-    doc.save('Ilves-P2018-Otteluohjelmat-2026.pdf');
+    doc.save('Ilves-P2018-Otteluohjelmat-Syksy-2026.pdf');
   };
 
   /* ── RENDERING ── */

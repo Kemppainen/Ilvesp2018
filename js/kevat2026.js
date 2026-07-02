@@ -1,0 +1,297 @@
+/* Ilves P2018 – Kevät 2026 (arkisto) */
+(function () {
+  'use strict';
+
+  var TEAMS = [
+    {id: '35213605', key: 'Z4QDRKWRTR', name: 'Ilves/P2018/A', div: 'P9', divTitle: 'Pojat 2017 \u2013 Piirisarja P9', taso: 1, divIdx: 0, players: ['Nooa Kemppainen','Mikke Laaksonen','Verneri Vatanen','Leo Mayomi','Noel Lamminen','Aslan Virtanen','Heikki L\u00e4hteenm\u00e4ki','Lukas Bassina']},
+    {id: '35213607', key: 'R8C3ZUZPBX', name: 'Ilves/P2018/B', div: 'P9', divTitle: 'Pojat 2017 \u2013 Piirisarja P9', taso: 1, divIdx: 0, players: ['Justus Tiainen','Vilho Keisu','Lemmy Pitk\u00e4nen','Henrik Fischer','Patrick Kyll\u00f6nen','Jasper Havia','Venni Tauriainen','Emil Kruus']},
+    {id: '35213608', key: '2CNSGFS7V5', name: 'Ilves/Keltainen A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Eeli Huotari #66','Oliver M\u00e4kiranta','Thomas Tienvieri','Elias Mattila','Eetu Palander','Oiva Rossi','Tapio Oinas','Elias Nieminen']},
+    {id: '35213611', key: 'K9N7PPBTBF', name: 'Ilves/Keltainen B', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Viljami Hanski','Elias Juutilainen','Santtu Sulonen','An-nur Aminu','Mert Efe \u00d6zkan','Mikael Leino','Oliver Kauppinen','Pauli Ahonen']},
+    {id: '35213613', key: 'NKW75YPCGN', name: 'Ilves/Keltavihre\u00e4 A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Leevi M\u00e4kinen','Vilho Anttila','Roger Wolanen','Jamiel Akalazu','Otso Miranda','Disuneth Withanage','Emil N\u00e4ttinen','Rasmus L\u00e4hteenm\u00e4ki','Matts Dunder']},
+    {id: '35213615', key: 'SGTRRP6YUB', name: 'Ilves/Keltavihre\u00e4 B', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 1, divIdx: 1, players: ['Lukas Riponiemi','Veikko Aaltonen','Ruben Elomaa','Milo Hermans','Moses Toppi','Emil Paloniemi','Eliel Vaine','Erik Lindberg']},
+    {id: '35213617', key: 'ZV5D4CPTYF', name: 'Ilves/Vihre\u00e4 A', div: 'P8', divTitle: 'Pojat 2018 \u2013 Piirisarja P8', taso: 2, divIdx: 1, players: ['Elmeri Taskinen','Einari Orisp\u00e4\u00e4','Eeli Saunam\u00e4ki','Adam Pyysalo','Josef Al-Bayati','Leevi Demin','Otso Jokilehto','Edvin J\u00e4rvinen #48','Eeli Tahvanainen']}
+  ];
+
+  var TAMPERE_VENUES = ['kauppi','tesoma','tammela','hervanta','hakamets','kissanmaa','pyynikki','kaleva','linnainmaa','multisilta','peltolammi','nekala','kaukaj\u00e4rvi','lukonm\u00e4ki','rahola','ahvenisj\u00e4rvi','keskuskentt','yl\u00f6j\u00e4rven ilves','lamminrahka','hakkari','harjuniitty','suorama'];
+
+  function isTampereVenue(v) {
+    if (!v) { return true; }
+    var low = v.toLowerCase();
+    for (var i = 0; i < TAMPERE_VENUES.length; i++) {
+      if (low.indexOf(TAMPERE_VENUES[i]) >= 0) { return true; }
+    }
+    return false;
+  }
+
+  function getGatherMinutes(venue) {
+    return isTampereVenue(venue) ? 30 : 45;
+  }
+
+  var VENUE_MAP_OVERRIDES = {
+    'keskuskentt\u00e4': 'Pirkkalan+keskuskentt\u00e4+Pirkkala'
+  };
+
+  function getMapQuery(arenaName) {
+    var low = arenaName.toLowerCase();
+    for (var key in VENUE_MAP_OVERRIDES) {
+      if (low.indexOf(key) >= 0) { return VENUE_MAP_OVERRIDES[key]; }
+    }
+    return arenaName;
+  }
+
+  var allResults = [];
+
+  function esc(s) {
+    var d = document.createElement('div');
+    d.textContent = s || '';
+    return d.innerHTML;
+  }
+
+  function isOurTeam(n, teamName) {
+    if (!n || !teamName) { return false; }
+    return n.trim().toLowerCase() === teamName.trim().toLowerCase();
+  }
+
+  function tag(n, teamName) {
+    if (isOurTeam(n, teamName)) { return '<span class="ilves">' + esc(n) + '</span>'; }
+    return esc(n);
+  }
+
+  function splitVenue(v) {
+    if (!v) { return {arena: '', detail: ''}; }
+    var m = v.match(/^(.+?)\s+(TN\s*.+|N\s+[A-Z].*)$/i);
+    if (m) { return {arena: m[1].trim(), detail: m[2].trim()}; }
+    return {arena: v, detail: ''};
+  }
+
+  function fetchWidget(teamId, teamKey) {
+    var url = 'https://spl.torneopal.fi/torneopal/ajax/[torneopal:team_schedule:team=' + teamId + String.fromCharCode(38) + 'key=' + teamKey + ']';
+    return fetch(url, {cache: 'no-store'})
+      .then(function (r) { return r.text(); })
+      .then(function (txt) {
+        var m = txt.match(/innerHTML\s*=\s*"([\s\S]*?)";/);
+        if (!m) { return []; }
+        var html = m[1].replace(/\\"/g, '"').replace(/\\'/g, "'").replace(/\\\\/g, '\\');
+        var tmp = document.createElement('div');
+        tmp.innerHTML = html;
+        return parseTable(tmp);
+      })
+      .catch(function () { return []; });
+  }
+
+  function parseTable(container) {
+    var rows = container.querySelectorAll('tr');
+    var matches = [];
+    for (var i = 0; i < rows.length; i++) {
+      var cells = rows[i].querySelectorAll('td');
+      if (cells.length < 6) { continue; }
+      var dateText = (cells[1] || {}).textContent || '';
+      var timeText = (cells[2] || {}).textContent || '';
+      var venueText = (cells[3] || {}).textContent || '';
+      var homeText = (cells[4] || {}).textContent || '';
+      var awayText = (cells[5] || {}).textContent || '';
+      var scoreText = (cells[6] || {}).textContent || '';
+      dateText = dateText.trim(); timeText = timeText.trim();
+      homeText = homeText.trim(); awayText = awayText.trim();
+      scoreText = scoreText.trim(); venueText = venueText.trim();
+      if (!homeText && !awayText) { continue; }
+      var pvMatch = dateText.match(/^(ma|ti|ke|to|pe|la|su)\s+/i);
+      var pv = pvMatch ? pvMatch[1].toLowerCase() : '';
+      var dateOnly = dateText.replace(/^(ma|ti|ke|to|pe|la|su)\s+/i, '').trim();
+      matches.push({d: dateOnly, pv: pv, t: timeText, h: homeText, a: awayText, s: scoreText, v: venueText});
+    }
+    return matches;
+  }
+
+  function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+
+  function parseMatchDate(dateStr, timeStr) {
+    var dp = dateStr.split('.');
+    if (dp.length < 3) { return null; }
+    var day = parseInt(dp[0], 10);
+    var mon = parseInt(dp[1], 10);
+    var year = parseInt(dp[2], 10);
+    if (year < 100) { year += 2000; }
+    var hour = 0, min = 0;
+    if (timeStr) {
+      var tp = timeStr.split(':');
+      hour = parseInt(tp[0], 10) || 0;
+      min = parseInt(tp[1], 10) || 0;
+    }
+    return new Date(year, mon - 1, day, hour, min, 0);
+  }
+
+  function renderTeamCard(team, matches) {
+    var tName = team.name;
+    var html = '';
+
+    html += '<div class="team-card">';
+    html += '<div class="team-header">';
+    html += '<div class="team-name">' + esc(team.name) + '</div>';
+    html += '<div class="team-meta">' + esc(team.div) + '</div>';
+    html += '<div class="match-count">' + matches.length + ' ottelua</div>';
+    html += '<div class="accordion-arrow">\u25BE</div>';
+    html += '</div>';
+
+    html += '<div class="round-group collapsed">';
+
+    /* Players */
+    html += '<div class="players-section">';
+    html += '<div class="players-header">';
+    html += '<span class="players-icon">\u26BD</span>';
+    html += '<span class="players-title">Pelaajat (' + (team.players ? team.players.length : 0) + ')</span>';
+    html += '<span class="players-arrow">\u25BE</span>';
+    html += '</div>';
+    html += '<div class="players-content">';
+    if (team.players && team.players.length > 0) {
+      html += '<div class="players-list">';
+      for (var p = 0; p < team.players.length; p++) {
+        html += '<span class="player-name">' + esc(team.players[p]) + '</span>';
+      }
+      html += '</div>';
+    } else {
+      html += '<div class="players-empty">Pelaajatietoja ei ole lis\u00e4tty.</div>';
+    }
+    html += '</div></div>';
+
+    /* Match days */
+    var days = [], dayMap = {};
+    for (var i = 0; i < matches.length; i++) {
+      var dk = matches[i].d;
+      if (!dayMap[dk]) { dayMap[dk] = []; days.push(dk); }
+      dayMap[dk].push(matches[i]);
+    }
+
+    for (var di = 0; di < days.length; di++) {
+      var dk2 = days[di];
+      var dm = dayMap[dk2];
+      var pv = dm[0].pv || '';
+
+      html += '<div class="date-group">';
+      html += '<div class="date-venue-row">';
+      html += '<div class="date-badge">' + pv + ' \u00a0' + esc(dk2) + '</div>';
+
+      var venues = {};
+      for (var k = 0; k < dm.length; k++) {
+        if (dm[k].v) {
+          var arenaName = splitVenue(dm[k].v).arena;
+          venues[arenaName] = 1;
+        }
+      }
+      var vk = Object.keys(venues);
+      if (vk.length >= 1) {
+        html += '<a class="venue-tag" href="https://www.google.com/maps/search/' + encodeURIComponent(getMapQuery(vk[0])) + '" target="_blank" rel="noopener"><span class="pin">\uD83D\uDCCD</span> ' + esc(vk[0]) + '</a>';
+      }
+      html += '</div>';
+
+      /* Gather time */
+      var firstTime = dm[0].t;
+      if (firstTime) {
+        var gMin = getGatherMinutes(dm[0].v);
+        var ftParts = firstTime.split(':');
+        var ftH = parseInt(ftParts[0], 10) || 0;
+        var ftM = parseInt(ftParts[1], 10) || 0;
+        ftM -= gMin;
+        if (ftM < 0) { ftM += 60; ftH -= 1; }
+        if (ftH < 0) { ftH = 0; ftM = 0; }
+        html += '<div class="gather-time">\uD83D\uDCE2 Kokoontuminen klo ' + pad2(ftH) + ':' + pad2(ftM) + '</div>';
+      }
+
+      html += '<div class="match-list">';
+      for (var k2 = 0; k2 < dm.length; k2++) {
+        var mx = dm[k2];
+        var hi = isOurTeam(mx.h, tName);
+        var rowCls = 'match-row ' + (hi ? 'home-match' : 'away-match');
+        var hasScore = mx.s && mx.s.trim() !== '' && mx.s.trim() !== '-' && mx.s.trim() !== '\u2013' && mx.s.trim().toLowerCase() !== 'ennakko';
+        var scoreCls = 'col-score' + (hasScore ? ' played' : '');
+        var vSplit = splitVenue(mx.v);
+        var detailHtml = vSplit.detail ? '<span class="field-detail">' + esc(vSplit.detail) + '</span>' : '';
+
+        html += '<div class="' + rowCls + '">';
+        html += '<div class="match-row-top">';
+        html += '<span class="col-time">' + esc(mx.t) + '</span>';
+        html += detailHtml;
+        html += '</div>';
+        html += '<div class="match-row-bottom">';
+        html += '<span class="col-home">' + tag(mx.h, tName) + '</span>';
+        html += '<span class="col-vs">\u2014</span>';
+        html += '<span class="col-away">' + tag(mx.a, tName) + '</span>';
+        html += '<span class="' + scoreCls + '">' + (hasScore ? esc(mx.s) : '\u2014') + '</span>';
+        html += '</div></div>';
+      }
+      html += '</div></div>';
+    }
+
+    html += '</div></div>';
+    return html;
+  }
+
+  function renderAll(results) {
+    allResults = results;
+    var el = document.getElementById('content');
+    var html = '';
+    var lastDivIdx = -1;
+
+    for (var i = 0; i < TEAMS.length; i++) {
+      var team = TEAMS[i];
+      var matches = results[i] || [];
+
+      if (team.divIdx !== lastDivIdx) {
+        html += '<div class="division-header">';
+        html += '<div class="division-pill">' + esc(team.div) + '</div>';
+        html += '<div class="division-title">' + esc(team.divTitle) + '</div>';
+        html += '</div>';
+        lastDivIdx = team.divIdx;
+      }
+
+      html += renderTeamCard(team, matches);
+    }
+
+    el.innerHTML = html;
+
+    el.addEventListener('click', function (e) {
+      var plHeader = e.target.closest('.players-header');
+      if (plHeader) {
+        e.stopPropagation();
+        var section = plHeader.closest('.players-section');
+        if (section) { section.classList.toggle('open'); }
+        return;
+      }
+      var header = e.target.closest('.team-header');
+      if (header) {
+        var card = header.closest('.team-card');
+        if (card) { card.classList.toggle('open'); }
+        return;
+      }
+      var row = e.target.closest('.match-row');
+      if (!row) { return; }
+      if (window.innerWidth > 650) { return; }
+      row.classList.toggle('expanded');
+    });
+
+    var upd = document.getElementById('updated-date');
+    if (upd) {
+      var now = new Date();
+      upd.textContent = now.getDate() + '.' + (now.getMonth() + 1) + '.' + now.getFullYear();
+    }
+  }
+
+  function load() {
+    var promises = [];
+    for (var i = 0; i < TEAMS.length; i++) {
+      promises.push(fetchWidget(TEAMS[i].id, TEAMS[i].key));
+    }
+    Promise.all(promises)
+      .then(function (results) {
+        document.getElementById('loading').classList.add('hidden');
+        renderAll(results);
+      })
+      .catch(function (err) {
+        document.getElementById('loading').innerHTML = '<div style="color:#F5B000">\u26A0\uFE0F Ottelutietoja ei voitu ladata.</div>';
+      });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', load);
+  } else { load(); }
+})();
