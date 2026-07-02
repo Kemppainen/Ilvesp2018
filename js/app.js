@@ -13,6 +13,8 @@
 
   var TAMPERE_VENUES = ['kauppi','tesoma','tammela','hervanta','hakamets','kissanmaa','pyynikki','kaleva','linnainmaa','multisilta','peltolammi','nekala','kaukaj\u00e4rvi','lukonm\u00e4ki','rahola','ahvenisj\u00e4rvi','keskuskentt','yl\u00f6j\u00e4rven ilves','lamminrahka','hakkari','harjuniitty','suorama'];
 
+  var SEASON_START = new Date(2026, 6, 2); /* 2.7.2026 (month is 0-indexed) */
+
   function isTampereVenue(v) {
     if (!v) { return true; } /* default to local if unknown */
     var low = v.toLowerCase();
@@ -213,6 +215,15 @@
     a.click();
     document.body.removeChild(a);
     setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+  }
+
+  function filterSeason(matches) {
+    var filtered = [];
+    for (var i = 0; i < matches.length; i++) {
+      var dt = parseMatchDate(matches[i].d, matches[i].t);
+      if (dt && dt >= SEASON_START) { filtered.push(matches[i]); }
+    }
+    return filtered;
   }
 
   /* ── PDF GENERATION ── */
@@ -518,14 +529,17 @@
   }
 
   function renderAll(results) {
-    allResults = results;
+    allResults = [];
+    for (var fi = 0; fi < results.length; fi++) {
+      allResults.push(filterSeason(results[fi] || []));
+    }
     var el = document.getElementById('content');
     var html = '';
     var lastDivIdx = -1;
 
     for (var i = 0; i < TEAMS.length; i++) {
       var team = TEAMS[i];
-      var matches = results[i] || [];
+      var matches = allResults[i];
 
       if (team.divIdx !== lastDivIdx) {
         var t2x = (team.taso === 2);
