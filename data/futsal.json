@@ -1,0 +1,653 @@
+{
+ "updated": "16.10.2026",
+ "teams": [
+  {
+   "id": "35203235",
+   "name": "Ilves P2018",
+   "div": "P10",
+   "divTitle": "P10 Futsal (2017) – Länsi Futsal",
+   "divIdx": 0,
+   "matches": [
+    {
+     "d": "8.11.2026",
+     "t": "13:20",
+     "arena": "Kauppi Sports Center",
+     "field": "Kenttä 1",
+     "h": "Ilves/keltainen",
+     "a": "Ilves P2018"
+    },
+    {
+     "d": "8.11.2026",
+     "t": "14:00",
+     "arena": "Kauppi Sports Center",
+     "field": "Kenttä 1",
+     "h": "Ilves P2018",
+     "a": "Tampere United/2018"
+    },
+    {
+     "open": "16.11.–6.12.2026",
+     "h": "TP-49 2018",
+     "a": "Ilves P2018"
+    },
+    {
+     "open": "16.11.–6.12.2026",
+     "h": "Ilves P2018",
+     "a": "PJK/valkoinen"
+    },
+    {
+     "d": "7.2.2027",
+     "t": "16:05",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "Ilves P2018",
+     "a": "FC Kangasala"
+    },
+    {
+     "d": "7.2.2027",
+     "t": "17:25",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "LeKi-futis",
+     "a": "Ilves P2018"
+    },
+    {
+     "d": "13.2.2027",
+     "t": "15:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves Keltavihreä",
+     "a": "Ilves P2018"
+    },
+    {
+     "d": "13.2.2027",
+     "t": "16:10",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves P2018",
+     "a": "Ilves-Kissat jr"
+    },
+    {
+     "d": "21.3.2027",
+     "t": "16:00",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D2",
+     "h": "Ilves P2018",
+     "a": "Tampere United"
+    },
+    {
+     "d": "21.3.2027",
+     "t": "17:20",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D2",
+     "h": "Ilves/Vihreä A",
+     "a": "Ilves P2018"
+    }
+   ],
+   "players": []
+  },
+  {
+   "id": "35231528",
+   "name": "Ilves P2018 Alfa",
+   "div": "P10",
+   "divTitle": "P10 Futsal (2017) – Länsi Futsal",
+   "divIdx": 0,
+   "matches": [
+    {
+     "d": "8.11.2026",
+     "t": "12:40",
+     "arena": "Kauppi Sports Center",
+     "field": "Kenttä 1",
+     "h": "Ilves P2018 Alfa",
+     "a": "Ilves/keltainen"
+    },
+    {
+     "d": "8.11.2026",
+     "t": "14:40",
+     "arena": "Kauppi Sports Center",
+     "field": "Kenttä 1",
+     "h": "Tampere United/2018",
+     "a": "Ilves P2018 Alfa"
+    },
+    {
+     "open": "16.11.–6.12.2026",
+     "h": "PJK/valkoinen",
+     "a": "Ilves P2018 Alfa"
+    },
+    {
+     "open": "16.11.–6.12.2026",
+     "h": "Ilves P2018 Alfa",
+     "a": "TP-49 2018"
+    },
+    {
+     "d": "7.2.2027",
+     "t": "16:45",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "Ilves P2018 Alfa",
+     "a": "LeKi-futis"
+    },
+    {
+     "d": "7.2.2027",
+     "t": "18:05",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "FC Kangasala",
+     "a": "Ilves P2018 Alfa"
+    },
+    {
+     "d": "13.2.2027",
+     "t": "14:50",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves-Kissat jr",
+     "a": "Ilves P2018 Alfa"
+    },
+    {
+     "d": "13.2.2027",
+     "t": "16:50",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves P2018 Alfa",
+     "a": "Ilves Keltavihreä"
+    },
+    {
+     "d": "21.3.2027",
+     "t": "16:40",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D2",
+     "h": "Ilves P2018 Alfa",
+     "a": "Ilves/Vihreä A"
+    },
+    {
+     "d": "21.3.2027",
+     "t": "18:00",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D2",
+     "h": "Tampere United",
+     "a": "Ilves P2018 Alfa"
+    }
+   ],
+   "players": []
+  },
+  {
+   "id": "35203236",
+   "name": "Ilves",
+   "div": "P9",
+   "divTitle": "P9 Futsal (2018) – Länsi Futsal",
+   "divIdx": 1,
+   "matches": [
+    {
+     "open": "2.11.–29.11.2026",
+     "h": "FC Kangasala/musta",
+     "a": "Ilves"
+    },
+    {
+     "open": "2.11.–29.11.2026",
+     "h": "Ilves",
+     "a": "Ilves Keltainen"
+    },
+    {
+     "d": "12.12.2026",
+     "t": "14:00",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves",
+     "a": "TPV Punainen"
+    },
+    {
+     "d": "12.12.2026",
+     "t": "15:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Mad Max / P2018",
+     "a": "Ilves"
+    },
+    {
+     "open": "4.1.–24.1.2027",
+     "h": "Ilves P2019",
+     "a": "Ilves"
+    },
+    {
+     "open": "4.1.–24.1.2027",
+     "h": "Ilves",
+     "a": "Ylöjärven Ilves"
+    },
+    {
+     "d": "30.1.2027",
+     "t": "16:45",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "Ilves",
+     "a": "Ilves Vihreä"
+    },
+    {
+     "d": "30.1.2027",
+     "t": "17:45",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "TP-49 2018",
+     "a": "Ilves"
+    },
+    {
+     "d": "21.2.2027",
+     "t": "10:45",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "Ilves P2019 Alfa",
+     "a": "Ilves"
+    },
+    {
+     "d": "21.2.2027",
+     "t": "11:15",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "Ilves",
+     "a": "Tampere United"
+    }
+   ],
+   "players": []
+  },
+  {
+   "id": "35203237",
+   "name": "Ilves Keltainen",
+   "div": "P9",
+   "divTitle": "P9 Futsal (2018) – Länsi Futsal",
+   "divIdx": 1,
+   "matches": [
+    {
+     "open": "2.11.–29.11.2026",
+     "h": "Ilves Keltainen",
+     "a": "Ilves Keltavihreä"
+    },
+    {
+     "open": "2.11.–29.11.2026",
+     "h": "Ilves",
+     "a": "Ilves Keltainen"
+    },
+    {
+     "d": "12.12.2026",
+     "t": "12:00",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves Vihreä",
+     "a": "Ilves Keltainen"
+    },
+    {
+     "d": "12.12.2026",
+     "t": "12:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves Keltainen",
+     "a": "Tampere United/2"
+    },
+    {
+     "d": "9.1.2027",
+     "t": "14:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves Keltainen",
+     "a": "Mad Max / P2018"
+    },
+    {
+     "d": "9.1.2027",
+     "t": "15:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "NoPS",
+     "a": "Ilves Keltainen"
+    },
+    {
+     "d": "31.1.2027",
+     "t": "12:00",
+     "arena": "Kauppi Sports Center",
+     "field": "Kenttä 2",
+     "h": "TPV Punainen",
+     "a": "Ilves Keltainen"
+    },
+    {
+     "d": "31.1.2027",
+     "t": "13:00",
+     "arena": "Kauppi Sports Center",
+     "field": "Kenttä 2",
+     "h": "Ilves Keltainen",
+     "a": "Ilves P2019 Alfa"
+    },
+    {
+     "d": "20.2.2027",
+     "t": "15:40",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "Ilves Keltainen",
+     "a": "TP-49 2018"
+    },
+    {
+     "d": "20.2.2027",
+     "t": "17:10",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "Ilves P2019",
+     "a": "Ilves Keltainen"
+    }
+   ],
+   "players": []
+  },
+  {
+   "id": "35203238",
+   "name": "Ilves Keltavihreä",
+   "div": "P9",
+   "divTitle": "P9 Futsal (2018) – Länsi Futsal",
+   "divIdx": 1,
+   "matches": [
+    {
+     "open": "2.11.–29.11.2026",
+     "h": "Ilves Keltainen",
+     "a": "Ilves Keltavihreä"
+    },
+    {
+     "open": "2.11.–29.11.2026",
+     "h": "Ilves Keltavihreä",
+     "a": "FC Kangasala/musta"
+    },
+    {
+     "open": "30.11.–20.12.2026",
+     "h": "Ilves Keltavihreä",
+     "a": "Ylöjärven Ilves"
+    },
+    {
+     "open": "30.11.–20.12.2026",
+     "h": "Ilves P2019 Alfa",
+     "a": "Ilves Keltavihreä"
+    },
+    {
+     "d": "23.1.2027",
+     "t": "11:00",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "Ilves Keltavihreä",
+     "a": "Ilves Vihreä"
+    },
+    {
+     "d": "23.1.2027",
+     "t": "11:30",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "TP-49 2018",
+     "a": "Ilves Keltavihreä"
+    },
+    {
+     "d": "7.2.2027",
+     "t": "11:00",
+     "arena": "Kauppi Sports Center",
+     "field": "Kenttä 2",
+     "h": "Tampere United",
+     "a": "Ilves Keltavihreä"
+    },
+    {
+     "d": "7.2.2027",
+     "t": "11:30",
+     "arena": "Kauppi Sports Center",
+     "field": "Kenttä 2",
+     "h": "Ilves Keltavihreä",
+     "a": "Ilves P2019"
+    },
+    {
+     "open": "15.2.–21.3.2027",
+     "h": "Mad Max / P2018",
+     "a": "Ilves Keltavihreä"
+    },
+    {
+     "open": "15.2.–21.3.2027",
+     "h": "Ilves Keltavihreä",
+     "a": "TPV Punainen"
+    }
+   ],
+   "players": []
+  },
+  {
+   "id": "35203239",
+   "name": "Ilves Vihreä",
+   "div": "P9",
+   "divTitle": "P9 Futsal (2018) – Länsi Futsal",
+   "divIdx": 1,
+   "matches": [
+    {
+     "d": "7.11.2026",
+     "t": "12:00",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves Vihreä",
+     "a": "Ilves P2019 Alfa"
+    },
+    {
+     "d": "7.11.2026",
+     "t": "13:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Mad Max / P2018",
+     "a": "Ilves Vihreä"
+    },
+    {
+     "d": "12.12.2026",
+     "t": "12:00",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves Vihreä",
+     "a": "Ilves Keltainen"
+    },
+    {
+     "d": "12.12.2026",
+     "t": "13:00",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Tampere United/2",
+     "a": "Ilves Vihreä"
+    },
+    {
+     "d": "23.1.2027",
+     "t": "11:00",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "Ilves Keltavihreä",
+     "a": "Ilves Vihreä"
+    },
+    {
+     "d": "23.1.2027",
+     "t": "12:00",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "Ilves Vihreä",
+     "a": "Tampere United"
+    },
+    {
+     "d": "30.1.2027",
+     "t": "16:45",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "Ilves",
+     "a": "Ilves Vihreä"
+    },
+    {
+     "d": "30.1.2027",
+     "t": "17:15",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D3",
+     "h": "Ilves Vihreä",
+     "a": "TP-49 2018"
+    },
+    {
+     "open": "15.2.–21.3.2027",
+     "h": "Ylöjärven Ilves",
+     "a": "Ilves Vihreä"
+    },
+    {
+     "open": "15.2.–21.3.2027",
+     "h": "Ilves Vihreä",
+     "a": "FC Kangasala/musta"
+    }
+   ],
+   "players": []
+  },
+  {
+   "id": "35231529",
+   "name": "Ilves Vihreäkeltainen",
+   "div": "P9",
+   "divTitle": "P9 Futsal (2018) – Länsi Futsal",
+   "divIdx": 1,
+   "matches": [
+    {
+     "d": "7.11.2026",
+     "t": "14:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves Vihreäkeltainen",
+     "a": "VesVi"
+    },
+    {
+     "d": "7.11.2026",
+     "t": "15:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "MouMa",
+     "a": "Ilves Vihreäkeltainen"
+    },
+    {
+     "d": "12.12.2026",
+     "t": "16:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves Vihreäkeltainen",
+     "a": "NoPS Keltainen"
+    },
+    {
+     "d": "12.12.2026",
+     "t": "17:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ylöjärven Ilves P2019",
+     "a": "Ilves Vihreäkeltainen"
+    },
+    {
+     "open": "4.1.–17.1.2027",
+     "h": "FC Vapsi",
+     "a": "Ilves Vihreäkeltainen"
+    },
+    {
+     "open": "4.1.–17.1.2027",
+     "h": "Ilves Vihreäkeltainen",
+     "a": "Apassit"
+    },
+    {
+     "d": "23.1.2027",
+     "t": "12:00",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Tampere United/3",
+     "a": "Ilves Vihreäkeltainen"
+    },
+    {
+     "d": "23.1.2027",
+     "t": "12:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves Vihreäkeltainen",
+     "a": "PJK/Valkoinen"
+    },
+    {
+     "open": "22.2.–14.3.2027",
+     "h": "Ilves/T2018",
+     "a": "Ilves Vihreäkeltainen"
+    },
+    {
+     "open": "22.2.–14.3.2027",
+     "h": "Ilves Vihreäkeltainen",
+     "a": "TP-49 2018 Valkoinen"
+    }
+   ],
+   "players": []
+  },
+  {
+   "id": "35231530",
+   "name": "Ilves Vihreäkeltainen B",
+   "div": "P9",
+   "divTitle": "P9 Futsal (2018) – Länsi Futsal",
+   "divIdx": 1,
+   "matches": [
+    {
+     "d": "14.11.2026",
+     "t": "12:00",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves Vihreäkeltainen B",
+     "a": "Tampere United/4"
+    },
+    {
+     "d": "14.11.2026",
+     "t": "13:00",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Tuisku",
+     "a": "Ilves Vihreäkeltainen B"
+    },
+    {
+     "d": "20.12.2026",
+     "t": "11:00",
+     "arena": "Kauppi Sports Center",
+     "field": "Kenttä 2",
+     "h": "Ilves Vihreäkeltainen B",
+     "a": "Valo"
+    },
+    {
+     "d": "20.12.2026",
+     "t": "12:00",
+     "arena": "Kauppi Sports Center",
+     "field": "Kenttä 2",
+     "h": "Ilves-Kissat jr",
+     "a": "Ilves Vihreäkeltainen B"
+    },
+    {
+     "d": "16.1.2027",
+     "t": "12:00",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves Itä",
+     "a": "Ilves Vihreäkeltainen B"
+    },
+    {
+     "d": "16.1.2027",
+     "t": "12:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
+     "h": "Ilves Vihreäkeltainen B",
+     "a": "FC ViP / P2018"
+    },
+    {
+     "open": "18.1.–31.1.2027",
+     "h": "PJK/sininen",
+     "a": "Ilves Vihreäkeltainen B"
+    },
+    {
+     "open": "18.1.–31.1.2027",
+     "h": "Ilves Vihreäkeltainen B",
+     "a": "Ylöjärven Ilves/punainen"
+    },
+    {
+     "d": "13.3.2027",
+     "t": "17:30",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D2",
+     "h": "FC Kangasala/Punainen",
+     "a": "Ilves Vihreäkeltainen B"
+    },
+    {
+     "d": "13.3.2027",
+     "t": "18:00",
+     "arena": "Pirkkahalli",
+     "field": "Futsal D2",
+     "h": "Ilves Vihreäkeltainen B",
+     "a": "TPV Valkoinen"
+    }
+   ],
+   "players": []
+  }
+ ]
+}
