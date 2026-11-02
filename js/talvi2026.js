@@ -7,7 +7,7 @@
     {date: 'la 14.11.2026', name: 'Vapari 3v3', venue: 'Vaparihalli', teams: [
       {name: 'Ilves P2018', players: ['Altti Lehtinen','Edvin Aalto','Elmeri Taskinen','Josef Al-Bayati','Julius Leppäkoski','Lukas Riponiemi','Moses Toppi','Otso Jokilehto']}
     ]},
-    {date: 'la–su 21.–22.11.2026', name: 'Miniliiga P9 – HJK', venue: 'Helsinki', teams: [
+    {date: 'su 22.11.2026', name: 'Miniliiga P9 – HJK', venue: 'Helsinki', teams: [
       {name: 'Ilves A', players: ['Henrik Fischer','Lemmy Pitkänen','Leo Mayomi','Nooa Kemppainen','Noel Lamminen','Patrick Kyllönen','Thomas Tienvieri','Vilho Keisu']},
       {name: 'Ilves B', players: ['Elias Mattila','Heikki Lähteenmäki','Jasper Havia','Oiva Rossi','Venni Tauriainen','Verneri Vatanen','Viljami Hanski','Vilho Anttila']}
     ]},
