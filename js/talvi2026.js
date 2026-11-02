@@ -30,6 +30,78 @@
 
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
 
+  /* ── PELAAJAHAKU ── */
+  var FUTSAL = null;
+  function parseDate(str) { var m = /(\d{1,2})\.(\d{1,2})\.(\d{4})/.exec(str); return m ? new Date(+m[3], +m[2] - 1, +m[1]) : null; }
+  function lastDate(str) { var ms = str.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/g) || []; var all = str.match(/(\d{1,2})\.(\d{1,2})\./g) || []; var y = (/(\d{4})/.exec(str) || [])[1];
+    if (!all.length) { return null; } var last = all[all.length - 1].split('.'); return new Date(+y, +last[1] - 1, +last[0]); }
+
+  function allPlayers() {
+    var set = {};
+    EVENTS.forEach(function (ev) { ev.teams.forEach(function (t) { t.players.forEach(function (p) { set[p] = 1; }); }); });
+    if (FUTSAL) { FUTSAL.teams.forEach(function (t) { (t.players || []).forEach(function (p) { set[p] = 1; }); }); }
+    return Object.keys(set).sort(function (a, b) { return a.localeCompare(b, 'fi'); });
+  }
+
+  function playerEvents(name) {
+    var rows = [];
+    if (FUTSAL) {
+      FUTSAL.teams.forEach(function (t) {
+        if ((t.players || []).indexOf(name) < 0) { return; }
+        var byDay = {};
+        t.matches.forEach(function (m) {
+          var key = m.d || m.open;
+          if (!byDay[key]) { byDay[key] = {key: key, open: !m.open ? false : true, games: [], arena: m.arena || ''}; }
+          byDay[key].games.push((m.t ? m.t + ' ' : '') + m.h + ' \u2013 ' + m.a);
+        });
+        Object.keys(byDay).forEach(function (k) {
+          var g = byDay[k];
+          rows.push({sort: g.open ? parseDate(k) : parseDate(k), date: (g.open ? 'Sovittava kierros ' : '') + k, name: 'Futsal \u2013 ' + t.name + ' (' + t.div + ')', venue: g.arena, detail: g.games.join(' \u00b7 '), futsal: true});
+        });
+      });
+    }
+    EVENTS.forEach(function (ev) {
+      ev.teams.forEach(function (t) {
+        if (t.players.indexOf(name) >= 0) { rows.push({sort: lastDate(ev.date), date: ev.date, name: ev.name, venue: ev.venue, detail: t.name}); }
+      });
+    });
+    rows.sort(function (a, b) { return (a.sort || 0) - (b.sort || 0); });
+    return rows;
+  }
+
+  function renderSearch() {
+    var players = allPlayers();
+    var html = '<div class="team-card open search-card"><div class="team-header" style="cursor:default"><span class="team-name">&#128269; Pelaajahaku</span></div><div class="round-group">';
+    html += '<input id="player-input" list="player-list" class="player-input" placeholder="Kirjoita tai valitse pelaaja\u2026" autocomplete="off">';
+    html += '<datalist id="player-list">';
+    players.forEach(function (p) { html += '<option value="' + esc(p) + '">'; });
+    html += '</datalist><div id="player-result"></div></div></div>';
+    document.getElementById('search').innerHTML = html;
+    var input = document.getElementById('player-input');
+    function show() {
+      var name = input.value.trim();
+      var out = document.getElementById('player-result');
+      if (players.indexOf(name) < 0) { out.innerHTML = ''; return; }
+      var rows = playerEvents(name);
+      var h = '<div class="player-events">';
+      if (!rows.length) { h += '<div class="players-empty">Ei pelej\u00e4 listoilla.</div>'; }
+      rows.forEach(function (r) {
+        h += '<div class="pe-row' + (r.futsal ? ' pe-futsal' : '') + '"><div class="pe-date">' + esc(r.date) + '</div><div class="pe-body"><div class="pe-name">' + esc(r.name) + (r.venue ? ' <span class="pe-venue">' + esc(r.venue) + '</span>' : '') + '</div><div class="pe-detail">' + esc(r.detail) + '</div></div></div>';
+      });
+      h += '</div><div class="pe-count">' + rows.length + ' pelitapahtumaa</div>';
+      out.innerHTML = h;
+    }
+    input.addEventListener('input', show);
+    input.addEventListener('change', show);
+    var hash = decodeURIComponent(location.hash.replace('#', ''));
+    if (hash) { input.value = hash; show(); }
+  }
+
+  function loadFutsal() {
+    fetch('data/futsal.json').then(function (r) { return r.json(); }).then(function (d) { FUTSAL = d; renderSearch(); })
+      .catch(function () { renderSearch(); });
+  }
+
   function render() {
     var html = '';
     for (var i = 0; i < EVENTS.length; i++) {
@@ -49,4 +121,5 @@
   }
 
   render();
+  loadFutsal();
 })();
