@@ -53,20 +53,74 @@
           var key = m.d || m.open;
           if (!byDay[key]) { byDay[key] = {key: key, open: !m.open ? false : true, games: [], arena: m.arena || ''}; }
           byDay[key].games.push((m.t ? m.t + ' ' : '') + m.h + ' \u2013 ' + m.a);
+          if (m.t) { byDay[key].times = byDay[key].times || []; byDay[key].times.push(m.t); }
         });
         Object.keys(byDay).forEach(function (k) {
           var g = byDay[k];
-          rows.push({sort: g.open ? parseDate(k) : parseDate(k), date: (g.open ? 'Sovittava kierros ' : '') + k, name: 'Futsal \u2013 ' + t.name + ' (' + t.div + ')', venue: g.arena, detail: g.games.join(' \u00b7 '), futsal: true});
+          rows.push({sort: parseDate(k), day: g.open ? null : parseDate(k), times: g.times || null, open: !!g.open, date: (g.open ? 'Sovittava kierros ' : '') + k, name: 'Futsal \u2013 ' + t.name + ' (' + t.div + ')', venue: g.arena, detail: g.games.join(' \u00b7 '), futsal: true});
         });
       });
     }
     EVENTS.forEach(function (ev) {
       ev.teams.forEach(function (t) {
-        if (t.players.indexOf(name) >= 0) { rows.push({sort: lastDate(ev.date), date: ev.date, name: ev.name, venue: ev.venue, detail: t.name}); }
+        if (t.players.indexOf(name) >= 0) {
+          var tm = /klo\s*(\d{1,2})(?:[.:](\d{2}))?\s*[\u2013-]\s*(\d{1,2})(?:[.:](\d{2}))?/.exec(ev.date);
+          rows.push({sort: lastDate(ev.date), day: lastDate(ev.date), span: tm ? [+tm[1], +(tm[2] || 0), +tm[3], +(tm[4] || 0)] : null, date: ev.date, name: ev.name, venue: ev.venue, detail: t.name});
+        }
       });
     });
     rows.sort(function (a, b) { return (a.sort || 0) - (b.sort || 0); });
     return rows;
+  }
+
+  /* ── ICS ── */
+  function pad2(n) { return n < 10 ? '0' + n : '' + n; }
+  function toICS(dt) { return dt.getFullYear() + pad2(dt.getMonth() + 1) + pad2(dt.getDate()) + 'T' + pad2(dt.getHours()) + pad2(dt.getMinutes()) + '00'; }
+  function toICSDate(dt) { return dt.getFullYear() + pad2(dt.getMonth() + 1) + pad2(dt.getDate()); }
+  function icsEsc(x) { return (x || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n'); }
+  var TAMPERE = ['kauppi','tesoma','tammela','hervanta','hakamets','kissanmaa','pyynikki','kaleva','vehmai','pirkkahalli','vapari','tampere','ylöjärv','lamminrahka','kangasala','lempäälä','nokia','pirkkala'];
+  function gatherMinutes(v) { var low = (v || '').toLowerCase(); for (var i = 0; i < TAMPERE.length; i++) { if (low.indexOf(TAMPERE[i]) >= 0) { return 30; } } return v ? 45 : 30; }
+  function gatherStr(dt) { return pad2(dt.getHours()) + ':' + pad2(dt.getMinutes()); }
+
+  function exportICS(name, rows) {
+    var lines = ['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//IlvesP2018//Talvi//FI','CALSCALE:GREGORIAN','X-WR-CALNAME:' + icsEsc(name + ' \u2013 Ilves P2018')];
+    var n = 0;
+    rows.forEach(function (r, i) {
+      if (!r.day) { return; } /* sovittavat kierrokset ohitetaan */
+      var uid = 'ilves-p2018-talvi-' + i + '-' + toICSDate(r.day) + '-' + encodeURIComponent(name) + '@ottelukalenteri';
+      var summary = r.name + (r.detail && !r.futsal ? ' (' + r.detail + ')' : '');
+      var desc = [];
+      if (r.futsal && r.times && r.times.length) {
+        var t = r.times.slice().sort(); var f = t[0].split(':'); var l = t[t.length - 1].split(':');
+        var first = new Date(r.day.getFullYear(), r.day.getMonth(), r.day.getDate(), +f[0], +f[1]);
+        var last = new Date(r.day.getFullYear(), r.day.getMonth(), r.day.getDate(), +l[0], +l[1]);
+        var start = new Date(first.getTime() - gatherMinutes(r.venue) * 60000);
+        var end = new Date(last.getTime() + 45 * 60000);
+        desc.push('Kokoontuminen klo ' + gatherStr(start), '', r.detail);
+        lines.push('BEGIN:VEVENT','DTSTART:' + toICS(start),'DTEND:' + toICS(end));
+      } else if (r.span) {
+        var s0 = new Date(r.day.getFullYear(), r.day.getMonth(), r.day.getDate(), r.span[0], r.span[1]);
+        var e0 = new Date(r.day.getFullYear(), r.day.getMonth(), r.day.getDate(), r.span[2], r.span[3]);
+        var st = new Date(s0.getTime() - gatherMinutes(r.venue) * 60000);
+        desc.push('Kokoontuminen klo ' + gatherStr(st), '', r.detail);
+        lines.push('BEGIN:VEVENT','DTSTART:' + toICS(st),'DTEND:' + toICS(e0));
+      } else {
+        var next = new Date(r.day.getTime() + 86400000);
+        desc.push(r.detail, '', 'Kellonaika tarkentuu.');
+        lines.push('BEGIN:VEVENT','DTSTART;VALUE=DATE:' + toICSDate(r.day),'DTEND;VALUE=DATE:' + toICSDate(next));
+      }
+      lines.push('SUMMARY:' + icsEsc(summary));
+      if (r.venue) { lines.push('LOCATION:' + icsEsc(r.venue)); }
+      lines.push('DESCRIPTION:' + icsEsc(desc.join('\n')),'UID:' + uid,'END:VEVENT');
+      n++;
+    });
+    lines.push('END:VCALENDAR');
+    var blob = new Blob([lines.join('\r\n')], {type: 'text/calendar;charset=utf-8'});
+    var url = URL.createObjectURL(blob); var a = document.createElement('a');
+    a.href = url; a.download = name.replace(/[\/\\ ]+/g, '-') + '-pelit.ics';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    return n;
   }
 
   function renderSearch() {
@@ -88,8 +142,13 @@
       rows.forEach(function (r) {
         h += '<div class="pe-row' + (r.futsal ? ' pe-futsal' : '') + '"><div class="pe-date">' + esc(r.date) + '</div><div class="pe-body"><div class="pe-name">' + esc(r.name) + (r.venue ? ' <span class="pe-venue">' + esc(r.venue) + '</span>' : '') + '</div><div class="pe-detail">' + esc(r.detail) + '</div></div></div>';
       });
-      h += '</div><div class="pe-count">' + rows.length + ' pelitapahtumaa</div>';
+      var fixed = rows.filter(function (r) { return r.day; }).length;
+      h += '</div><div class="pe-footer"><span class="pe-count">' + rows.length + ' pelitapahtumaa</span>';
+      if (fixed) { h += '<button type="button" class="cal-export-btn" id="pe-cal">&#128197; Vie kalenteriin (' + fixed + ')</button>'; }
+      h += '</div>';
       out.innerHTML = h;
+      var b = document.getElementById('pe-cal');
+      if (b) { b.addEventListener('click', function () { exportICS(name, rows); }); }
     }
     input.addEventListener('input', show);
     input.addEventListener('change', show);
