@@ -37,7 +37,7 @@
     for (var i = 0; i < TAMPERE_VENUES.length; i++) { if (low.indexOf(TAMPERE_VENUES[i]) >= 0) { return true; } }
     return false;
   }
-  function getGatherMinutes(v) { return isTampereVenue(v) ? 30 : 45; }
+  function getGatherMinutes(v) { return 30; }
   function mapQuery(arena) {
     var low = (arena || '').toLowerCase();
     for (var k in MAP_QUERIES) { if (low.indexOf(k) >= 0) { return MAP_QUERIES[k]; } }

@@ -94,7 +94,7 @@
         var t = r.times.slice().sort(); var f = t[0].split(':'); var l = t[t.length - 1].split(':');
         var first = new Date(r.day.getFullYear(), r.day.getMonth(), r.day.getDate(), +f[0], +f[1]);
         var last = new Date(r.day.getFullYear(), r.day.getMonth(), r.day.getDate(), +l[0], +l[1]);
-        var start = new Date(first.getTime() - gatherMinutes(r.venue) * 60000);
+        var start = new Date(first.getTime() - 30 * 60000);
         var end = new Date(last.getTime() + 45 * 60000);
         desc.push('Kokoontuminen klo ' + gatherStr(start), '', r.detail);
         lines.push('BEGIN:VEVENT','DTSTART:' + toICS(start),'DTEND:' + toICS(end));
