@@ -83,7 +83,16 @@
      "a": "Ilves P2018"
     }
    ],
-   "players": []
+   "players": [
+    "An-nur Aminu",
+    "Eeli Huotari",
+    "Emil Paloniemi",
+    "Gad Niyokwizerwa",
+    "Jamiel Akalazu",
+    "Lukas Bassina",
+    "Oiva Rossi",
+    "Viljami Hanski"
+   ]
   },
   {
    "id": "35231528",
@@ -167,7 +176,16 @@
      "a": "Ilves P2018 Alfa"
     }
    ],
-   "players": []
+   "players": [
+    "Eeli Saunamäki",
+    "Elias Nieminen",
+    "Jasper Havia",
+    "Lakindu Gamlath",
+    "Mikael Leino",
+    "Oliver Mäkiranta",
+    "Veikko Aaltonen",
+    "Viljo Konttinen"
+   ]
   },
   {
    "id": "35203236",
@@ -245,7 +263,16 @@
      "a": "Tampere United"
     }
    ],
-   "players": []
+   "players": [
+    "Aaron Melander",
+    "Heikki Lähteenmäki",
+    "Leo Mayomi",
+    "Nooa Kemppainen",
+    "Otso Miranda",
+    "Rasmus Lähteenmäki",
+    "Thomas Saresvaara",
+    "Walter Capone"
+   ]
   },
   {
    "id": "35203237",
@@ -329,7 +356,16 @@
      "a": "Ilves Keltainen"
     }
    ],
-   "players": []
+   "players": [
+    "Einari Orispää",
+    "Eino Innanen",
+    "Eliel Vaine",
+    "Joel Aro",
+    "Kasper-veli Räihä",
+    "Mert Efe Özkan",
+    "Verneri Vatanen",
+    "Vilho Keisu"
+   ]
   },
   {
    "id": "35203238",
@@ -401,7 +437,17 @@
      "a": "TPV Punainen"
     }
    ],
-   "players": []
+   "players": [
+    "Atila Nikkhouyabgarm",
+    "Elias Mattila",
+    "Elmo Lovén",
+    "Hugo Ulmanen",
+    "Leevi Demin",
+    "Leevi Mäkinen",
+    "Lemmy Pitkänen",
+    "Pauli Ahonen",
+    "Santtu Sulonen"
+   ]
   },
   {
    "id": "35203239",
@@ -485,7 +531,17 @@
      "a": "FC Kangasala/musta"
     }
    ],
-   "players": []
+   "players": [
+    "Altti Lehtinen",
+    "Edvin Aalto",
+    "Elmeri Taskinen",
+    "Josef Al-Bayati",
+    "Justus Tiainen",
+    "Matts Dunder",
+    "Noel Lamminen",
+    "Patrick Kyllönen",
+    "Ruben Elomaa"
+   ]
   },
   {
    "id": "35231529",
@@ -563,7 +619,17 @@
      "a": "TP-49 2018 Valkoinen"
     }
    ],
-   "players": []
+   "players": [
+    "Henrik Fischer",
+    "Julius Leppäkoski",
+    "Kevin Kytökorpi",
+    "Lukas Riponiemi",
+    "Mikke Laaksonen",
+    "Moses Toppi",
+    "Otso Jokilehto",
+    "Roger Wolanen",
+    "Thomas Tienvieri"
+   ]
   },
   {
    "id": "35231530",
@@ -647,7 +713,17 @@
      "a": "TPV Valkoinen"
     }
    ],
-   "players": []
+   "players": [
+    "Edvin Järvinen",
+    "Emil Kruus",
+    "Milo Hermans",
+    "Oliver Kauppinen",
+    "Onni Muranen",
+    "Tapio Oinas",
+    "Valo Saarimäki",
+    "Venni Tauriainen",
+    "Vilho Anttila"
+   ]
   }
  ]
 }

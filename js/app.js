@@ -6,14 +6,14 @@
   var FALLBACK_URL = 'data/futsal.json?v=' + Date.now();
   var P10 = 'P10 Futsal (2017) \u2013 L\u00e4nsi Futsal', P9 = 'P9 Futsal (2018) \u2013 L\u00e4nsi Futsal';
   var CONFIG = [
-    {id: '35203235', key: 'AHFMT5XQ4G', name: 'Ilves P2018', div: 'P10', divTitle: P10, divIdx: 0, players: []},
-    {id: '35231528', key: 'P84NSEVYPQ', name: 'Ilves P2018 Alfa', div: 'P10', divTitle: P10, divIdx: 0, players: []},
-    {id: '35203236', key: 'D6QJHWX56G', name: 'Ilves', div: 'P9', divTitle: P9, divIdx: 1, players: []},
-    {id: '35203237', key: '66AFTD3BZC', name: 'Ilves Keltainen', div: 'P9', divTitle: P9, divIdx: 1, players: []},
-    {id: '35203238', key: '7G68W9AQ5N', name: 'Ilves Keltavihre\u00e4', div: 'P9', divTitle: P9, divIdx: 1, players: []},
-    {id: '35203239', key: '5VM23GMEX7', name: 'Ilves Vihre\u00e4', div: 'P9', divTitle: P9, divIdx: 1, players: []},
-    {id: '35231529', key: 'R8GAEV5TZ7', name: 'Ilves Vihre\u00e4keltainen', div: 'P9', divTitle: P9, divIdx: 1, players: []},
-    {id: '35231530', key: 'TDVDTSX3MN', name: 'Ilves Vihre\u00e4keltainen B', div: 'P9', divTitle: P9, divIdx: 1, players: []}
+    {id: '35203235', key: 'AHFMT5XQ4G', name: 'Ilves P2018', div: 'P10', divTitle: P10, divIdx: 0, players: ['An-nur Aminu', 'Eeli Huotari', 'Emil Paloniemi', 'Gad Niyokwizerwa', 'Jamiel Akalazu', 'Lukas Bassina', 'Oiva Rossi', 'Viljami Hanski']},
+    {id: '35231528', key: 'P84NSEVYPQ', name: 'Ilves P2018 Alfa', div: 'P10', divTitle: P10, divIdx: 0, players: ['Eeli Saunamäki', 'Elias Nieminen', 'Jasper Havia', 'Lakindu Gamlath', 'Mikael Leino', 'Oliver Mäkiranta', 'Veikko Aaltonen', 'Viljo Konttinen']},
+    {id: '35203236', key: 'D6QJHWX56G', name: 'Ilves', div: 'P9', divTitle: P9, divIdx: 1, players: ['Aaron Melander', 'Heikki Lähteenmäki', 'Leo Mayomi', 'Nooa Kemppainen', 'Otso Miranda', 'Rasmus Lähteenmäki', 'Thomas Saresvaara', 'Walter Capone']},
+    {id: '35203237', key: '66AFTD3BZC', name: 'Ilves Keltainen', div: 'P9', divTitle: P9, divIdx: 1, players: ['Einari Orispää', 'Eino Innanen', 'Eliel Vaine', 'Joel Aro', 'Kasper-veli Räihä', 'Mert Efe Özkan', 'Verneri Vatanen', 'Vilho Keisu']},
+    {id: '35203238', key: '7G68W9AQ5N', name: 'Ilves Keltavihre\u00e4', div: 'P9', divTitle: P9, divIdx: 1, players: ['Atila Nikkhouyabgarm', 'Elias Mattila', 'Elmo Lovén', 'Hugo Ulmanen', 'Leevi Demin', 'Leevi Mäkinen', 'Lemmy Pitkänen', 'Pauli Ahonen', 'Santtu Sulonen']},
+    {id: '35203239', key: '5VM23GMEX7', name: 'Ilves Vihre\u00e4', div: 'P9', divTitle: P9, divIdx: 1, players: ['Altti Lehtinen', 'Edvin Aalto', 'Elmeri Taskinen', 'Josef Al-Bayati', 'Justus Tiainen', 'Matts Dunder', 'Noel Lamminen', 'Patrick Kyllönen', 'Ruben Elomaa']},
+    {id: '35231529', key: 'R8GAEV5TZ7', name: 'Ilves Vihre\u00e4keltainen', div: 'P9', divTitle: P9, divIdx: 1, players: ['Henrik Fischer', 'Julius Leppäkoski', 'Kevin Kytökorpi', 'Lukas Riponiemi', 'Mikke Laaksonen', 'Moses Toppi', 'Otso Jokilehto', 'Roger Wolanen', 'Thomas Tienvieri']},
+    {id: '35231530', key: 'TDVDTSX3MN', name: 'Ilves Vihre\u00e4keltainen B', div: 'P9', divTitle: P9, divIdx: 1, players: ['Edvin Järvinen', 'Emil Kruus', 'Milo Hermans', 'Oliver Kauppinen', 'Onni Muranen', 'Tapio Oinas', 'Valo Saarimäki', 'Venni Tauriainen', 'Vilho Anttila']}
   ];
 
   var TAMPERE_VENUES = ['kauppi','pirkkahalli','vehmai','tesoma','tammela','hervanta','hakamets','kissanmaa','pyynikki','kaleva','linnainmaa','multisilta','peltolammi','nekala','kaukaj\u00e4rvi','lukonm\u00e4ki','rahola','ahvenisj\u00e4rvi','lamminrahka','hakkari','harjuniitty','suorama'];
