@@ -111,13 +111,18 @@
       for (var j = 0; j < ev.teams.length; j++) {
         var t = ev.teams[j];
         var players = t.players.slice().sort(function (a, b) { return a.localeCompare(b, 'fi'); });
-        html += '<div class="team-card open"><div class="team-header" style="cursor:default"><span class="team-name">' + esc(t.name) + '</span><span class="team-count">' + players.length + ' pelaajaa</span></div>';
-        html += '<div class="round-group"><div class="players-list">';
+        html += '<div class="team-card"><div class="team-header"><span class="team-name">' + esc(t.name) + '</span><span class="team-meta"><span class="match-count">' + players.length + ' pelaajaa</span></span><div class="accordion-arrow">\u25BE</div></div>';
+        html += '<div class="round-group collapsed"><div class="players-list">';
         for (var p = 0; p < players.length; p++) { html += '<span class="player-name">' + esc(players[p]) + '</span>'; }
         html += '</div></div></div>';
       }
     }
-    document.getElementById('content').innerHTML = html;
+    var el = document.getElementById('content');
+    el.innerHTML = html;
+    el.addEventListener('click', function (e) {
+      var header = e.target.closest('.team-header');
+      if (header) { var card = header.closest('.team-card'); if (card) { card.classList.toggle('open'); } }
+    });
   }
 
   render();
