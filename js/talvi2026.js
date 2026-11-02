@@ -11,7 +11,7 @@
       {name: 'Ilves A', players: ['Henrik Fischer','Lemmy Pitkänen','Leo Mayomi','Nooa Kemppainen','Noel Lamminen','Patrick Kyllönen','Thomas Tienvieri','Vilho Keisu']},
       {name: 'Ilves B', players: ['Elias Mattila','Heikki Lähteenmäki','Jasper Havia','Oiva Rossi','Venni Tauriainen','Verneri Vatanen','Viljami Hanski','Vilho Anttila']}
     ]},
-    {date: 'su 22.11.2026', name: 'Talviliiga', venue: '', teams: [
+    {date: 'su 22.11.2026 klo 13–16', name: 'Talviliiga – JJK', venue: 'Huhtahalli, Jyväskylä', teams: [
       {name: 'Ryhmä 1', players: ['An-nur Aminu','Eeli Huotari','Eeli Saunamäki','Emil Kruus','Emil Paloniemi','Justus Tiainen','Veikko Aaltonen','Viljo Konttinen']},
       {name: 'Ryhmä 2', players: ['Elias Nieminen','Gad Niyokwizerwa','Jamiel Akalazu','Lakindu Gamlath','Mikael Leino','Mikke Laaksonen','Oliver Mäkiranta','Ruben Elomaa']}
     ]},
