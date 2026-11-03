@@ -1,5 +1,5 @@
 {
- "updated": "16.10.2026",
+ "updated": "3.11.2026",
  "teams": [
   {
    "id": "35203235",
@@ -25,12 +25,18 @@
      "a": "Tampere United/2018"
     },
     {
-     "open": "16.11.–6.12.2026",
+     "d": "21.11.2026",
+     "t": "16:00",
+     "arena": "Monitoimihalli",
+     "field": "",
      "h": "TP-49 2018",
      "a": "Ilves P2018"
     },
     {
-     "open": "16.11.–6.12.2026",
+     "d": "21.11.2026",
+     "t": "18:00",
+     "arena": "Monitoimihalli",
+     "field": "",
      "h": "Ilves P2018",
      "a": "PJK/valkoinen"
     },
@@ -102,7 +108,7 @@
      ]
     },
     {
-     "key": "16.11.–6.12.2026",
+     "key": "21.11.2026",
      "players": [
       "Emil Paloniemi"
      ]
@@ -151,12 +157,18 @@
      "a": "Ilves P2018 Alfa"
     },
     {
-     "open": "16.11.–6.12.2026",
+     "d": "21.11.2026",
+     "t": "16:40",
+     "arena": "Monitoimihalli",
+     "field": "",
      "h": "PJK/valkoinen",
      "a": "Ilves P2018 Alfa"
     },
     {
-     "open": "16.11.–6.12.2026",
+     "d": "21.11.2026",
+     "t": "17:20",
+     "arena": "Monitoimihalli",
+     "field": "",
      "h": "Ilves P2018 Alfa",
      "a": "TP-49 2018"
     },
@@ -227,7 +239,7 @@
      ]
     },
     {
-     "key": "16.11.–6.12.2026",
+     "key": "21.11.2026",
      "players": [
       "Eeli Saunamäki"
      ]
@@ -260,12 +272,18 @@
    "divIdx": 1,
    "matches": [
     {
-     "open": "2.11.–29.11.2026",
+     "d": "15.11.2026",
+     "t": "11:30",
+     "arena": "Vatialan koulu",
+     "field": "",
      "h": "FC Kangasala/musta",
      "a": "Ilves"
     },
     {
-     "open": "2.11.–29.11.2026",
+     "d": "15.11.2026",
+     "t": "12:30",
+     "arena": "Vatialan koulu",
+     "field": "",
      "h": "Ilves",
      "a": "Ilves Keltainen"
     },
@@ -286,12 +304,18 @@
      "a": "Ilves"
     },
     {
-     "open": "4.1.–24.1.2027",
+     "d": "6.1.2027",
+     "t": "11:30",
+     "arena": "Ylöjärven Ilves Areena",
+     "field": "",
      "h": "Ilves P2019",
      "a": "Ilves"
     },
     {
-     "open": "4.1.–24.1.2027",
+     "d": "6.1.2027",
+     "t": "12:00",
+     "arena": "Ylöjärven Ilves Areena",
+     "field": "",
      "h": "Ilves",
      "a": "Ylöjärven Ilves"
     },
@@ -340,7 +364,7 @@
    ],
    "rests": [
     {
-     "key": "2.11.–29.11.2026",
+     "key": "15.11.2026",
      "players": [
       "Heikki Lähteenmäki"
      ]
@@ -352,7 +376,7 @@
      ]
     },
     {
-     "key": "4.1.–24.1.2027",
+     "key": "6.1.2027",
      "players": [
       "Otso Miranda"
      ]
@@ -379,12 +403,18 @@
    "divIdx": 1,
    "matches": [
     {
-     "open": "2.11.–29.11.2026",
+     "d": "15.11.2026",
+     "t": "12:00",
+     "arena": "Vatialan koulu",
+     "field": "",
      "h": "Ilves Keltainen",
      "a": "Ilves Keltavihreä"
     },
     {
-     "open": "2.11.–29.11.2026",
+     "d": "15.11.2026",
+     "t": "12:30",
+     "arena": "Vatialan koulu",
+     "field": "",
      "h": "Ilves",
      "a": "Ilves Keltainen"
     },
@@ -465,7 +495,7 @@
    ],
    "rests": [
     {
-     "key": "2.11.–29.11.2026",
+     "key": "15.11.2026",
      "players": [
       "Einari Orispää"
      ]
@@ -504,22 +534,34 @@
    "divIdx": 1,
    "matches": [
     {
-     "open": "2.11.–29.11.2026",
+     "d": "15.11.2026",
+     "t": "12:00",
+     "arena": "Vatialan koulu",
+     "field": "",
      "h": "Ilves Keltainen",
      "a": "Ilves Keltavihreä"
     },
     {
-     "open": "2.11.–29.11.2026",
+     "d": "15.11.2026",
+     "t": "13:00",
+     "arena": "Vatialan koulu",
+     "field": "",
      "h": "Ilves Keltavihreä",
      "a": "FC Kangasala/musta"
     },
     {
-     "open": "30.11.–20.12.2026",
+     "d": "28.11.2026",
+     "t": "14:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
      "h": "Ilves Keltavihreä",
      "a": "Ylöjärven Ilves"
     },
     {
-     "open": "30.11.–20.12.2026",
+     "d": "28.11.2026",
+     "t": "15:30",
+     "arena": "Vehmaisten koulu",
+     "field": "",
      "h": "Ilves P2019 Alfa",
      "a": "Ilves Keltavihreä"
     },
@@ -556,12 +598,18 @@
      "a": "Ilves P2019"
     },
     {
-     "open": "15.2.–21.3.2027",
+     "d": "21.2.2027",
+     "t": "10:00",
+     "arena": "Valkeakosken Liikuntahalli",
+     "field": "",
      "h": "Mad Max / P2018",
      "a": "Ilves Keltavihreä"
     },
     {
-     "open": "15.2.–21.3.2027",
+     "d": "21.2.2027",
+     "t": "10:30",
+     "arena": "Valkeakosken Liikuntahalli",
+     "field": "",
      "h": "Ilves Keltavihreä",
      "a": "TPV Punainen"
     }
@@ -579,14 +627,14 @@
    ],
    "rests": [
     {
-     "key": "2.11.–29.11.2026",
+     "key": "15.11.2026",
      "players": [
       "Elias Mattila",
       "Lemmy Pitkänen"
      ]
     },
     {
-     "key": "30.11.–20.12.2026",
+     "key": "28.11.2026",
      "players": [
       "Leevi Demin",
       "Pauli Ahonen"
@@ -607,7 +655,7 @@
      ]
     },
     {
-     "key": "15.2.–21.3.2027",
+     "key": "21.2.2027",
      "players": [
       "Elias Mattila",
       "Leevi Mäkinen"
@@ -687,12 +735,18 @@
      "a": "TP-49 2018"
     },
     {
-     "open": "15.2.–21.3.2027",
+     "d": "20.2.2027",
+     "t": "13:45",
+     "arena": "Pikkolan koulu",
+     "field": "",
      "h": "Ylöjärven Ilves",
      "a": "Ilves Vihreä"
     },
     {
-     "open": "15.2.–21.3.2027",
+     "d": "20.2.2027",
+     "t": "14:45",
+     "arena": "Pikkolan koulu",
+     "field": "",
      "h": "Ilves Vihreä",
      "a": "FC Kangasala/musta"
     }
@@ -738,7 +792,7 @@
      ]
     },
     {
-     "key": "15.2.–21.3.2027",
+     "key": "20.2.2027",
      "players": [
       "Noel Lamminen",
       "Justus Tiainen"
@@ -786,12 +840,18 @@
      "a": "Ilves Vihreäkeltainen"
     },
     {
-     "open": "4.1.–17.1.2027",
+     "d": "16.1.2027",
+     "t": "10:00",
+     "arena": "Vareliuksen koulu LH",
+     "field": "",
      "h": "FC Vapsi",
      "a": "Ilves Vihreäkeltainen"
     },
     {
-     "open": "4.1.–17.1.2027",
+     "d": "16.1.2027",
+     "t": "10:35",
+     "arena": "Vareliuksen koulu LH",
+     "field": "",
      "h": "Ilves Vihreäkeltainen",
      "a": "Apassit"
     },
@@ -812,12 +872,18 @@
      "a": "PJK/Valkoinen"
     },
     {
-     "open": "22.2.–14.3.2027",
+     "d": "27.2.2027",
+     "t": "12:30",
+     "arena": "Monitoimihalli",
+     "field": "",
      "h": "Ilves/T2018",
      "a": "Ilves Vihreäkeltainen"
     },
     {
-     "open": "22.2.–14.3.2027",
+     "d": "27.2.2027",
+     "t": "13:00",
+     "arena": "Monitoimihalli",
+     "field": "",
      "h": "Ilves Vihreäkeltainen",
      "a": "TP-49 2018 Valkoinen"
     }
@@ -849,7 +915,7 @@
      ]
     },
     {
-     "key": "4.1.–17.1.2027",
+     "key": "16.1.2027",
      "players": [
       "Thomas Tienvieri",
       "Julius Leppäkoski"
@@ -863,7 +929,7 @@
      ]
     },
     {
-     "key": "22.2.–14.3.2027",
+     "key": "27.2.2027",
      "players": [
       "Henrik Fischer",
       "Mikke Laaksonen"
@@ -927,12 +993,18 @@
      "a": "FC ViP / P2018"
     },
     {
-     "open": "18.1.–31.1.2027",
+     "d": "24.1.2027",
+     "t": "10:40",
+     "arena": "Nuolialan koulu",
+     "field": "",
      "h": "PJK/sininen",
      "a": "Ilves Vihreäkeltainen B"
     },
     {
-     "open": "18.1.–31.1.2027",
+     "d": "24.1.2027",
+     "t": "11:20",
+     "arena": "Nuolialan koulu",
+     "field": "",
      "h": "Ilves Vihreäkeltainen B",
      "a": "Ylöjärven Ilves/punainen"
     },
@@ -987,7 +1059,7 @@
      ]
     },
     {
-     "key": "18.1.–31.1.2027",
+     "key": "24.1.2027",
      "players": [
       "Onni Muranen",
       "Valo Saarimäki"
