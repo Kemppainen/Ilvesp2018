@@ -63,9 +63,12 @@
           byDay[key].games.push((m.t ? m.t + ' ' : '') + m.h + ' \u2013 ' + m.a);
           if (m.t) { byDay[key].times = byDay[key].times || []; byDay[key].times.push(m.t); }
         });
-        Object.keys(byDay).forEach(function (k) {
-          var g = byDay[k];
-          var resting = (t.rests || []).some(function (r) { return restKeyMatches(r.key, k, !!g.open) && r.players.indexOf(name) >= 0; });
+        var dayKeys = Object.keys(byDay).sort(function (a, b) { return parseDate(a) - parseDate(b); });
+        dayKeys.forEach(function (k, gi) {
+          var g = byDay[k]; var rs = t.rests || [];
+          var exact = rs.filter(function (r) { return r.key === k; })[0];
+          var rr = exact || rs[gi];
+          var resting = !!rr && rr.players.indexOf(name) >= 0;
           if (resting) { rows.push({sort: parseDate(k), day: null, rest: true, date: (g.open ? 'Sovittava kierros ' : '') + k, name: 'Futsal \u2013 ' + t.name + ' (' + t.div + ')', venue: g.arena, detail: 'Huilivuoro', futsal: true}); return; }
           rows.push({sort: parseDate(k), day: g.open ? null : parseDate(k), times: g.times || null, open: !!g.open, date: (g.open ? 'Sovittava kierros ' : '') + k, name: 'Futsal \u2013 ' + t.name + ' (' + t.div + ')', venue: g.arena, detail: g.games.join(' \u00b7 '), futsal: true});
         });
