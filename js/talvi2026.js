@@ -36,6 +36,14 @@
   function lastDate(str) { var ms = str.match(/(\d{1,2})\.(\d{1,2})\.(\d{4})/g) || []; var all = str.match(/(\d{1,2})\.(\d{1,2})\./g) || []; var y = (/(\d{4})/.exec(str) || [])[1];
     if (!all.length) { return null; } var last = all[all.length - 1].split('.'); return new Date(+y, +last[1] - 1, +last[0]); }
 
+  function rangeOf(key) { var p = key.split('\u2013'); var e = p[1].split('.'); var s = p[0].split('.'); var y = +e[2]; if (+s[1] > +e[1]) { y--; }
+    return [new Date(y, +s[1] - 1, +s[0]), new Date(+e[2], +e[1] - 1, +e[0])]; }
+  function restKeyMatches(key, k, isOpen) {
+    if (key === k) { return true; }
+    if (!isOpen && key.indexOf('\u2013') >= 0) { var d = parseDate(k); var r = rangeOf(key); return d >= r[0] && d <= r[1]; }
+    return false;
+  }
+
   function allPlayers() {
     var set = {};
     EVENTS.forEach(function (ev) { ev.teams.forEach(function (t) { t.players.forEach(function (p) { set[p] = 1; }); }); });
@@ -57,7 +65,7 @@
         });
         Object.keys(byDay).forEach(function (k) {
           var g = byDay[k];
-          var resting = (t.rests || []).some(function (r) { return r.key === k && r.players.indexOf(name) >= 0; });
+          var resting = (t.rests || []).some(function (r) { return restKeyMatches(r.key, k, !!g.open) && r.players.indexOf(name) >= 0; });
           if (resting) { rows.push({sort: parseDate(k), day: null, rest: true, date: (g.open ? 'Sovittava kierros ' : '') + k, name: 'Futsal \u2013 ' + t.name + ' (' + t.div + ')', venue: g.arena, detail: 'Huilivuoro', futsal: true}); return; }
           rows.push({sort: parseDate(k), day: g.open ? null : parseDate(k), times: g.times || null, open: !!g.open, date: (g.open ? 'Sovittava kierros ' : '') + k, name: 'Futsal \u2013 ' + t.name + ' (' + t.div + ')', venue: g.arena, detail: g.games.join(' \u00b7 '), futsal: true});
         });

@@ -161,9 +161,16 @@
     doc.save('Ilves-P2018-Futsal-2026-27.pdf');
   };
 
+  function restMatches(key, g) {
+    if (key === (g.open || g.d)) { return true; }
+    /* avoimelle kierrokselle annettu huili pätee myös, kun päivä on vahvistunut sen aikaikkunaan */
+    if (!g.open && key.indexOf('\u2013') >= 0) { var d = parseDate(g.d); return d >= openStart(key) && d <= openEnd(key); }
+    return false;
+  }
+  function openEnd(range) { var e = range.split('\u2013')[1].split('.'); return new Date(parseInt(e[2], 10), parseInt(e[1], 10) - 1, parseInt(e[0], 10)); }
   function restFor(team, g) {
-    var key = g.open || g.d; var rs = team.rests || [];
-    for (var i = 0; i < rs.length; i++) { if (rs[i].key === key) { return rs[i].players; } }
+    var rs = team.rests || [];
+    for (var i = 0; i < rs.length; i++) { if (restMatches(rs[i].key, g)) { return rs[i].players; } }
     return [];
   }
 
