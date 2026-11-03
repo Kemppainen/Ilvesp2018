@@ -57,6 +57,8 @@
         });
         Object.keys(byDay).forEach(function (k) {
           var g = byDay[k];
+          var resting = (t.rests || []).some(function (r) { return r.key === k && r.players.indexOf(name) >= 0; });
+          if (resting) { rows.push({sort: parseDate(k), day: null, rest: true, date: (g.open ? 'Sovittava kierros ' : '') + k, name: 'Futsal \u2013 ' + t.name + ' (' + t.div + ')', venue: g.arena, detail: 'Huilivuoro', futsal: true}); return; }
           rows.push({sort: parseDate(k), day: g.open ? null : parseDate(k), times: g.times || null, open: !!g.open, date: (g.open ? 'Sovittava kierros ' : '') + k, name: 'Futsal \u2013 ' + t.name + ' (' + t.div + ')', venue: g.arena, detail: g.games.join(' \u00b7 '), futsal: true});
         });
       });
@@ -140,10 +142,11 @@
       var h = '<div class="player-events">';
       if (!rows.length) { h += '<div class="players-empty">Ei pelej\u00e4 listoilla.</div>'; }
       rows.forEach(function (r) {
-        h += '<div class="pe-row' + (r.futsal ? ' pe-futsal' : '') + '"><div class="pe-date">' + esc(r.date) + '</div><div class="pe-body"><div class="pe-name">' + esc(r.name) + (r.venue ? ' <span class="pe-venue">' + esc(r.venue) + '</span>' : '') + '</div><div class="pe-detail">' + esc(r.detail) + '</div></div></div>';
+        h += '<div class="pe-row' + (r.futsal ? ' pe-futsal' : '') + (r.rest ? ' pe-rest' : '') + '"><div class="pe-date">' + esc(r.date) + '</div><div class="pe-body"><div class="pe-name">' + esc(r.name) + (r.venue ? ' <span class="pe-venue">' + esc(r.venue) + '</span>' : '') + '</div><div class="pe-detail">' + esc(r.detail) + '</div></div></div>';
       });
       var fixed = rows.filter(function (r) { return r.day; }).length;
-      h += '</div><div class="pe-footer"><span class="pe-count">' + rows.length + ' pelitapahtumaa</span>';
+      var played = rows.filter(function (r) { return !r.rest; }).length;
+      h += '</div><div class="pe-footer"><span class="pe-count">' + played + ' pelitapahtumaa' + (rows.length - played ? ' + ' + (rows.length - played) + ' huilivuoroa' : '') + '</span>';
       if (fixed) { h += '<button type="button" class="cal-export-btn" id="pe-cal">&#128197; Vie kalenteriin (' + fixed + ')</button>'; }
       h += '</div>';
       out.innerHTML = h;

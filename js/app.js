@@ -6,14 +6,14 @@
   var FALLBACK_URL = 'data/futsal.json?v=' + Date.now();
   var P10 = 'P10 Futsal (2017) \u2013 L\u00e4nsi Futsal', P9 = 'P9 Futsal (2018) \u2013 L\u00e4nsi Futsal';
   var CONFIG = [
-    {id: '35203235', key: 'AHFMT5XQ4G', name: 'Ilves P2018', div: 'P10', divTitle: P10, divIdx: 0, players: ['An-nur Aminu', 'Eeli Huotari', 'Emil Paloniemi', 'Gad Niyokwizerwa', 'Jamiel Akalazu', 'Lukas Bassina', 'Oiva Rossi', 'Viljami Hanski']},
-    {id: '35231528', key: 'P84NSEVYPQ', name: 'Ilves P2018 Alfa', div: 'P10', divTitle: P10, divIdx: 0, players: ['Eeli Saunamäki', 'Elias Nieminen', 'Jasper Havia', 'Lakindu Gamlath', 'Mikael Leino', 'Oliver Mäkiranta', 'Veikko Aaltonen', 'Viljo Konttinen']},
-    {id: '35203236', key: 'D6QJHWX56G', name: 'Ilves', div: 'P9', divTitle: P9, divIdx: 1, players: ['Aaron Melander', 'Heikki Lähteenmäki', 'Leo Mayomi', 'Nooa Kemppainen', 'Otso Miranda', 'Rasmus Lähteenmäki', 'Thomas Saresvaara', 'Walter Capone']},
-    {id: '35203237', key: '66AFTD3BZC', name: 'Ilves Keltainen', div: 'P9', divTitle: P9, divIdx: 1, players: ['Einari Orispää', 'Eino Innanen', 'Eliel Vaine', 'Joel Aro', 'Kasper-veli Räihä', 'Mert Efe Özkan', 'Verneri Vatanen', 'Vilho Keisu']},
-    {id: '35203238', key: '7G68W9AQ5N', name: 'Ilves Keltavihre\u00e4', div: 'P9', divTitle: P9, divIdx: 1, players: ['Atila Nikkhouyabgarm', 'Elias Mattila', 'Elmo Lovén', 'Hugo Ulmanen', 'Leevi Demin', 'Leevi Mäkinen', 'Lemmy Pitkänen', 'Pauli Ahonen', 'Santtu Sulonen']},
-    {id: '35203239', key: '5VM23GMEX7', name: 'Ilves Vihre\u00e4', div: 'P9', divTitle: P9, divIdx: 1, players: ['Altti Lehtinen', 'Edvin Aalto', 'Elmeri Taskinen', 'Josef Al-Bayati', 'Justus Tiainen', 'Matts Dunder', 'Noel Lamminen', 'Patrick Kyllönen', 'Ruben Elomaa']},
-    {id: '35231529', key: 'R8GAEV5TZ7', name: 'Ilves Vihre\u00e4keltainen', div: 'P9', divTitle: P9, divIdx: 1, players: ['Henrik Fischer', 'Julius Leppäkoski', 'Kevin Kytökorpi', 'Lukas Riponiemi', 'Mikke Laaksonen', 'Moses Toppi', 'Otso Jokilehto', 'Roger Wolanen', 'Thomas Tienvieri']},
-    {id: '35231530', key: 'TDVDTSX3MN', name: 'Ilves Vihre\u00e4keltainen B', div: 'P9', divTitle: P9, divIdx: 1, players: ['Edvin Järvinen', 'Emil Kruus', 'Milo Hermans', 'Oliver Kauppinen', 'Onni Muranen', 'Tapio Oinas', 'Valo Saarimäki', 'Venni Tauriainen', 'Vilho Anttila']}
+    {id: '35203235', key: 'AHFMT5XQ4G', name: 'Ilves P2018', div: 'P10', divTitle: P10, divIdx: 0, players: ['An-nur Aminu', 'Eeli Huotari', 'Emil Paloniemi', 'Gad Niyokwizerwa', 'Jamiel Akalazu', 'Lukas Bassina', 'Oiva Rossi', 'Viljami Hanski'], rests: [{'key': '8.11.2026', 'players': ['Lukas Bassina']}, {'key': '16.11.–6.12.2026', 'players': ['An-nur Aminu']}, {'key': '7.2.2027', 'players': ['Jamiel Akalazu']}, {'key': '13.2.2027', 'players': ['Eeli Huotari']}, {'key': '21.3.2027', 'players': ['Oiva Rossi']}]},
+    {id: '35231528', key: 'P84NSEVYPQ', name: 'Ilves P2018 Alfa', div: 'P10', divTitle: P10, divIdx: 0, players: ['Eeli Saunamäki', 'Elias Nieminen', 'Jasper Havia', 'Lakindu Gamlath', 'Mikael Leino', 'Oliver Mäkiranta', 'Veikko Aaltonen', 'Viljo Konttinen'], rests: [{'key': '8.11.2026', 'players': ['Elias Nieminen']}, {'key': '16.11.–6.12.2026', 'players': ['Eeli Saunamäki']}, {'key': '7.2.2027', 'players': ['Jasper Havia']}, {'key': '13.2.2027', 'players': ['Lakindu Gamlath']}, {'key': '21.3.2027', 'players': ['Veikko Aaltonen']}]},
+    {id: '35203236', key: 'D6QJHWX56G', name: 'Ilves', div: 'P9', divTitle: P9, divIdx: 1, players: ['Aaron Melander', 'Heikki Lähteenmäki', 'Leo Mayomi', 'Nooa Kemppainen', 'Otso Miranda', 'Rasmus Lähteenmäki', 'Thomas Saresvaara', 'Walter Capone'], rests: [{'key': '2.11.–29.11.2026', 'players': ['Heikki Lähteenmäki']}, {'key': '12.12.2026', 'players': ['Leo Mayomi']}, {'key': '4.1.–24.1.2027', 'players': ['Otso Miranda']}, {'key': '30.1.2027', 'players': ['Rasmus Lähteenmäki']}, {'key': '21.2.2027', 'players': ['Aaron Melander']}]},
+    {id: '35203237', key: '66AFTD3BZC', name: 'Ilves Keltainen', div: 'P9', divTitle: P9, divIdx: 1, players: ['Einari Orispää', 'Eino Innanen', 'Eliel Vaine', 'Joel Aro', 'Kasper-veli Räihä', 'Mert Efe Özkan', 'Verneri Vatanen', 'Vilho Keisu'], rests: [{'key': '2.11.–29.11.2026', 'players': ['Einari Orispää']}, {'key': '12.12.2026', 'players': ['Mert Efe Özkan']}, {'key': '9.1.2027', 'players': ['Verneri Vatanen']}, {'key': '31.1.2027', 'players': ['Eliel Vaine']}, {'key': '20.2.2027', 'players': ['Eino Innanen']}]},
+    {id: '35203238', key: '7G68W9AQ5N', name: 'Ilves Keltavihre\u00e4', div: 'P9', divTitle: P9, divIdx: 1, players: ['Atila Nikkhouyabgarm', 'Elias Mattila', 'Elmo Lovén', 'Hugo Ulmanen', 'Leevi Demin', 'Leevi Mäkinen', 'Lemmy Pitkänen', 'Pauli Ahonen', 'Santtu Sulonen'], rests: [{'key': '2.11.–29.11.2026', 'players': ['Elias Mattila', 'Lemmy Pitkänen']}, {'key': '30.11.–20.12.2026', 'players': ['Leevi Demin', 'Pauli Ahonen']}, {'key': '23.1.2027', 'players': ['Santtu Sulonen', 'Atila Nikkhouyabgarm']}, {'key': '7.2.2027', 'players': ['Elmo Lovén', 'Hugo Ulmanen']}, {'key': '15.2.–21.3.2027', 'players': ['Elias Mattila', 'Leevi Mäkinen']}]},
+    {id: '35203239', key: '5VM23GMEX7', name: 'Ilves Vihre\u00e4', div: 'P9', divTitle: P9, divIdx: 1, players: ['Altti Lehtinen', 'Edvin Aalto', 'Elmeri Taskinen', 'Josef Al-Bayati', 'Justus Tiainen', 'Matts Dunder', 'Noel Lamminen', 'Patrick Kyllönen', 'Ruben Elomaa'], rests: [{'key': '7.11.2026', 'players': ['Elmeri Taskinen', 'Josef Al-Bayati']}, {'key': '12.12.2026', 'players': ['Matts Dunder', 'Noel Lamminen']}, {'key': '23.1.2027', 'players': ['Patrick Kyllönen', 'Ruben Elomaa']}, {'key': '30.1.2027', 'players': ['Altti Lehtinen', 'Edvin Aalto']}, {'key': '15.2.–21.3.2027', 'players': ['Noel Lamminen', 'Justus Tiainen']}]},
+    {id: '35231529', key: 'R8GAEV5TZ7', name: 'Ilves Vihre\u00e4keltainen', div: 'P9', divTitle: P9, divIdx: 1, players: ['Henrik Fischer', 'Julius Leppäkoski', 'Kevin Kytökorpi', 'Lukas Riponiemi', 'Mikke Laaksonen', 'Moses Toppi', 'Otso Jokilehto', 'Roger Wolanen', 'Thomas Tienvieri'], rests: [{'key': '7.11.2026', 'players': ['Henrik Fischer', 'Moses Toppi']}, {'key': '12.12.2026', 'players': ['Otso Jokilehto', 'Roger Wolanen']}, {'key': '4.1.–17.1.2027', 'players': ['Thomas Tienvieri', 'Julius Leppäkoski']}, {'key': '23.1.2027', 'players': ['Kevin Kytökorpi', 'Lukas Riponiemi']}, {'key': '22.2.–14.3.2027', 'players': ['Henrik Fischer', 'Mikke Laaksonen']}]},
+    {id: '35231530', key: 'TDVDTSX3MN', name: 'Ilves Vihre\u00e4keltainen B', div: 'P9', divTitle: P9, divIdx: 1, players: ['Edvin Järvinen', 'Emil Kruus', 'Milo Hermans', 'Oliver Kauppinen', 'Onni Muranen', 'Tapio Oinas', 'Valo Saarimäki', 'Venni Tauriainen', 'Vilho Anttila'], rests: [{'key': '14.11.2026', 'players': ['Emil Kruus', 'Venni Tauriainen']}, {'key': '20.12.2026', 'players': ['Edvin Järvinen', 'Milo Hermans']}, {'key': '16.1.2027', 'players': ['Oliver Kauppinen', 'Tapio Oinas']}, {'key': '18.1.–31.1.2027', 'players': ['Onni Muranen', 'Valo Saarimäki']}, {'key': '13.3.2027', 'players': ['Venni Tauriainen', 'Vilho Anttila']}]}
   ];
 
   var TAMPERE_VENUES = ['kauppi','pirkkahalli','vehmai','tesoma','tammela','hervanta','hakamets','kissanmaa','pyynikki','kaleva','linnainmaa','multisilta','peltolammi','nekala','kaukaj\u00e4rvi','lukonm\u00e4ki','rahola','ahvenisj\u00e4rvi','lamminrahka','hakkari','harjuniitty','suorama'];
@@ -95,6 +95,7 @@
       var start = new Date(first.getTime() - getGatherMinutes(venue) * 60000);
       var end = new Date(last.getTime() + 45 * 60000);
       var desc = ['Kokoontuminen klo ' + gatherTime(g.matches[0].t, venue), ''];
+      var rn = restFor(team, g); if (rn.length) { desc.push('Huilaa: ' + rn.join(', '), ''); }
       for (var k = 0; k < g.matches.length; k++) { var m = g.matches[k]; desc.push(m.t + '  ' + m.h + ' - ' + m.a + (m.field ? '  (' + m.field + ')' : '')); }
       lines.push('BEGIN:VEVENT','DTSTART:' + toICS(start),'DTEND:' + toICS(end),'SUMMARY:' + icsEsc('Futsal ' + team.name),'LOCATION:' + icsEsc(venue + ', Tampere'),'DESCRIPTION:' + icsEsc(desc.join('\n')),'UID:ilves-p2018-futsal-' + team.id + '-' + g.d.replace(/\./g, '') + '@ottelukalenteri','END:VEVENT');
     }
@@ -149,6 +150,8 @@
           doc.setFont('helvetica', 'normal'); doc.setFontSize(6.5); color(MUTED); doc.text(mx.arena ? mx.arena + (mx.field ? ' ' + mx.field : '') : 'ei viel\u00e4 sovittu', ml + 150, y + 4.2);
           y += rowH; alt = !alt;
         }
+        var rn = restFor(team, g);
+        if (rn.length) { doc.setFont('helvetica', 'italic'); doc.setFontSize(6.5); color(MUTED); doc.text('Huilaa: ' + rn.join(', '), ml + 2, y + 3.5); y += rowH - 1; }
         if (gi < groups.length - 1) { doc.setDrawColor(230, 220, 190); doc.line(ml, y, ml + cw, y); y += 2; }
       }
       doc.setDrawColor(GREEN[0], GREEN[1], GREEN[2]); doc.line(ml, ph - 12, ml + cw, ph - 12);
@@ -157,6 +160,12 @@
     }
     doc.save('Ilves-P2018-Futsal-2026-27.pdf');
   };
+
+  function restFor(team, g) {
+    var key = g.open || g.d; var rs = team.rests || [];
+    for (var i = 0; i < rs.length; i++) { if (rs[i].key === key) { return rs[i].players; } }
+    return [];
+  }
 
   /* ── RENDERING ── */
   function renderTeamCard(team, teamIdx) {
@@ -189,6 +198,8 @@
         html += '<a class="venue-tag" href="https://www.google.com/maps/search/' + encodeURIComponent(mapQuery(arena)) + '" target="_blank" rel="noopener"><span class="pin">\uD83D\uDCCD</span> ' + esc(arena) + '</a></div>';
         html += '<div class="gather-time">\uD83D\uDCE2 Kokoontuminen klo ' + gatherTime(g.matches[0].t, arena) + '</div>';
       }
+      var restNames = restFor(team, g);
+      if (restNames.length) { html += '<div class="rest-note">\uD83D\uDECB Huilaa: ' + esc(restNames.join(', ')) + '</div>'; }
       html += '<div class="match-list">';
       for (var k = 0; k < g.matches.length; k++) {
         var mx = g.matches[k]; var hi = isOurTeam(mx.h, team.name);
@@ -306,7 +317,7 @@
           return [];
         });
       }).then(function (matches) {
-        return {id: team.id, name: team.name, div: team.div, divTitle: team.divTitle, divIdx: team.divIdx, players: team.players, matches: matches};
+        return {id: team.id, name: team.name, div: team.div, divTitle: team.divTitle, divIdx: team.divIdx, players: team.players, rests: team.rests || [], matches: matches};
       });
     });
     Promise.all(jobs)
