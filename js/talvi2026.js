@@ -12,19 +12,27 @@
       {name: 'Ilves B', players: ['Elias Mattila','Heikki Lähteenmäki','Jasper Havia','Oiva Rossi','Venni Tauriainen','Verneri Vatanen','Viljami Hanski','Vilho Anttila']}
     ]},
     {date: 'su 22.11.2026 klo 13–16', name: 'Talviliiga – JJK', venue: 'Huhtahalli, Jyväskylä', teams: [
-      {name: 'Ryhmä 1', players: ['An-nur Aminu','Eeli Huotari','Eeli Saunamäki','Emil Kruus','Emil Paloniemi','Justus Tiainen','Veikko Aaltonen','Viljo Konttinen']},
-      {name: 'Ryhmä 2', players: ['Elias Nieminen','Gad Niyokwizerwa','Jamiel Akalazu','Lakindu Gamlath','Mikael Leino','Mikke Laaksonen','Oliver Mäkiranta','Ruben Elomaa']}
+      {name: 'Ryhmä 1', players: ['An-nur Aminu','Eeli Huotari','Eeli Saunamäki','Emil Kruus','Emil Paloniemi','Gad Niyokwizerwa','Veikko Aaltonen','Viljo Konttinen']},
+      {name: 'Ryhmä 2', players: ['Edvin Järvinen','Elias Nieminen','Josef Al-Bayati','Lakindu Gamlath','Mikael Leino','Oliver Mäkiranta','Ruben Elomaa','Walter Capone']}
     ]},
     {date: 'su 22.11.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
-      {name: 'Ilves (taso 1)', players: ['Eliel Vaine','Elmeri Taskinen','Leevi Mäkinen','Matts Dunder','Oliver Kauppinen','Pauli Ahonen','Roger Wolanen','Walter Capone']},
-      {name: 'Ilves Keltainen (taso 2)', players: ['Aaron Melander','Altti Lehtinen','Atila Nikkhouyabgarm','Kevin Kytökorpi','Leevi Demin','Milo Hermans','Otso Miranda','Thomas Saresvaara']}
+      {name: 'P10 taso 1', players: ['Einari Orispää','Jamiel Akalazu','Mert Efe Özkan','Mikke Laaksonen','Milo Hermans','Otso Jokilehto','Pauli Ahonen','Rasmus Lähteenmäki']},
+      {name: 'P9 taso 1 – Ilves', players: ['Atila Nikkhouyabgarm','Eliel Vaine','Elmeri Taskinen','Elmo Lovén','Kasper-veli Räihä','Lukas Riponiemi','Moses Toppi','Roger Wolanen']},
+      {name: 'P9 taso 1 – uusi ryhmä', players: ['Eino Innanen','Hugo Ulmanen','Joel Aro','Julius Leppäkoski','Leevi Mäkinen','Matts Dunder','Oliver Kauppinen','Otso Miranda']},
+      {name: 'P9 taso 2 – Ilves Keltainen', players: ['Aaron Melander','Altti Lehtinen','Justus Tiainen','Kevin Kytökorpi','Leevi Demin','Tapio Oinas','Thomas Saresvaara','Valo Saarimäki']}
     ]},
     {date: 'la 28.11.2026', name: 'Vapari 3v3', venue: 'Vaparihalli', teams: [
       {name: 'Ilves P2018', players: ['Edvin Järvinen','Kasper-veli Räihä','Matts Dunder','Milo Hermans','Oliver Kauppinen','Onni Muranen','Tapio Oinas','Valo Saarimäki','Vilho Anttila']}
     ]},
+    {date: 'la–su 5.–6.12.2026', name: 'Miniliiga P9 – Honka', venue: 'Espoo', teams: [
+      {name: 'Ilves A', players: []},
+      {name: 'Ilves B', players: []}
+    ]},
     {date: 'su 6.12.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
-      {name: 'Ilves (taso 1)', players: ['Edvin Järvinen','Einari Orispää','Lukas Bassina','Lukas Riponiemi','Mert Efe Özkan','Otso Jokilehto','Rasmus Lähteenmäki','Santtu Sulonen']},
-      {name: 'Ilves Keltainen (taso 2)', players: ['Edvin Aalto','Eino Innanen','Elmo Lovén','Hugo Ulmanen','Joel Aro','Josef Al-Bayati','Moses Toppi','Tapio Oinas']}
+      {name: 'P10 taso 1', players: []},
+      {name: 'P9 taso 1 – Ilves', players: []},
+      {name: 'P9 taso 1 – uusi ryhmä', players: []},
+      {name: 'P9 taso 2 – Ilves Keltainen', players: []}
     ]}
   ];
 
@@ -185,9 +193,10 @@
         var t = ev.teams[j];
         var players = t.players.slice().sort(function (a, b) { return a.localeCompare(b, 'fi'); });
         html += '<div class="team-card"><div class="team-header"><span class="team-name">' + esc(t.name) + '</span><span class="team-meta"><span class="match-count">' + players.length + ' pelaajaa</span></span><div class="accordion-arrow">\u25BE</div></div>';
-        html += '<div class="round-group collapsed"><div class="players-list">';
-        for (var p = 0; p < players.length; p++) { html += '<span class="player-name">' + esc(players[p]) + '</span>'; }
-        html += '</div></div></div>';
+        html += '<div class="round-group collapsed">';
+        if (players.length) { html += '<div class="players-list">'; for (var p = 0; p < players.length; p++) { html += '<span class="player-name">' + esc(players[p]) + '</span>'; } html += '</div>'; }
+        else { html += '<div class="players-empty">Pelaajat nimet\u00e4\u00e4n my\u00f6hemmin.</div>'; }
+        html += '</div></div>';
       }
     }
     var el = document.getElementById('content');
