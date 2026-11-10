@@ -6,7 +6,7 @@
   var EVENTS = [
     {date: 'la 14.11.2026', name: 'Vapari 3v3', venue: 'Vaparihalli', teams: [
       {name: 'Ilves A', players: ['Altti Lehtinen','Elmeri Taskinen','Josef Al-Bayati','Leevi Mäkinen','Moses Toppi','Otso Jokilehto']},
-      {name: 'Ilves B', players: ['Aaron Melander','Edvin Aalto','Eino Innanen','Hugo Ulmanen','Julius Leppäkoski','Nooa Kemppainen']}
+      {name: 'Ilves B', players: ['Aaron Melander','Edvin Aalto','Eino Innanen','Hugo Ulmanen','Julius Leppäkoski','Noel Lamminen']}
     ]},
     {date: 'su 22.11.2026', name: 'Miniliiga P9 – HJK', venue: 'Helsinki', teams: [
       {name: 'Ilves A', players: ['Henrik Fischer','Lemmy Pitkänen','Leo Mayomi','Nooa Kemppainen','Noel Lamminen','Patrick Kyllönen','Thomas Tienvieri','Vilho Keisu']},
