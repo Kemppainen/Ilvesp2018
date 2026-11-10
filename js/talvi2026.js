@@ -13,11 +13,11 @@
       {name: 'Ilves B', players: ['Elias Mattila','Heikki Lähteenmäki','Jasper Havia','Oiva Rossi','Venni Tauriainen','Verneri Vatanen','Viljami Hanski','Vilho Anttila']}
     ]},
     {date: 'su 22.11.2026 klo 13–16', name: 'Talviliiga – JJK', venue: 'Huhtahalli, Jyväskylä', teams: [
-      {name: 'Ryhmä 1', players: ['An-nur Aminu','Eeli Huotari','Eeli Saunamäki','Emil Kruus','Emil Paloniemi','Gad Niyokwizerwa','Veikko Aaltonen','Viljo Konttinen']},
+      {name: 'Ryhmä 1', players: ['Rasmus Lähteenmäki','Eeli Huotari','Eeli Saunamäki','Emil Kruus','Emil Paloniemi','Gad Niyokwizerwa','Veikko Aaltonen','Viljo Konttinen']},
       {name: 'Ryhmä 2', players: ['Edvin Järvinen','Elias Nieminen','Josef Al-Bayati','Lakindu Gamlath','Mikael Leino','Oliver Mäkiranta','Ruben Elomaa','Walter Capone']}
     ]},
     {date: 'su 22.11.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
-      {name: 'P10 taso 1', players: ['Einari Orispää','Jamiel Akalazu','Mert Efe Özkan','Mikke Laaksonen','Milo Hermans','Otso Jokilehto','Pauli Ahonen','Rasmus Lähteenmäki']},
+      {name: 'P10 taso 1', players: ['Einari Orispää','Jamiel Akalazu','Mert Efe Özkan','Mikke Laaksonen','Milo Hermans','Otso Jokilehto','Pauli Ahonen','An-nur Aminu']},
       {name: 'Ilves (P9 taso 1)', players: ['Atila Nikkhouyabgarm','Eliel Vaine','Elmeri Taskinen','Elmo Lovén','Kasper-veli Räihä','Lukas Riponiemi','Moses Toppi','Roger Wolanen']},
       {name: 'Ilves Keltainen (P9 taso 1)', players: ['Eino Innanen','Hugo Ulmanen','Joel Aro','Julius Leppäkoski','Leevi Mäkinen','Matts Dunder','Oliver Kauppinen','Otso Miranda']},
       {name: 'Ilves Keltavihreä (P9 taso 2)', players: ['Aaron Melander','Altti Lehtinen','Justus Tiainen','Kevin Kytökorpi','Leevi Demin','Tapio Oinas','Thomas Saresvaara','Valo Saarimäki']}
