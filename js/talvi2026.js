@@ -18,9 +18,9 @@
     ]},
     {date: 'su 22.11.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
       {name: 'P10 taso 1', players: ['Einari Orispää','Jamiel Akalazu','Mert Efe Özkan','Mikke Laaksonen','Milo Hermans','Otso Jokilehto','Pauli Ahonen','Rasmus Lähteenmäki']},
-      {name: 'P9 taso 1 – Ilves', players: ['Atila Nikkhouyabgarm','Eliel Vaine','Elmeri Taskinen','Elmo Lovén','Kasper-veli Räihä','Lukas Riponiemi','Moses Toppi','Roger Wolanen']},
-      {name: 'P9 taso 1 – uusi ryhmä', players: ['Eino Innanen','Hugo Ulmanen','Joel Aro','Julius Leppäkoski','Leevi Mäkinen','Matts Dunder','Oliver Kauppinen','Otso Miranda']},
-      {name: 'P9 taso 2 – Ilves Keltainen', players: ['Aaron Melander','Altti Lehtinen','Justus Tiainen','Kevin Kytökorpi','Leevi Demin','Tapio Oinas','Thomas Saresvaara','Valo Saarimäki']}
+      {name: 'Ilves (P9 taso 1)', players: ['Atila Nikkhouyabgarm','Eliel Vaine','Elmeri Taskinen','Elmo Lovén','Kasper-veli Räihä','Lukas Riponiemi','Moses Toppi','Roger Wolanen']},
+      {name: 'Ilves Keltainen (P9 taso 1)', players: ['Eino Innanen','Hugo Ulmanen','Joel Aro','Julius Leppäkoski','Leevi Mäkinen','Matts Dunder','Oliver Kauppinen','Otso Miranda']},
+      {name: 'Ilves Keltavihreä (P9 taso 2)', players: ['Aaron Melander','Altti Lehtinen','Justus Tiainen','Kevin Kytökorpi','Leevi Demin','Tapio Oinas','Thomas Saresvaara','Valo Saarimäki']}
     ]},
     {date: 'la 28.11.2026', name: 'Vapari 3v3', venue: 'Vaparihalli', teams: [
       {name: 'Ilves A', players: ['Edvin Järvinen','Matts Dunder','Milo Hermans','Oliver Kauppinen','Tapio Oinas','Vilho Anttila']},
@@ -32,9 +32,9 @@
     ]},
     {date: 'su 6.12.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
       {name: 'P10 taso 1', players: []},
-      {name: 'P9 taso 1 – Ilves', players: []},
-      {name: 'P9 taso 1 – uusi ryhmä', players: []},
-      {name: 'P9 taso 2 – Ilves Keltainen', players: []}
+      {name: 'Ilves (P9 taso 1)', players: []},
+      {name: 'Ilves Keltainen (P9 taso 1)', players: []},
+      {name: 'Ilves Keltavihreä (P9 taso 2)', players: []}
     ]}
   ];
 
