@@ -5,7 +5,8 @@
   /* Lisää uudet tapahtumat tähän listaan aikajärjestyksessä. */
   var EVENTS = [
     {date: 'la 14.11.2026', name: 'Vapari 3v3', venue: 'Vaparihalli', teams: [
-      {name: 'Ilves P2018', players: ['Altti Lehtinen','Edvin Aalto','Elmeri Taskinen','Josef Al-Bayati','Julius Leppäkoski','Leevi Mäkinen','Moses Toppi','Otso Jokilehto']}
+      {name: 'Ilves A', players: ['Altti Lehtinen','Elmeri Taskinen','Josef Al-Bayati','Leevi Mäkinen','Moses Toppi','Otso Jokilehto']},
+      {name: 'Ilves B', players: ['Aaron Melander','Edvin Aalto','Eino Innanen','Hugo Ulmanen','Julius Leppäkoski','Nooa Kemppainen']}
     ]},
     {date: 'su 22.11.2026', name: 'Miniliiga P9 – HJK', venue: 'Helsinki', teams: [
       {name: 'Ilves A', players: ['Henrik Fischer','Lemmy Pitkänen','Leo Mayomi','Nooa Kemppainen','Noel Lamminen','Patrick Kyllönen','Thomas Tienvieri','Vilho Keisu']},
@@ -22,7 +23,8 @@
       {name: 'P9 taso 2 – Ilves Keltainen', players: ['Aaron Melander','Altti Lehtinen','Justus Tiainen','Kevin Kytökorpi','Leevi Demin','Tapio Oinas','Thomas Saresvaara','Valo Saarimäki']}
     ]},
     {date: 'la 28.11.2026', name: 'Vapari 3v3', venue: 'Vaparihalli', teams: [
-      {name: 'Ilves P2018', players: ['Edvin Järvinen','Kasper-veli Räihä','Matts Dunder','Milo Hermans','Oliver Kauppinen','Onni Muranen','Tapio Oinas','Valo Saarimäki','Vilho Anttila']}
+      {name: 'Ilves A', players: ['Edvin Järvinen','Matts Dunder','Milo Hermans','Oliver Kauppinen','Tapio Oinas','Vilho Anttila']},
+      {name: 'Ilves B', players: ['Joel Aro','Kasper-veli Räihä','Onni Muranen','Thomas Saresvaara','Valo Saarimäki','Vilho Keisu']}
     ]},
     {date: 'la–su 5.–6.12.2026', name: 'Miniliiga P9 – Honka', venue: 'Espoo', teams: [
       {name: 'Ilves A', players: []},
