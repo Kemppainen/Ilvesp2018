@@ -19,7 +19,7 @@
     {date: 'su 22.11.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
       {name: 'P10 taso 1', players: ['Einari Orispää','Jamiel Akalazu','Mert Efe Özkan','Mikke Laaksonen','Milo Hermans','Otso Jokilehto','Pauli Ahonen','An-nur Aminu']},
       {name: 'Ilves (P9 taso 1)', players: ['Atila Nikkhouyabgarm','Eliel Vaine','Elmeri Taskinen','Elmo Lovén','Kasper-veli Räihä','Lukas Riponiemi','Moses Toppi','Roger Wolanen']},
-      {name: 'Ilves Keltainen (P9 taso 1)', players: ['Eino Innanen','Hugo Ulmanen','Joel Aro','Julius Leppäkoski','Leevi Mäkinen','Matts Dunder','Oliver Kauppinen','Otso Miranda']},
+      {name: 'Ilves Keltainen (P9 taso 1)', players: ['Eino Innanen','Hugo Ulmanen','Joel Aro','Julius Leppäkoski','Edvin Aalto','Leevi Mäkinen','Matts Dunder','Oliver Kauppinen']},
       {name: 'Ilves Keltavihreä (P9 taso 2)', players: ['Aaron Melander','Altti Lehtinen','Justus Tiainen','Kevin Kytökorpi','Leevi Demin','Tapio Oinas','Thomas Saresvaara','Valo Saarimäki']}
     ]},
     {date: 'la 28.11.2026', name: 'Vapari 3v3', venue: 'Vaparihalli', teams: [
