@@ -8,9 +8,9 @@
       {name: 'Ilves A', time: 'klo 15.15–17.10', info: 'Lohko B: TamU, ViiPV, YIlves A · 3v3 + 4v4', players: ['Altti Lehtinen','Elmeri Taskinen','Josef Al-Bayati','Leevi Mäkinen','Moses Toppi','Otso Jokilehto']},
       {name: 'Ilves B', time: 'klo 12.45–14.40', info: 'Lohko A: LeKi-futis, Loiske, YIlves B · 3v3 + 4v4', players: ['Aaron Melander','Edvin Aalto','Eino Innanen','Hugo Ulmanen','Julius Leppäkoski','Oliver Mäkiranta']}
     ]},
-    {date: 'su 22.11.2026 klo 16.15–19.05', name: 'Miniliiga P9 – HJK', venue: 'Sahara, Helsinki', teams: [
-      {name: 'Ilves A', info: 'Kentät 1–2: 16.15 KäPa · 17.05 TPS · 17.30 Honka · 18.20 HJK · 18.45 EsPa', players: ['Henrik Fischer','Lemmy Pitkänen','Leo Mayomi','Nooa Kemppainen','Noel Lamminen','Patrick Kyllönen','Thomas Tienvieri','Vilho Keisu']},
-      {name: 'Ilves B', info: 'Kentät 3–4: 16.15 KäPa · 17.05 TPS · 17.30 Honka · 18.20 HJK · 18.45 EsPa', players: ['Elias Mattila','Heikki Lähteenmäki','Jasper Havia','Oiva Rossi','Venni Tauriainen','Verneri Vatanen','Viljami Hanski','Vilho Anttila']}
+    {date: 'su 22.11.2026', name: 'Miniliiga P9 – HJK', venue: 'Lehtikuusentien kenttä, Helsinki', teams: [
+      {name: 'Ilves A', time: 'klo 11.00–13.10', info: '11.00 TPS A (k2) · 11.25 KäPa A (k3) · 12.00 Gnistan A (k3) · 12.25 Honka A (k2) · 12.50 HJK A (k1)', players: ['Henrik Fischer','Lemmy Pitkänen','Leo Mayomi','Nooa Kemppainen','Noel Lamminen','Patrick Kyllönen','Thomas Tienvieri','Vilho Keisu']},
+      {name: 'Ilves B', time: 'klo 13.15–15.15', info: '13.15 TPS B (k2) · 13.40 KäPa B (k3) · 14.05 Gnistan B (k3) · 14.30 Honka B (k2) · 14.55 HJK B (k1)', players: ['Elias Mattila','Heikki Lähteenmäki','Jasper Havia','Oiva Rossi','Venni Tauriainen','Verneri Vatanen','Viljami Hanski','Vilho Anttila']}
     ]},
     {date: 'su 22.11.2026 klo 13–16', name: 'Talviliiga – JJK', venue: 'Huhtahalli, Jyväskylä', teams: [
       {name: 'Ryhmä 1', players: ['Rasmus Lähteenmäki','Eeli Huotari','Eeli Saunamäki','Emil Kruus','Emil Paloniemi','Gad Niyokwizerwa','Veikko Aaltonen','Viljo Konttinen']},
