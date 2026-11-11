@@ -5,8 +5,8 @@
   /* Lisää uudet tapahtumat tähän listaan aikajärjestyksessä. */
   var EVENTS = [
     {date: 'la 14.11.2026', name: 'Vapari 3v3', venue: 'Vaparihalli', teams: [
-      {name: 'Ilves A', players: ['Altti Lehtinen','Elmeri Taskinen','Josef Al-Bayati','Leevi Mäkinen','Moses Toppi','Otso Jokilehto']},
-      {name: 'Ilves B', players: ['Aaron Melander','Edvin Aalto','Eino Innanen','Hugo Ulmanen','Julius Leppäkoski','Oliver Mäkiranta']}
+      {name: 'Ilves A', time: 'klo 15.15–17.10', info: 'Lohko B: TamU, ViiPV, YIlves A · 3v3 + 4v4', players: ['Altti Lehtinen','Elmeri Taskinen','Josef Al-Bayati','Leevi Mäkinen','Moses Toppi','Otso Jokilehto']},
+      {name: 'Ilves B', time: 'klo 12.45–14.40', info: 'Lohko A: LeKi-futis, Loiske, YIlves B · 3v3 + 4v4', players: ['Aaron Melander','Edvin Aalto','Eino Innanen','Hugo Ulmanen','Julius Leppäkoski','Oliver Mäkiranta']}
     ]},
     {date: 'su 22.11.2026', name: 'Miniliiga P9 – HJK', venue: 'Helsinki', teams: [
       {name: 'Ilves A', players: ['Henrik Fischer','Lemmy Pitkänen','Leo Mayomi','Nooa Kemppainen','Noel Lamminen','Patrick Kyllönen','Thomas Tienvieri','Vilho Keisu']},
@@ -87,8 +87,8 @@
     EVENTS.forEach(function (ev) {
       ev.teams.forEach(function (t) {
         if (t.players.indexOf(name) >= 0) {
-          var tm = /klo\s*(\d{1,2})(?:[.:](\d{2}))?\s*[\u2013-]\s*(\d{1,2})(?:[.:](\d{2}))?/.exec(ev.date);
-          rows.push({sort: lastDate(ev.date), day: lastDate(ev.date), span: tm ? [+tm[1], +(tm[2] || 0), +tm[3], +(tm[4] || 0)] : null, date: ev.date, name: ev.name, venue: ev.venue, detail: t.name});
+          var tm = /klo\s*(\d{1,2})(?:[.:](\d{2}))?\s*[\u2013-]\s*(\d{1,2})(?:[.:](\d{2}))?/.exec(t.time || ev.date);
+          rows.push({sort: lastDate(ev.date), day: lastDate(ev.date), span: tm ? [+tm[1], +(tm[2] || 0), +tm[3], +(tm[4] || 0)] : null, date: ev.date + (t.time ? ' ' + t.time : ''), name: ev.name, venue: ev.venue, detail: t.name + (t.info ? ' \u2013 ' + t.info : '')});
         }
       });
     });
@@ -194,8 +194,9 @@
       for (var j = 0; j < ev.teams.length; j++) {
         var t = ev.teams[j];
         var players = t.players.slice().sort(function (a, b) { return a.localeCompare(b, 'fi'); });
-        html += '<div class="team-card"><div class="team-header"><span class="team-name">' + esc(t.name) + '</span><span class="team-meta"><span class="match-count">' + players.length + ' pelaajaa</span></span><div class="accordion-arrow">\u25BE</div></div>';
+        html += '<div class="team-card"><div class="team-header"><span class="team-name">' + esc(t.name) + (t.time ? ' <span class="team-time">' + esc(t.time) + '</span>' : '') + '</span><span class="team-meta"><span class="match-count">' + (players.length ? players.length + ' pelaajaa' : 'avoin') + '</span></span><div class="accordion-arrow">\u25BE</div></div>';
         html += '<div class="round-group collapsed">';
+        if (t.info) { html += '<div class="team-info">' + esc(t.info) + '</div>'; }
         if (players.length) { html += '<div class="players-list">'; for (var p = 0; p < players.length; p++) { html += '<span class="player-name">' + esc(players[p]) + '</span>'; } html += '</div>'; }
         else { html += '<div class="players-empty">Pelaajat nimet\u00e4\u00e4n my\u00f6hemmin.</div>'; }
         html += '</div></div>';
