@@ -16,7 +16,6 @@
       {name: 'Ryhmä 2', players: ['Edvin Järvinen','Elias Nieminen','Josef Al-Bayati','Lakindu Gamlath','Mikael Leino','Oliver Mäkiranta','Ruben Elomaa','Walter Capone']}
     ]},
     {date: 'su 22.11.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
-      {name: 'P10 taso 1', players: ['Einari Orispää','Jamiel Akalazu','Mert Efe Özkan','Mikke Laaksonen','Milo Hermans','Otso Jokilehto','Pauli Ahonen','An-nur Aminu']},
       {name: 'Ilves (P9 taso 1)', players: ['Atila Nikkhouyabgarm','Eliel Vaine','Elmeri Taskinen','Elmo Lovén','Kasper-veli Räihä','Lukas Riponiemi','Moses Toppi','Roger Wolanen']},
       {name: 'Ilves Keltainen (P9 taso 1)', players: ['Eino Innanen','Hugo Ulmanen','Joel Aro','Julius Leppäkoski','Edvin Aalto','Leevi Mäkinen','Matts Dunder','Oliver Kauppinen']},
       {name: 'Ilves Keltavihreä (P9 taso 2)', players: ['Aaron Melander','Altti Lehtinen','Justus Tiainen','Kevin Kytökorpi','Leevi Demin','Tapio Oinas','Thomas Saresvaara','Valo Saarimäki']}
@@ -30,7 +29,6 @@
       {name: 'Ilves B', players: []}
     ]},
     {date: 'su 6.12.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
-      {name: 'P10 taso 1', players: []},
       {name: 'Ilves (P9 taso 1)', players: []},
       {name: 'Ilves Keltainen (P9 taso 1)', players: []},
       {name: 'Ilves Keltavihreä (P9 taso 2)', players: []}
