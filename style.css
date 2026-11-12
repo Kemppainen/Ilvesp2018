@@ -343,45 +343,30 @@ footer a:hover { text-decoration: underline; }
 .open-note { font-size: 12px; color: var(--text-dim, #777); margin: 2px 0 6px; font-style: italic; }
 .open-window .match-row { opacity: .8; }
 
-/* ── VÄLILEHDET + KALENTERI ── */
-.tabs { display: flex; gap: 6px; margin-bottom: 24px; border-bottom: 2px solid var(--border-light); }
-.tab {
-  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600; color: var(--text-muted);
-  background: transparent; border: none; border-bottom: 3px solid transparent; margin-bottom: -2px;
-  padding: 10px 16px; cursor: pointer;
-}
-.tab.active { color: var(--green); border-bottom-color: var(--yellow); }
-.cal-filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+/* ── SUODATTIMET + MUUT JOUKKUEET ── */
+.cal-filters { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
 .chip {
   font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 500; color: var(--text-muted);
   background: #FAFAFA; border: 1px solid var(--border-light); border-radius: 16px; padding: 6px 12px; cursor: pointer;
 }
 .chip.active { background: var(--green); border-color: var(--green); color: #fff; }
-.cal-day-head { font-size: 15px; font-weight: 600; color: var(--green); margin: 22px 0 8px; }
-.cal-today { font-size: 11px; font-weight: 600; background: var(--yellow); color: var(--yellow-dark); border-radius: 10px; padding: 2px 8px; margin-left: 6px; vertical-align: 2px; }
-.cal-card .team-header { align-items: flex-start; }
-.cal-type {
-  flex-shrink: 0; background: var(--green); color: #fff; font-size: 10px; font-weight: 600;
-  letter-spacing: 0.4px; text-transform: uppercase; padding: 3px 8px; border-radius: 10px; margin-top: 1px;
-}
-.cal-head { flex: 1; min-width: 0; }
-.cal-sub { font-size: 12px; color: var(--yellow-muted); margin-top: 2px; }
-.cal-sub a { color: inherit; text-decoration: underline; }
-.cal-card .accordion-arrow { margin-top: 2px; }
+.cal-filters + .division-header { margin-top: 0; }
+.ev-note { font-size: 12px; color: var(--text-muted); margin: -2px 0 8px; padding: 0 2px; }
 .cal-players { margin: 8px 0 6px; }
-.cal-team { padding: 8px 0 10px; border-top: 1px solid var(--border-light); }
-.cal-team:first-child { border-top: none; padding-top: 0; }
-.cal-team-name { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 4px; }
-.cal-team-time { font-weight: 500; font-size: 12px; color: var(--green); margin-left: 6px; }
-.cal-team-info { font-size: 12px; color: var(--text-muted); margin-bottom: 8px; }
-.cal-open { padding: 4px 14px; }
-.cal-open-row { display: flex; gap: 10px; font-size: 12.5px; color: var(--text-body); padding: 8px 0; border-bottom: 1px solid var(--border-light); }
-.cal-open-row:last-child { border-bottom: none; }
-.cal-open-win { flex-shrink: 0; min-width: 96px; font-weight: 600; color: var(--green); }
-.cal-past { margin-top: 28px; }
-.cal-past summary { font-size: 13px; font-weight: 600; color: var(--text-muted); cursor: pointer; padding: 8px 0; }
-@media (max-width: 650px) {
-  .tabs { margin-bottom: 18px; }
-  .tab { flex: 1; padding: 10px 8px; }
-  .cal-open-row { flex-direction: column; gap: 2px; }
-}
+
+/* ── PELAAJAHAKU ── */
+.search-card { margin-bottom: 28px; }
+.player-input { width: 100%; box-sizing: border-box; font: inherit; font-size: 15px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px; background: #FAFAFA; }
+.player-input:focus { outline: 2px solid var(--yellow); border-color: var(--yellow); }
+.player-events { margin-top: 12px; display: flex; flex-direction: column; gap: 8px; }
+.pe-row { display: flex; gap: 12px; padding: 8px 10px; border: 1px solid var(--border-light); border-radius: 8px; border-left: 3px solid var(--green); }
+.pe-row.pe-futsal { border-left-color: var(--yellow); }
+.pe-row.pe-rest { opacity: 0.55; border-left-style: dashed; }
+.pe-date { min-width: 120px; font-size: 12.5px; font-weight: 600; color: var(--green); }
+.pe-name { font-size: 13.5px; font-weight: 600; color: var(--text-primary); }
+.pe-venue { font-weight: 400; color: var(--text-dim); font-size: 12px; }
+.pe-detail { font-size: 12px; color: var(--text-body); margin-top: 2px; }
+.pe-footer { margin-top: 12px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.pe-count { font-size: 12px; color: var(--text-dim); }
+.pe-footer .cal-export-btn { margin-left: auto; }
+@media (max-width: 600px) { .pe-row { flex-direction: column; gap: 2px; } }
