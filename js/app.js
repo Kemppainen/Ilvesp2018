@@ -340,7 +340,7 @@
             html += '<div class="match-list">';
             for (var r = 0; r < parsed.rows.length; r++) {
               var row = parsed.rows[r];
-              html += '<div class="match-row home-match"><div class="match-row-top"><span class="col-time">' + esc(row.t || '–') + '</span>' + (row.field ? '<span class="field-detail">' + esc(row.field) + '</span>' : '') + '</div>';
+              html += '<div class="match-row ' + (r % 2 ? 'away-match' : 'home-match') + '"><div class="match-row-top"><span class="col-time">' + esc(row.t || '–') + '</span>' + (row.field ? '<span class="field-detail">' + esc(row.field) + '</span>' : '') + '</div>';
               html += '<div class="match-row-bottom"><span class="col-home"><span class="ilves">' + esc(order[n]) + '</span></span><span class="col-vs">—</span><span class="col-away">' + esc(row.opp) + '</span><span class="col-score">—</span></div></div>';
             }
             html += '</div>';
