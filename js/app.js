@@ -335,6 +335,7 @@
           var note = []; if (ev.name !== type) { note.push(ev.name); } if (klo && !parsed.timed) { note.push(klo); } else if (!klo) { note.push('kellonaika tarkentuu'); }
           note = note.concat(parsed.notes);
           if (note.length) { html += '<div class="ev-note">' + esc(note.join(' · ')) + '</div>'; }
+          html += '<div class="players-section"><div class="players-header"><span class="players-icon">\u26BD</span><span class="players-title">Pelaajat (' + (tm.players.length || 'avoin') + ')</span><span class="players-arrow">\u25BE</span></div><div class="players-content">' + playersHtml(tm.players) + '</div></div>';
           if (parsed.rows.length) {
             html += '<div class="match-list">';
             for (var r = 0; r < parsed.rows.length; r++) {
@@ -344,7 +345,7 @@
             }
             html += '</div>';
           }
-          html += '<div class="cal-players">' + playersHtml(tm.players) + '</div></div>';
+          html += '</div>';
         }
         html += '</div></div>';
       }
