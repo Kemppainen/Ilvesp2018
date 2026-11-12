@@ -231,18 +231,22 @@
 
   function renderAll(data) {
     TEAMS = data.teams;
-    var el = document.getElementById('content'); var html = ''; var lastDiv = -1;
+    var el = document.getElementById('content'); var html = filtersHtml(); var lastDiv = -1;
     for (var i = 0; i < TEAMS.length; i++) {
       var team = TEAMS[i];
       if (team.divIdx !== lastDiv) {
-        html += '<div class="division-header"><div class="division-pill">' + esc(team.div) + '</div><div class="division-title">' + esc(team.divTitle) + '</div></div>';
+        html += '<div class="division-header" data-type="Futsal"><div class="division-pill">' + esc(team.div) + '</div><div class="division-title">' + esc(team.divTitle) + '</div></div>';
         lastDiv = team.divIdx;
       }
-      html += renderTeamCard(team, i);
+      html += renderTeamCard(team, i).replace('<div class="team-card">', '<div class="team-card" data-type="Futsal">');
     }
+    html += renderOtherTeams();
     el.innerHTML = html;
 
     el.addEventListener('click', function (e) {
+      if (e.target.closest('a')) { return; }
+      var chip = e.target.closest('.chip');
+      if (chip) { applyFilter(el, chip); return; }
       var calBtn = e.target.closest('.cal-export-btn');
       if (calBtn) { e.stopPropagation(); generateICS(parseInt(calBtn.getAttribute('data-team-idx'), 10)); return; }
       var pl = e.target.closest('.players-header');
@@ -278,6 +282,56 @@
   }
   function calCard(type, title, sub, body) {
     return '<div class="team-card cal-card" data-type="' + type + '"><div class="team-header"><span class="cal-type">' + esc(type) + '</span><div class="cal-head"><div class="team-name">' + esc(title) + '</div><div class="cal-sub">' + sub + '</div></div><div class="accordion-arrow">▾</div></div><div class="round-group collapsed">' + body + '</div></div>';
+  }
+
+  /* ── SUODATTIMET (yhteiset molemmille välilehdille) ── */
+  function filtersHtml() {
+    var h = '<div class="cal-filters"><button type="button" class="chip active" data-filter="">Kaikki</button>';
+    for (var c = 0; c < CAL_TYPES.length; c++) { h += '<button type="button" class="chip" data-filter="' + CAL_TYPES[c] + '">' + CAL_TYPES[c] + '</button>'; }
+    return h + '</div>';
+  }
+  function applyFilter(el, chip) {
+    var f = chip.getAttribute('data-filter');
+    var chips = el.querySelectorAll('.chip'); for (var a = 0; a < chips.length; a++) { chips[a].classList.toggle('active', chips[a] === chip); }
+    var cards = el.querySelectorAll('[data-type]'); for (var b = 0; b < cards.length; b++) { cards[b].classList.toggle('hidden', !!f && cards[b].getAttribute('data-type') !== f); }
+    var ds = el.querySelectorAll('[data-types]'); for (var x = 0; x < ds.length; x++) { ds[x].classList.toggle('hidden', !!f && (' ' + ds[x].getAttribute('data-types') + ' ').indexOf(' ' + f + ' ') < 0); }
+  }
+
+  /* ── MUUT JOUKKUEET (Miniliiga, Talviliiga, Talvisarja, 3v3) futsalkorttien muodossa ── */
+  function venueQuery(v) { return /vapari|tammela|kauppi|pirkkahalli/i.test(v) && v.indexOf(',') < 0 ? v + ' Tampere' : v; }
+  function renderOtherTeams() {
+    var evs = window.TALVI_EVENTS || []; var html = '';
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    for (var c = 1; c < CAL_TYPES.length; c++) {
+      var type = CAL_TYPES[c]; var order = [], map = {};
+      for (var i = 0; i < evs.length; i++) {
+        if (evType(evs[i].name) !== type) { continue; }
+        for (var j = 0; j < evs[i].teams.length; j++) {
+          var t = evs[i].teams[j];
+          if (!map[t.name]) { map[t.name] = []; order.push(t.name); }
+          map[t.name].push({ev: evs[i], t: t});
+        }
+      }
+      if (!order.length) { continue; }
+      html += '<div class="division-header" data-type="' + type + '"><div class="division-pill">' + esc(type) + '</div><div class="division-title">' + esc(type) + ' 2026–27</div></div>';
+      for (var n = 0; n < order.length; n++) {
+        var list = map[order[n]];
+        html += '<div class="team-card" data-type="' + type + '"><div class="team-header"><div class="team-name">' + esc(order[n]) + '</div><div class="team-meta">' + esc(type) + '</div><div class="match-count">' + list.length + (list.length === 1 ? ' tapahtuma' : ' tapahtumaa') + '</div><div class="accordion-arrow">▾</div></div><div class="round-group collapsed">';
+        for (var k = 0; k < list.length; k++) {
+          var ev = list[k].ev, tm = list[k].t;
+          var label = ev.date.replace(/\s*klo.*$/, '').replace(/\.\d{4}/, '.');
+          var klo = tm.time || (/klo\s*[\d.:–-]+/.exec(ev.date) || [''])[0];
+          html += '<div class="date-group"><div class="date-venue-row"><div class="date-badge">' + esc(label) + '</div>';
+          if (ev.venue) { html += '<a class="venue-tag" href="https://www.google.com/maps/search/' + encodeURIComponent(venueQuery(ev.venue)) + '" target="_blank" rel="noopener"><span class="pin">📍</span> ' + esc(ev.venue) + '</a>'; }
+          html += '</div>';
+          html += '<div class="gather-time">' + (klo ? '🕒 ' + esc(klo) + (ev.name !== type ? ' · ' : '') : '') + (ev.name !== type ? esc(ev.name) : '') + (!klo && ev.name === type ? 'Kellonaika tarkentuu' : '') + '</div>';
+          if (tm.info) { html += '<div class="cal-team-info">' + esc(tm.info) + '</div>'; }
+          html += '<div class="cal-players">' + playersHtml(tm.players) + '</div></div>';
+        }
+        html += '</div></div>';
+      }
+    }
+    return html;
   }
 
   function buildCalendar() {
@@ -337,9 +391,7 @@
     }
     for (var i = 0; i < keys.length; i++) { var d = days[keys[i]]; if (d.date < today) { past += dayHtml(d); pastN++; } else { up += dayHtml(d); } }
 
-    var html = '<div class="cal-filters"><button type="button" class="chip active" data-filter="">Kaikki</button>';
-    for (var c = 0; c < CAL_TYPES.length; c++) { html += '<button type="button" class="chip" data-filter="' + CAL_TYPES[c] + '">' + CAL_TYPES[c] + '</button>'; }
-    html += '</div>';
+    var html = filtersHtml();
     html += up || '<div class="players-empty">Ei tulevia pelejä.</div>';
     if (open.length) {
       open.sort(function (x, y) { return x.sort - y.sort; });
@@ -356,13 +408,7 @@
     el.addEventListener('click', function (e) {
       if (e.target.closest('a')) { return; }
       var chip = e.target.closest('.chip');
-      if (chip) {
-        var f = chip.getAttribute('data-filter');
-        var chips = el.querySelectorAll('.chip'); for (var a = 0; a < chips.length; a++) { chips[a].classList.toggle('active', chips[a] === chip); }
-        var cards = el.querySelectorAll('[data-type]'); for (var b = 0; b < cards.length; b++) { cards[b].classList.toggle('hidden', !!f && cards[b].getAttribute('data-type') !== f); }
-        var ds = el.querySelectorAll('.cal-day'); for (var x = 0; x < ds.length; x++) { ds[x].classList.toggle('hidden', !!f && (' ' + ds[x].getAttribute('data-types') + ' ').indexOf(' ' + f + ' ') < 0); }
-        return;
-      }
+      if (chip) { applyFilter(el, chip); return; }
       var header = e.target.closest('.team-header');
       if (header) { header.closest('.team-card').classList.toggle('open'); return; }
       var row = e.target.closest('.match-row');
