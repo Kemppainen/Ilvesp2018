@@ -4,32 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#F5B000">
-  <title>Ilves P2018 – Futsal 2026–27</title>
-  <link rel="stylesheet" href="style.css?v=4">
+  <title>Ilves P2018 – Pelit 2026–27</title>
+  <link rel="stylesheet" href="style.css?v=5">
 </head>
 <body>
 <header>
   <div>
-    <h1>ILVES P2018 <span>FUTSAL</span></h1>
-    <p>L&auml;nsi Futsal 2026&ndash;27 &middot; P10 &amp; P9</p>
+    <h1>ILVES P2018 <span>PELIT</span></h1>
+    <p>Futsal &middot; Miniliiga &middot; Talviliiga &middot; Talvisarja &middot; 3v3</p>
   </div>
-  <div class="season-badge">Futsal 26&ndash;27</div>
+  <div class="season-badge">Talvi 26&ndash;27</div>
 </header>
 <main>
+  <div class="tabs hidden" id="tabs">
+    <button type="button" class="tab active" data-tab="teams">Joukkueet</button>
+    <button type="button" class="tab" data-tab="calendar">Kalenteri</button>
+  </div>
   <div id="loading" class="loading">
     <div class="loading-icon">&#9917;</div>
     <div>Haetaan ottelutietoja Palloliiton tulospalvelusta...</div>
   </div>
   <div id="content"></div>
+  <div id="calendar" class="hidden"></div>
 </main>
 <footer>
   Tiedot haettu: <a href="https://tulospalvelu.palloliitto.fi" target="_blank">tulospalvelu.palloliitto.fi</a> &nbsp;&middot;&nbsp;
   P&auml;ivitetty: <span id="updated-date">&ndash;</span> &nbsp;&middot;&nbsp;
   <button id="pdf-btn" style="display:none" onclick="window.generatePDF()">Lataa PDF</button>
   &nbsp;&middot;&nbsp;
-  <a href="talvi2026.html">&#10052; Talven muut pelit</a> &nbsp;&middot;&nbsp; <a href="syksy2026.html">&#128218; Syksy 2026</a> &nbsp;&middot;&nbsp; <a href="kevat2026.html">&#128218; Kev&auml;t 2026</a>
+  <a href="talvi2026.html">&#128269; Pelaajahaku ja kokoonpanot</a> &nbsp;&middot;&nbsp; <a href="syksy2026.html">&#128218; Syksy 2026</a> &nbsp;&middot;&nbsp; <a href="kevat2026.html">&#128218; Kev&auml;t 2026</a>
 </footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="js/app.js?v=futsal8"></script>
+<script src="js/events.js?v=1"></script>
+<script src="js/app.js?v=pelit1"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-/* Ilves P2018 – Futsal 2026–27 (Länsi Futsal) */
+/* Ilves P2018 – Pelit 2026–27: joukkueet (Länsi Futsal) + kalenteri (kaikki pelit) */
 (function () {
   'use strict';
 
@@ -253,8 +253,138 @@
       if (row && window.innerWidth <= 650) { row.classList.toggle('expanded'); }
     });
 
+    buildCalendar(); initTabs();
+
     var upd = document.getElementById('updated-date'); if (upd) { upd.textContent = data.updated || '\u2013'; }
     var pdfBtn = document.getElementById('pdf-btn'); if (pdfBtn) { pdfBtn.style.display = 'inline-block'; }
+  }
+
+
+  /* ── KALENTERI: kaikki pelit päivittäin ── */
+  var CAL_TYPES = ['Futsal', 'Miniliiga', 'Talviliiga', 'Talvisarja', '3v3'];
+  function evType(name) { for (var i = 1; i < CAL_TYPES.length; i++) { if (name.indexOf(CAL_TYPES[i]) >= 0) { return CAL_TYPES[i]; } } return 'Muu'; }
+  /* "la–su 5.–6.12.2026" -> alku 5.12.2026; "su 22.11.2026 klo 13–16" -> 22.11.2026 */
+  function evStart(str) {
+    var m = /(\d{1,2})\.(\d{1,2})\.(\d{4})/.exec(str); if (!m) { return null; }
+    var day = +m[1]; var r = /(\d{1,2})\.\s*[–-]\s*\d{1,2}\.\d{1,2}\.\d{4}/.exec(str); if (r) { day = +r[1]; }
+    return new Date(+m[3], +m[2] - 1, day);
+  }
+  function dayKey(dt) { return dt.getFullYear() + '-' + pad2(dt.getMonth() + 1) + '-' + pad2(dt.getDate()); }
+  function playersHtml(list) {
+    if (!list.length) { return '<div class="players-empty">Pelaajat nimetään myöhemmin.</div>'; }
+    var s = list.slice().sort(function (x, y) { return x.localeCompare(y, 'fi'); }); var h = '<div class="players-list">';
+    for (var i = 0; i < s.length; i++) { h += '<span class="player-name">' + esc(s[i]) + '</span>'; }
+    return h + '</div>';
+  }
+  function calCard(type, title, sub, body) {
+    return '<div class="team-card cal-card" data-type="' + type + '"><div class="team-header"><span class="cal-type">' + esc(type) + '</span><div class="cal-head"><div class="team-name">' + esc(title) + '</div><div class="cal-sub">' + sub + '</div></div><div class="accordion-arrow">▾</div></div><div class="round-group collapsed">' + body + '</div></div>';
+  }
+
+  function buildCalendar() {
+    var days = {}, open = [];
+    function add(dt, sortKey, html, type) { var k = dayKey(dt); if (!days[k]) { days[k] = {date: dt, items: []}; } days[k].items.push({sort: sortKey, html: html, type: type}); }
+
+    for (var ti = 0; ti < TEAMS.length; ti++) {
+      var team = TEAMS[ti]; var groups = groupMatches(team.matches);
+      for (var gi = 0; gi < groups.length; gi++) {
+        var g = groups[gi]; var rest = restFor(team, g, gi);
+        if (g.open) { open.push({sort: g.sort, team: team, g: g}); continue; }
+        var arena = g.matches[0].arena; var first = g.matches[0].t;
+        var body = '<div class="gather-time">📢 Kokoontuminen klo ' + gatherTime(first, arena) + '</div>';
+        if (rest.length) { body += '<div class="rest-note">🛋 Huilaa: ' + esc(rest.join(', ')) + '</div>'; }
+        body += '<div class="match-list">';
+        for (var k = 0; k < g.matches.length; k++) {
+          var mx = g.matches[k];
+          body += '<div class="match-row ' + (isOurTeam(mx.h, team.name) ? 'home-match' : 'away-match') + '"><div class="match-row-top"><span class="col-time">' + esc(mx.t) + '</span>' + (mx.field ? '<span class="field-detail">' + esc(mx.field) + '</span>' : '') + '</div>';
+          body += '<div class="match-row-bottom"><span class="col-home">' + tag(mx.h, team.name) + '</span><span class="col-vs">—</span><span class="col-away">' + tag(mx.a, team.name) + '</span><span class="col-score' + (hasScore(mx.s) ? ' played' : '') + '">' + (hasScore(mx.s) ? esc(mx.s) : '—') + '</span></div></div>';
+        }
+        body += '</div>';
+        var playing = team.players.filter(function (p) { return rest.indexOf(p) < 0; });
+        body += '<div class="cal-players">' + playersHtml(playing) + '</div>';
+        var sub = 'klo ' + esc(first) + ' · <a href="https://www.google.com/maps/search/' + encodeURIComponent(mapQuery(arena)) + '" target="_blank" rel="noopener">' + esc(arena) + '</a>';
+        add(parseDate(g.d), first, calCard('Futsal', team.name + ' (' + team.div + ')', sub, body), 'Futsal');
+      }
+    }
+
+    var evs = window.TALVI_EVENTS || [];
+    for (var ei = 0; ei < evs.length; ei++) {
+      var ev = evs[ei]; var dt = evStart(ev.date); if (!dt) { continue; }
+      var klo = (/klo\s*[\d.:–-]+/.exec(ev.date) || [''])[0];
+      var multi = /[–-]\s*\d{1,2}\.\d{1,2}\.\d{4}/.test(ev.date) ? ev.date.replace(/\.\d{4}.*/, '.') : '';
+      var eb = '';
+      for (var j = 0; j < ev.teams.length; j++) {
+        var t = ev.teams[j];
+        eb += '<div class="cal-team"><div class="cal-team-name">' + esc(t.name) + (t.time ? ' <span class="cal-team-time">' + esc(t.time) + '</span>' : '') + '</div>';
+        if (t.info) { eb += '<div class="cal-team-info">' + esc(t.info) + '</div>'; }
+        eb += playersHtml(t.players) + '</div>';
+      }
+      var times = ev.teams.map(function (x) { return (/(\d{1,2})[.:](\d{2})/.exec(x.time || '') || [])[0]; }).filter(Boolean).sort();
+      var bits = []; if (multi) { bits.push(esc(multi)); } if (klo) { bits.push(esc(klo)); } else if (times.length) { bits.push('klo ' + esc(times[0]) + ' alkaen'); }
+      if (ev.venue) { bits.push(esc(ev.venue)); }
+      bits.push(ev.teams.length + (ev.teams.length === 1 ? ' ryhmä' : ' ryhmää'));
+      var ty = evType(ev.name);
+      add(dt, (times[0] || (/\d{1,2}/.exec(klo.replace('klo', '')) || ['99'])[0]).replace('.', ':').replace(/^(\d):/, '0$1:'), calCard(ty, ev.name, bits.join(' · '), eb), ty);
+    }
+
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var keys = Object.keys(days).sort(); var up = '', past = '', pastN = 0;
+    function dayHtml(d) {
+      d.items.sort(function (x, y) { return x.sort < y.sort ? -1 : x.sort > y.sort ? 1 : 0; });
+      var types = {}; d.items.forEach(function (it) { types[it.type] = 1; });
+      var h = '<div class="cal-day" data-types="' + Object.keys(types).join(' ') + '"><div class="cal-day-head">' + WEEKDAYS[d.date.getDay()] + ' ' + d.date.getDate() + '.' + (d.date.getMonth() + 1) + '.' + (d.date.getFullYear() !== today.getFullYear() ? d.date.getFullYear() : '') + (dayKey(d.date) === dayKey(today) ? ' <span class="cal-today">tänään</span>' : '') + '</div>';
+      d.items.forEach(function (it) { h += it.html; });
+      return h + '</div>';
+    }
+    for (var i = 0; i < keys.length; i++) { var d = days[keys[i]]; if (d.date < today) { past += dayHtml(d); pastN++; } else { up += dayHtml(d); } }
+
+    var html = '<div class="cal-filters"><button type="button" class="chip active" data-filter="">Kaikki</button>';
+    for (var c = 0; c < CAL_TYPES.length; c++) { html += '<button type="button" class="chip" data-filter="' + CAL_TYPES[c] + '">' + CAL_TYPES[c] + '</button>'; }
+    html += '</div>';
+    html += up || '<div class="players-empty">Ei tulevia pelejä.</div>';
+    if (open.length) {
+      open.sort(function (x, y) { return x.sort - y.sort; });
+      html += '<div class="cal-day" data-types="Futsal"><div class="cal-day-head">Futsal – päivä sopimatta</div><div class="team-card cal-open" data-type="Futsal">';
+      for (var o = 0; o < open.length; o++) {
+        var og = open[o].g; var ms = og.matches.map(function (m) { return m.h + ' – ' + m.a; }).join(' · ');
+        html += '<div class="cal-open-row"><span class="cal-open-win">' + esc(og.open.replace(/\.\d{4}$/, '.')) + '</span><span><b>' + esc(open[o].team.name) + '</b> ' + esc(ms) + '</span></div>';
+      }
+      html += '</div></div>';
+    }
+    if (past) { html += '<details class="cal-past"><summary>Pelatut (' + pastN + ' päivää)</summary>' + past + '</details>'; }
+
+    var el = document.getElementById('calendar'); el.innerHTML = html;
+    el.addEventListener('click', function (e) {
+      if (e.target.closest('a')) { return; }
+      var chip = e.target.closest('.chip');
+      if (chip) {
+        var f = chip.getAttribute('data-filter');
+        var chips = el.querySelectorAll('.chip'); for (var a = 0; a < chips.length; a++) { chips[a].classList.toggle('active', chips[a] === chip); }
+        var cards = el.querySelectorAll('[data-type]'); for (var b = 0; b < cards.length; b++) { cards[b].classList.toggle('hidden', !!f && cards[b].getAttribute('data-type') !== f); }
+        var ds = el.querySelectorAll('.cal-day'); for (var x = 0; x < ds.length; x++) { ds[x].classList.toggle('hidden', !!f && (' ' + ds[x].getAttribute('data-types') + ' ').indexOf(' ' + f + ' ') < 0); }
+        return;
+      }
+      var header = e.target.closest('.team-header');
+      if (header) { header.closest('.team-card').classList.toggle('open'); return; }
+      var row = e.target.closest('.match-row');
+      if (row && window.innerWidth <= 650) { row.classList.toggle('expanded'); }
+    });
+  }
+
+  function initTabs() {
+    var tabs = document.getElementById('tabs'); if (!tabs) { return; }
+    tabs.classList.remove('hidden');
+    function show(name) {
+      var btns = tabs.querySelectorAll('.tab');
+      for (var i = 0; i < btns.length; i++) { btns[i].classList.toggle('active', btns[i].getAttribute('data-tab') === name); }
+      document.getElementById('content').classList.toggle('hidden', name !== 'teams');
+      document.getElementById('calendar').classList.toggle('hidden', name !== 'calendar');
+    }
+    tabs.addEventListener('click', function (e) {
+      var b = e.target.closest('.tab'); if (!b) { return; }
+      var name = b.getAttribute('data-tab'); show(name);
+      try { history.replaceState(null, '', name === 'calendar' ? '#kalenteri' : location.pathname + location.search); } catch (err) {}
+    });
+    if (location.hash === '#kalenteri') { show('calendar'); }
   }
 
   /* \u2500\u2500 WIDGET \u2500\u2500 */
