@@ -5,7 +5,7 @@
   window.TALVI_EVENTS = [
     {date: 'la 14.11.2026', name: 'Vapari 3v3', venue: 'Vaparihalli', teams: [
       {name: 'Ilves A', time: 'klo 15.15–17.10', info: 'Lohko B: TamU, ViiPV, YIlves A · 3v3 + 4v4', players: ['Altti Lehtinen','Elmeri Taskinen','Josef Al-Bayati','Leevi Mäkinen','Moses Toppi','Otso Jokilehto']},
-      {name: 'Ilves B', time: 'klo 12.45–14.40', info: 'Lohko A: LeKi-futis, Loiske, YIlves B · 3v3 + 4v4', players: ['Aaron Melander','Edvin Aalto','Eino Innanen','Hugo Ulmanen','Julius Leppäkoski','Oliver Mäkiranta']}
+      {name: 'Ilves B', time: 'klo 12.45–14.40', info: 'Lohko A: LeKi-futis, Loiske, YIlves B · 3v3 + 4v4', players: ['Aaron Melander','Edvin Aalto','Eino Innanen','Hugo Ulmanen','Julius Leppäkoski','Nooa Kemppainen']}
     ]},
     {date: 'su 22.11.2026', name: 'Miniliiga P9 – HJK', venue: 'Lehtikuusentien kenttä, Helsinki', teams: [
       {name: 'Ilves A', time: 'klo 11.00–13.10', info: '11.00 TPS A (k2) · 11.25 KäPa A (k3) · 12.00 Gnistan A (k3) · 12.25 Honka A (k2) · 12.50 HJK A (k1)', players: ['Henrik Fischer','Lemmy Pitkänen','Leo Mayomi','Nooa Kemppainen','Noel Lamminen','Patrick Kyllönen','Thomas Tienvieri','Vilho Keisu']},
