@@ -265,8 +265,8 @@
 
 
   /* ── LAJIT ── */
-  var CAL_TYPES = ['Futsal', 'Miniliiga', 'Talviliiga', 'Talvisarja', '3v3'];
-  function evType(name) { for (var i = 1; i < CAL_TYPES.length; i++) { if (name.indexOf(CAL_TYPES[i]) >= 0) { return CAL_TYPES[i]; } } return 'Muu'; }
+  var CAL_TYPES = ['Futsal', 'Miniliiga', 'Talviliiga', 'Talvisarja', '3v3', 'Turnaus'];
+  function evType(name) { for (var i = 1; i < CAL_TYPES.length; i++) { if (name.toLowerCase().indexOf(CAL_TYPES[i].toLowerCase()) >= 0) { return CAL_TYPES[i]; } } return 'Muu'; }
   function playersHtml(list) {
     if (!list.length) { return '<div class="players-empty">Pelaajat nimetään myöhemmin.</div>'; }
     var s = list.slice().sort(function (x, y) { return x.localeCompare(y, 'fi'); }); var h = '<div class="players-list">';

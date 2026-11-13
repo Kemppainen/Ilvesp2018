@@ -24,6 +24,10 @@
       {name: 'Ilves A', players: ['Edvin Järvinen','Matts Dunder','Milo Hermans','Oliver Kauppinen','Tapio Oinas','Vilho Anttila']},
       {name: 'Ilves B', players: ['Joel Aro','Kasper-veli Räihä','Onni Muranen','Thomas Saresvaara','Valo Saarimäki','Vilho Keisu']}
     ]},
+    {date: 'la 28.11.2026 klo 13.30–18', name: 'FC Lahti -turnaus', venue: 'Luhta Areena, Lahti', teams: [
+      {name: 'Ilves A', players: ['Otso Jokilehto','An-nur Aminu','Jamiel Akalazu','Gad Niyokwizerwa','Lukas Bassina','Heikki Lähteenmäki','Justus Tiainen','Eeli Huotari']},
+      {name: 'Ilves B', players: ['Einari Orispää','Mert Efe Özkan','Mikke Laaksonen','Otso Miranda','Veikko Aaltonen','Viljo Konttinen','Venni Tauriainen','Henrik Fischer']}
+    ]},
     {date: 'la–su 5.–6.12.2026', name: 'Miniliiga P9 – Honka', venue: 'Espoo', teams: [
       {name: 'Ilves A', players: []},
       {name: 'Ilves B', players: []}
