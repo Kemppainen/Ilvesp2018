@@ -24,7 +24,7 @@
       {name: 'Ilves A', players: ['Edvin Järvinen','Matts Dunder','Milo Hermans','Oliver Kauppinen','Tapio Oinas','Vilho Anttila']},
       {name: 'Ilves B', players: ['Joel Aro','Kasper-veli Räihä','Onni Muranen','Thomas Saresvaara','Valo Saarimäki','Vilho Keisu']}
     ]},
-    {date: 'la 28.11.2026 klo 14–18', name: 'FC Lahti -turnaus', venue: 'Luhta Areena, Lahti', teams: [
+    {date: 'la 28.11.2026 klo 14–18', name: 'Lahden harjoitusottelut', venue: 'Suurhalli Areena, Lahti', teams: [
       {name: 'Ilves A', players: ['Otso Jokilehto','An-nur Aminu','Jamiel Akalazu','Gad Niyokwizerwa','Lukas Bassina','Heikki Lähteenmäki','Venni Tauriainen','Eeli Huotari']},
       {name: 'Ilves B', players: ['Einari Orispää','Mert Efe Özkan','Mikke Laaksonen','Otso Miranda','Veikko Aaltonen','Viljo Konttinen','Justus Tiainen','Henrik Fischer']}
     ]},

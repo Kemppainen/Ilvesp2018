@@ -265,7 +265,7 @@
 
 
   /* ── LAJIT ── */
-  var CAL_TYPES = ['Futsal', 'Miniliiga', 'Talviliiga', 'Talvisarja', '3v3', 'Turnaus'];
+  var CAL_TYPES = ['Futsal', 'Miniliiga', 'Talviliiga', 'Talvisarja', '3v3', 'Harjoitusottelut', 'Turnaus', 'Muu'];
   function evType(name) { for (var i = 1; i < CAL_TYPES.length; i++) { if (name.toLowerCase().indexOf(CAL_TYPES[i].toLowerCase()) >= 0) { return CAL_TYPES[i]; } } return 'Muu'; }
   function playersHtml(list) {
     if (!list.length) { return '<div class="players-empty">Pelaajat nimetään myöhemmin.</div>'; }
@@ -276,7 +276,8 @@
   /* ── SUODATTIMET (yhteiset molemmille välilehdille) ── */
   function filtersHtml() {
     var h = '<div class="cal-filters"><button type="button" class="chip active" data-filter="">Kaikki</button>';
-    for (var c = 0; c < CAL_TYPES.length; c++) { h += '<button type="button" class="chip" data-filter="' + CAL_TYPES[c] + '">' + CAL_TYPES[c] + '</button>'; }
+    var used = {Futsal: 1}; (window.TALVI_EVENTS || []).forEach(function (ev) { used[evType(ev.name)] = 1; });
+    for (var c = 0; c < CAL_TYPES.length; c++) { if (used[CAL_TYPES[c]]) { h += '<button type="button" class="chip" data-filter="' + CAL_TYPES[c] + '">' + CAL_TYPES[c] + '</button>'; } }
     return h + '</div>';
   }
   function applyFilter(el, chip) {
