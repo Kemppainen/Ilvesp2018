@@ -288,7 +288,7 @@
   }
 
   /* ── MUUT JOUKKUEET (Miniliiga, Talviliiga, Talvisarja, 3v3) futsalkorttien muodossa ── */
-  function venueQuery(v) { return /vapari|tammela|kauppi|pirkkahalli/i.test(v) && v.indexOf(',') < 0 ? v + ' Tampere' : v; }
+  function venueQuery(v) { if (/vapari/i.test(v)) { return 'Pikku-Vaparihalli, Aittom\u00e4entie 9, Lemp\u00e4\u00e4l\u00e4'; } return /tammela|kauppi|pirkkahalli/i.test(v) && v.indexOf(',') < 0 ? v + ' Tampere' : v; }
   /* Muiden pelien kokoontuminen: 30 min Tampereen seudulla, 45 min muualla */
   function otherGatherMinutes(v) { return /vapari|tammela|kauppi|pirkkahalli|hervanta|tesoma|kaleva|tampere|ylöjärv|kangasala|lempäälä|nokia|pirkkala/i.test(v || '') || !v ? 30 : 45; }
   function minusMinutes(h, m, d) { var x = h * 60 + m - d; if (x < 0) { x = 0; } return pad2(Math.floor(x / 60)) + ':' + pad2(x % 60); }
