@@ -328,14 +328,14 @@
           var klo = tm.time || (/klo\s*[\d.:–-]+/.exec(ev.date) || [''])[0];
           var parsed = parseInfo(tm.info);
           var st = /(\d{1,2})(?:[.:](\d{2}))?/.exec(klo.replace('klo', ''));
+          html += '<div class="players-section"><div class="players-header"><span class="players-icon">\u26BD</span><span class="players-title">Pelaajat' + (list.length > 1 ? ' ' + esc(label) : '') + ' (' + (tm.players.length || 'avoin') + ')</span><span class="players-arrow">\u25BE</span></div><div class="players-content">' + playersHtml(tm.players) + '</div></div>';
           html += '<div class="date-group"><div class="date-venue-row"><div class="date-badge">' + esc(label) + '</div>';
           if (ev.venue) { html += '<a class="venue-tag" href="https://www.google.com/maps/search/' + encodeURIComponent(venueQuery(ev.venue)) + '" target="_blank" rel="noopener"><span class="pin">📍</span> ' + esc(ev.venue) + '</a>'; }
           html += '</div>';
           if (st) { html += '<div class="gather-time">📢 Kokoontuminen klo ' + minusMinutes(+st[1], +(st[2] || 0), otherGatherMinutes(ev.venue)) + '</div>'; }
           var note = []; if (ev.name !== type) { note.push(ev.name); } if (klo && !parsed.timed) { note.push(klo); } else if (!klo) { note.push('kellonaika tarkentuu'); }
           note = note.concat(parsed.notes);
-          if (note.length) { html += '<div class="ev-note">' + esc(note.join(' · ')) + '</div>'; }
-          html += '<div class="players-section"><div class="players-header"><span class="players-icon">\u26BD</span><span class="players-title">Pelaajat (' + (tm.players.length || 'avoin') + ')</span><span class="players-arrow">\u25BE</span></div><div class="players-content">' + playersHtml(tm.players) + '</div></div>';
+          if (note.length) { html += '<div class="rest-note">\u2139\uFE0F ' + esc(note.join(' · ')) + '</div>'; }
           if (parsed.rows.length) {
             html += '<div class="match-list">';
             for (var r = 0; r < parsed.rows.length; r++) {
