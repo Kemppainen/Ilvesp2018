@@ -297,6 +297,8 @@
     var out = {rows: [], notes: [], timed: false}; if (!info) { return out; }
     var parts = info.split(/\s+·\s+/);
     for (var i = 0; i < parts.length; i++) {
+      var hm = /^(\d{1,2})[.:](\d{2})\s+(.+?)\s+\u2013\s+(.+?)(?:\s+\(([^)]+)\))?$/.exec(parts[i]);
+      if (hm) { var hf = hm[5] || ''; var hk = /^k(\d+)$/i.exec(hf); out.rows.push({t: pad2(+hm[1]) + ':' + hm[2], h: hm[3], a: hm[4], field: hk ? 'Kentt\u00e4 ' + hk[1] : hf}); out.timed = true; continue; }
       var m = /^(\d{1,2})[.:](\d{2})\s+(.+?)(?:\s+\(([^)]+)\))?$/.exec(parts[i]);
       if (m) { var f = m[4] || ''; var km = /^k(\d+)$/i.exec(f); out.rows.push({t: pad2(+m[1]) + ':' + m[2], opp: m[3], field: km ? 'Kenttä ' + km[1] : f}); out.timed = true; continue; }
       var l = /^(Lohko\s+\S+):\s*(.+)$/.exec(parts[i]);
@@ -341,8 +343,9 @@
             html += '<div class="match-list">';
             for (var r = 0; r < parsed.rows.length; r++) {
               var row = parsed.rows[r];
-              html += '<div class="match-row ' + (r % 2 ? 'away-match' : 'home-match') + '"><div class="match-row-top"><span class="col-time">' + esc(row.t || '–') + '</span>' + (row.field ? '<span class="field-detail">' + esc(row.field) + '</span>' : '') + '</div>';
-              html += '<div class="match-row-bottom"><span class="col-home"><span class="ilves">' + esc(order[n]) + '</span></span><span class="col-vs">—</span><span class="col-away">' + esc(row.opp) + '</span><span class="col-score">—</span></div></div>';
+              var us = tm.us || order[n]; var hasHA = !!row.h; html += '<div class="match-row ' + ((hasHA ? row.h !== us : r % 2) ? 'away-match' : 'home-match') + '"><div class="match-row-top"><span class="col-time">' + esc(row.t || '–') + '</span>' + (row.field ? '<span class="field-detail">' + esc(row.field) + '</span>' : '') + '</div>';
+              if (hasHA) { html += '<div class="match-row-bottom"><span class="col-home">' + tag(row.h, us) + '</span><span class="col-vs">\u2014</span><span class="col-away">' + tag(row.a, us) + '</span><span class="col-score">\u2014</span></div></div>'; }
+              else { html += '<div class="match-row-bottom"><span class="col-home"><span class="ilves">' + esc(order[n]) + '</span></span><span class="col-vs">—</span><span class="col-away">' + esc(row.opp) + '</span><span class="col-score">—</span></div></div>'; }
             }
             html += '</div>';
           }
