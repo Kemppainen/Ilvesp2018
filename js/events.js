@@ -18,8 +18,8 @@
     ]},
     {date: 'su 22.11.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
       {name: 'Ilves (P9 taso 1)', us: 'Ilves', time: 'klo 13.50–16.00', info: '13.50 FC Haka / Valkoinen – Ilves (k1) · 14.34 Ilves – YIlves/sininen (k1) · 15.18 Ilves – Ilves/Keltavihreä (k1) · 15.40 Ilves – YIlves (k2)', players: ['Atila Nikkhouyabgarm','Eliel Vaine','Elmeri Taskinen','Elmo Lovén','Kasper-veli Räihä','Lukas Riponiemi','Moses Toppi','Roger Wolanen']},
-      {name: 'Ilves Keltainen (P9 taso 1)', us: 'Ilves Keltainen', time: 'klo 13.50–16.00', info: '13.50 FC Haka / Musta – Ilves Keltainen (k3) · 14.34 Ilves Keltainen – YIlves/valkoinen (k3) · 15.18 Ilves Keltainen – PJK/sininen (k3) · 15.40 Ilves Keltainen – YIlves/punainen (k4)', players: ['Eino Innanen','Hugo Ulmanen','Joel Aro','Julius Leppäkoski','Edvin Aalto','Leevi Mäkinen','Matts Dunder','Oliver Kauppinen']},
-      {name: 'Ilves Keltavihreä (P9 taso 2)', us: 'Ilves/Keltavihreä', time: 'klo 13.50–16.00', info: '13.50 Ilves/Keltavihreä – YIlves (k2) · 14.34 Ilves/Keltavihreä – TPV/Punainen (k2) · 15.18 Ilves – Ilves/Keltavihreä (k1) · 15.40 YIlves/sininen – Ilves/Keltavihreä (k1)', players: ['Aaron Melander','Altti Lehtinen','Justus Tiainen','Kevin Kytökorpi','Leevi Demin','Tapio Oinas','Thomas Saresvaara','Valo Saarimäki']}
+      {name: 'Ilves Keltavihreä (P9 taso 1)', us: 'Ilves/Keltavihreä', time: 'klo 13.50–16.00', info: '13.50 Ilves/Keltavihreä – YIlves (k2) · 14.34 Ilves/Keltavihreä – TPV/Punainen (k2) · 15.18 Ilves – Ilves/Keltavihreä (k1) · 15.40 YIlves/sininen – Ilves/Keltavihreä (k1)', players: ['Eino Innanen','Hugo Ulmanen','Joel Aro','Julius Leppäkoski','Edvin Aalto','Leevi Mäkinen','Matts Dunder','Oliver Kauppinen']},
+      {name: 'Ilves Keltainen (P9 taso 2)', us: 'Ilves Keltainen', time: 'klo 13.50–16.00', info: '13.50 FC Haka / Musta – Ilves Keltainen (k3) · 14.34 Ilves Keltainen – YIlves/valkoinen (k3) · 15.18 Ilves Keltainen – PJK/sininen (k3) · 15.40 Ilves Keltainen – YIlves/punainen (k4)', players: ['Aaron Melander','Altti Lehtinen','Justus Tiainen','Kevin Kytökorpi','Leevi Demin','Tapio Oinas','Thomas Saresvaara','Valo Saarimäki']}
     ]},
     {date: 'la 28.11.2026', name: 'Vapari 3v3', venue: 'Vaparihalli', teams: [
       {name: 'Ilves A', players: ['Edvin Järvinen','Matts Dunder','Milo Hermans','Oliver Kauppinen','Tapio Oinas','Vilho Anttila']},
@@ -35,8 +35,8 @@
     ]},
     {date: 'su 6.12.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
       {name: 'Ilves (P9 taso 1)', players: []},
-      {name: 'Ilves Keltainen (P9 taso 1)', players: []},
-      {name: 'Ilves Keltavihreä (P9 taso 2)', players: []}
+      {name: 'Ilves Keltavihreä (P9 taso 1)', players: []},
+      {name: 'Ilves Keltainen (P9 taso 2)', players: []}
     ]}
   ];
 })();
