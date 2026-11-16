@@ -13,8 +13,8 @@
       {name: 'Ilves B', time: 'klo 13.15–15.15', info: '13.15 TPS B (k2) · 13.40 KäPa B (k3) · 14.05 Gnistan B (k3) · 14.30 Honka B (k2) · 14.55 HJK B (k1)', players: ['Elias Mattila','Heikki Lähteenmäki','Jasper Havia','Oiva Rossi','Venni Tauriainen','Verneri Vatanen','Viljami Hanski','Vilho Anttila']}
     ]},
     {date: 'su 22.11.2026 klo 13–16', name: 'Talviliiga – JJK', venue: 'Huhtahalli, Jyväskylä', teams: [
-      {name: 'Ryhmä 1', players: ['Rasmus Lähteenmäki','Eeli Huotari','Eeli Saunamäki','Emil Kruus','Emil Paloniemi','Gad Niyokwizerwa','Veikko Aaltonen','Viljo Konttinen']},
-      {name: 'Ryhmä 2', players: ['Edvin Järvinen','Elias Nieminen','Josef Al-Bayati','Lakindu Gamlath','Mikael Leino','Oliver Mäkiranta','Ruben Elomaa','Walter Capone']}
+      {name: 'Ryhmä 1', us: 'Ilves', info: '13.00 Ilves – Inter (Kenttä B) · 14.00 KuPS – Ilves (Kenttä A) · 15.00 Ilves – TuNL (Kenttä B) · 15.30 JJK – Ilves (Kenttä C)', players: ['Rasmus Lähteenmäki','Eeli Huotari','Eeli Saunamäki','Emil Kruus','Emil Paloniemi','Gad Niyokwizerwa','Veikko Aaltonen','Viljo Konttinen']},
+      {name: 'Ryhmä 2', us: 'Ilves2', info: '13.00 JJK2 – Ilves2 (Kenttä D) · 13.30 Ilves2 – Inter2 (Kenttä D) · 14.30 TuNL2 – Ilves2 (Kenttä D) · Sijoitusottelu klo 15.00 (pronssi) tai 15.30 (finaali), Kenttä D', players: ['Edvin Järvinen','Elias Nieminen','Josef Al-Bayati','Lakindu Gamlath','Mikael Leino','Oliver Mäkiranta','Ruben Elomaa','Walter Capone']}
     ]},
     {date: 'su 22.11.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
       {name: 'Ilves (P9 taso 1)', us: 'Ilves', time: 'klo 13.50–16.00', info: '13.50 FC Haka / Valkoinen – Ilves (k1) · 14.34 Ilves – YIlves/sininen (k1) · 15.18 Ilves – Ilves/Keltavihreä (k1) · 15.40 Ilves – YIlves (k2)', players: ['Atila Nikkhouyabgarm','Eliel Vaine','Elmeri Taskinen','Elmo Lovén','Kasper-veli Räihä','Lukas Riponiemi','Moses Toppi','Roger Wolanen']},
