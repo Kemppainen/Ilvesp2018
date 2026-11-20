@@ -29,7 +29,7 @@
     ]},
     {date: 'la 28.11.2026 klo 14–18', name: 'Lahden harjoitusottelut', venue: 'Suurhalli Areena, Lahti', teams: [
       {name: 'Ilves A', players: ['Otso Jokilehto','An-nur Aminu','Jamiel Akalazu','Gad Niyokwizerwa','Lukas Bassina','Heikki Lähteenmäki','Venni Tauriainen','Eeli Huotari']},
-      {name: 'Ilves B', players: ['Einari Orispää','Mert Efe Özkan','Mikke Laaksonen','Otso Miranda','Veikko Aaltonen','Viljo Konttinen','Justus Tiainen','Henrik Fischer']}
+      {name: 'Ilves B', players: ['Einari Orispää','Mikke Laaksonen','Otso Miranda','Veikko Aaltonen','Viljo Konttinen','Justus Tiainen','Henrik Fischer']}
     ]},
     {date: 'la–su 5.–6.12.2026', name: 'Miniliiga P9 – Honka', venue: 'Espoo', teams: [
       {name: 'Ilves A', players: []},
