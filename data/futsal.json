@@ -484,6 +484,7 @@
     }
    ],
    "players": [
+    "Eeli Hurske",
     "Einari Orispää",
     "Eino Innanen",
     "Eliel Vaine",
@@ -501,7 +502,9 @@
     },
     {
      "key": "12.12.2026",
-     "players": []
+     "players": [
+      "Eeli Hurske"
+     ]
     },
     {
      "key": "9.1.2027",
