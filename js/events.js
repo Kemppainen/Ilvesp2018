@@ -32,13 +32,13 @@
       {name: 'Ilves B', players: ['Einari Orispää','Mikke Laaksonen','Otso Miranda','Veikko Aaltonen','Viljo Konttinen','Justus Tiainen','Henrik Fischer']}
     ]},
     {date: 'la–su 5.–6.12.2026', name: 'Miniliiga P9 – Honka', venue: 'Espoo', teams: [
-      {name: 'Ilves A', players: []},
-      {name: 'Ilves B', players: []}
+      {name: 'Ilves A', players: ['Lemmy Pitkänen','Leo Mayomi','Noel Lamminen','Patrick Kyllönen','Thomas Tienvieri','Veikko Aaltonen','Verneri Vatanen','Vilho Anttila']},
+      {name: 'Ilves B', players: ['Eeli Huotari','Elias Mattila','Gad Niyokwizerwa','Henrik Fischer','Jasper Havia','Nooa Kemppainen','Oiva Rossi','Viljo Konttinen']}
     ]},
     {date: 'su 6.12.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
-      {name: 'Ilves (P9 taso 1)', players: []},
-      {name: 'Ilves Keltavihreä (P9 taso 1)', players: []},
-      {name: 'Ilves Keltainen (P9 taso 2)', players: []}
+      {name: 'Ilves (P9 taso 1)', players: ['Einari Orispää','Emil Kruus','Justus Tiainen','Mikael Leino','Otso Miranda','Rasmus Lähteenmäki','Ruben Elomaa','Santtu Sulonen']},
+      {name: 'Ilves Keltavihreä (P9 taso 1)', players: ['An-nur Aminu','Eeli Saunamäki','Elias Nieminen','Emil Paloniemi','Jamiel Akalazu','Lukas Bassina','Mikke Laaksonen','Oliver Mäkiranta']},
+      {name: 'Ilves Keltainen (P9 taso 2)', players: ['Eeli Hurske','Eliel Vaine','Leevi Demin','Lukas Riponiemi','Milo Hermans','Onni Muranen','Pauli Ahonen','Roger Wolanen']}
     ]}
   ];
 })();
