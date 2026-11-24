@@ -31,9 +31,9 @@
       {name: 'Ilves A', players: ['Otso Jokilehto','An-nur Aminu','Jamiel Akalazu','Gad Niyokwizerwa','Lukas Bassina','Heikki Lähteenmäki','Venni Tauriainen','Eeli Huotari']},
       {name: 'Ilves B', players: ['Einari Orispää','Mikke Laaksonen','Otso Miranda','Veikko Aaltonen','Viljo Konttinen','Justus Tiainen','Henrik Fischer']}
     ]},
-    {date: 'la–su 5.–6.12.2026', name: 'Miniliiga P9 – Honka', venue: 'Espoo', teams: [
-      {name: 'Ilves A', players: ['Lemmy Pitkänen','Leo Mayomi','Noel Lamminen','Patrick Kyllönen','Thomas Tienvieri','Veikko Aaltonen','Verneri Vatanen','Vilho Anttila']},
-      {name: 'Ilves B', players: ['Eeli Huotari','Elias Mattila','Gad Niyokwizerwa','Henrik Fischer','Jasper Havia','Nooa Kemppainen','Oiva Rossi','Viljo Konttinen']}
+    {date: 'la 5.12.2026', name: 'Miniliiga P9 – Honka', venue: 'Matinkylän tekonurmi, Espoo', teams: [
+      {name: 'Ilves A', time: 'klo 11.15–13.15', info: '11.15 Kasiysi/Red (k2) · 11.40 Honka A (k1) · 12.05 TPS A (k2) · 12.30 KäPa A (k3) · 12.55 HJK A (k3)', players: ['Lemmy Pitkänen','Leo Mayomi','Noel Lamminen','Patrick Kyllönen','Thomas Tienvieri','Veikko Aaltonen','Verneri Vatanen','Vilho Anttila']},
+      {name: 'Ilves B', time: 'klo 13.20–15.20', info: '13.20 Kasiysi/White (k2) · 13.45 Honka B (k1) · 14.10 TPS B (k2) · 14.35 KäPa B (k3) · 15.00 HJK B (k3)', players: ['Eeli Huotari','Elias Mattila','Gad Niyokwizerwa','Henrik Fischer','Jasper Havia','Nooa Kemppainen','Oiva Rossi','Viljo Konttinen']}
     ]},
     {date: 'su 6.12.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
       {name: 'Ilves (P9 taso 1)', players: ['Einari Orispää','Emil Kruus','Justus Tiainen','Mikael Leino','Otso Miranda','Rasmus Lähteenmäki','Ruben Elomaa','Santtu Sulonen']},
