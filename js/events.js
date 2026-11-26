@@ -24,8 +24,8 @@
       {name: 'Ilves Keltainen (P9 taso 2)', us: 'Ilves Keltainen', time: 'klo 13.50–16.00', info: '13.50 FC Haka / Musta – Ilves Keltainen (k3) · 14.34 Ilves Keltainen – YIlves/valkoinen (k3) · 15.18 Ilves Keltainen – PJK/sininen (k3) · 15.40 Ilves Keltainen – YIlves/punainen (k4)', players: ['Aaron Melander','Altti Lehtinen','Justus Tiainen','Kevin Kytökorpi','Leevi Demin','Tapio Oinas','Thomas Saresvaara','Valo Saarimäki']}
     ]},
     {date: 'la 28.11.2026', name: 'Vapari 3v3', venue: 'Vaparihalli', teams: [
-      {name: 'Ilves A', players: ['Edvin Järvinen','Matts Dunder','Milo Hermans','Oliver Kauppinen','Tapio Oinas','Vilho Anttila']},
-      {name: 'Ilves B', players: ['Joel Aro','Kasper-veli Räihä','Onni Muranen','Thomas Saresvaara','Valo Saarimäki','Vilho Keisu']}
+      {name: 'Ilves A', time: 'klo 12.45–14.55', info: '12.45 TamU (4v4) · 13.20 TamU (3v3) · 13.45 LeKi-futis 2017 (3v3) · 14.35 Ilves B (3v3)', players: ['Edvin Järvinen','Matts Dunder','Milo Hermans','Oliver Kauppinen','Tapio Oinas','Vilho Anttila']},
+      {name: 'Ilves B', time: 'klo 14.10–16.35', info: '14.10 ViiPV (3v3) · 14.35 Ilves A (3v3) · 15.00 Loiske 2017 (3v3) · 16.05 Loiske 2017 (4v4)', players: ['Joel Aro','Kasper-veli Räihä','Onni Muranen','Thomas Saresvaara','Valo Saarimäki','Vilho Keisu']}
     ]},
     {date: 'la 28.11.2026 klo 14–18', name: 'Lahden harjoitusottelut', venue: 'Suurhalli Areena, Lahti', teams: [
       {name: 'Ilves A', players: ['Otso Jokilehto','An-nur Aminu','Jamiel Akalazu','Gad Niyokwizerwa','Lukas Bassina','Heikki Lähteenmäki','Venni Tauriainen','Eeli Huotari']},
