@@ -36,9 +36,9 @@
       {name: 'Ilves B', time: 'klo 13.20–15.20', info: '13.20 Kasiysi/White (k2) · 13.45 Honka B (k1) · 14.10 TPS B (k2) · 14.35 KäPa B (k3) · 15.00 HJK B (k3)', players: ['Eeli Huotari','Elias Mattila','Gad Niyokwizerwa','Henrik Fischer','Jasper Havia','Nooa Kemppainen','Oiva Rossi','Viljo Konttinen']}
     ]},
     {date: 'su 6.12.2026', name: 'Talvisarja', venue: 'Tammela', teams: [
-      {name: 'Ilves (P9 taso 1)', players: ['Einari Orispää','Emil Kruus','Justus Tiainen','Mikael Leino','Otso Miranda','Rasmus Lähteenmäki','Ruben Elomaa','Santtu Sulonen']},
-      {name: 'Ilves Keltavihreä (P9 taso 1)', players: ['An-nur Aminu','Eeli Saunamäki','Elias Nieminen','Emil Paloniemi','Jamiel Akalazu','Lukas Bassina','Mikke Laaksonen','Oliver Mäkiranta']},
-      {name: 'Ilves Keltainen (P9 taso 2)', players: ['Eeli Hurske','Eliel Vaine','Leevi Demin','Lukas Riponiemi','Milo Hermans','Onni Muranen','Pauli Ahonen','Roger Wolanen']}
+      {name: 'Ilves (P9 taso 1)', us: 'Ilves', time: 'klo 11.50–14.10', info: '11.50 FC Haka / Valkoinen – Ilves (k1) · 12.34 Ilves – YIlves/sininen (k1) · 13.18 Ilves – Ilves/Keltavihreä (k1) · 13.50 Ilves – YIlves (k2)', players: ['Einari Orispää','Emil Kruus','Justus Tiainen','Mikael Leino','Otso Miranda','Rasmus Lähteenmäki','Ruben Elomaa','Santtu Sulonen']},
+      {name: 'Ilves Keltavihreä (P9 taso 1)', us: 'Ilves/Keltavihreä', time: 'klo 11.50–14.10', info: '11.50 Ilves/Keltavihreä – YIlves (k2) · 12.34 Ilves/Keltavihreä – TPV/Punainen (k2) · 13.18 Ilves – Ilves/Keltavihreä (k1) · 13.50 YIlves/sininen – Ilves/Keltavihreä (k1)', players: ['An-nur Aminu','Eeli Saunamäki','Elias Nieminen','Emil Paloniemi','Jamiel Akalazu','Lukas Bassina','Mikke Laaksonen','Oliver Mäkiranta']},
+      {name: 'Ilves Keltainen (P9 taso 2)', us: 'Ilves Keltainen', time: 'klo 11.50–14.10', info: '11.50 Ilves Keltainen – YIlves/punainen (k4) · 12.34 Ilves Keltainen – TPV/Valkoinen (k4) · 13.18 Ilves Keltainen – PJK/sininen (k3) · 13.50 YIlves/valkoinen – Ilves Keltainen (k3)', players: ['Eeli Hurske','Eliel Vaine','Leevi Demin','Lukas Riponiemi','Milo Hermans','Onni Muranen','Pauli Ahonen','Roger Wolanen']}
     ]}
   ];
 })();
